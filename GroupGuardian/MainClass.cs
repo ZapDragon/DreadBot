@@ -19,7 +19,6 @@ namespace GroupGuardian
             WebhookInfo whi;
             try
             {
-                 whi = Methods.getWebhookInfo();
             }
             catch (Exception e)
             {
