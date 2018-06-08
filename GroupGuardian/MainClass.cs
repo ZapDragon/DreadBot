@@ -19,17 +19,17 @@ namespace GroupGuardian
             WebhookInfo whi;
             try
             {
-                 whi = Methods.getWebhookInfo();
+                whi = Methods.getWebhookInfo();
+                Console.WriteLine(whi.pendingUpdateCount);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
 
-            Console.WriteLine(whi.pendingUpdateCount);
             
 
-            Console.ReadLine();
+            //Console.ReadLine();
 
             Console.Title = "Group Guardian v" + version;
             //Console.BackgroundColor = ConsoleColor.Blue;
@@ -37,9 +37,34 @@ namespace GroupGuardian
             Console.WriteLine("Starting Group Guardian...");
 
             ConfigLoader config = new ConfigLoader();
-            Console.WriteLine("Nope");
 
-            Console.ReadLine();
+            while (true)
+            {
+                try
+                {
+                    Update[] updates = Methods.getUpdates();
+                    foreach (var update in updates)
+                    {
+                        HandleUpdate(update);
+                    }
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("I BROKE, SKIPPING UPDATE!");
+                    throw;
+                }
+            }
+            //Console.WriteLine("Nope");
+
+            //Console.ReadLine();
+        }
+
+        private static void HandleUpdate(Update update)
+        {
+            if (update.message != null && update.message.text != null)
+            {
+                Console.WriteLine(update.message.text);
+            }
         }
     }
 }
