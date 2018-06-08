@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
 
 namespace GroupGuardian
 {
@@ -1769,11 +1771,24 @@ namespace GroupGuardian
     // This needs some love.
     #region Telegram Method Object Types
     
+    [DataContract]
+    public class GetMethod
+    {
+        public string ToPayload()
+        {
+            MemoryStream ms = new MemoryStream();
+            new DataContractJsonSerializer(GetType()).WriteObject(ms, this);
+            ms.Position = 0;
+
+            return new StreamReader(ms).ReadToEnd();
+        }
+    }
 
     #region Send Message Contracts
+    
 
     [DataContract]
-    public class SendMessage
+    public class SendMessage : GetMethod
     {
         [DataMember(Name = "text")]
         public string text { get; set; }
@@ -1811,7 +1826,7 @@ namespace GroupGuardian
     #endregion
 
     [DataContract]
-    public class ForwardMessage
+    public class ForwardMessage : GetMethod
     {
         [DataMember(Name = "chat_id")]
         public long chat_id { get; set; }
@@ -1835,13 +1850,13 @@ namespace GroupGuardian
 
 
     [DataContract]
-    public class GetChatById
+    public class GetChatById : GetMethod
     {
         [DataMember(Name = "chat_id")]
         public long chat_id { get; set; }
     }
     [DataContract]
-    public class GetChatByIdResult
+    public class GetChatByIdResult : GetMethod
     {
         [DataMember(Name = "ok")]
         public bool ok { get; set; }
@@ -1850,13 +1865,24 @@ namespace GroupGuardian
         public Chat resutlt { get; set; }
     }
 
-    public class GetChatAdminsResult
+    public class GetChatAdminsResult : GetMethod
     {
         [DataMember(Name = "ok")]
         public bool ok { get; set; }
 
         [DataMember(Name = "result")]
         public ChatMember[] result { get; set; }
+    }
+    public class GetUpdates : GetMethod
+    {
+        [DataMember(Name = "offset", EmitDefaultValue = false)]
+        public long offset { get; set; }
+        [DataMember(Name = "limit", EmitDefaultValue = false)]
+        public int limit { get; set; }
+        [DataMember(Name = "timeout", EmitDefaultValue = false)]
+        public int timeout { get; set; }
+        [DataMember(Name = "allowed_updates", EmitDefaultValue = false)]
+        public string[] allowed_updates { get; set; }
     }
     #endregion
 

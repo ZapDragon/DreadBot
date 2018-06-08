@@ -12,7 +12,7 @@ namespace GroupGuardian
 {
     class Methods
     {
-        private static bool Debug = true;
+        private static bool Debug = false;
 
         #region Global Method Execution
 
@@ -49,7 +49,7 @@ namespace GroupGuardian
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Error while parsing JSON " + HttpResponse.StatusCode + " Reason:" + HttpResponse.ReasonPhrase);
                     Console.ResetColor();
-                    return null;
+                    throw new Exception();
                 }
             }
 
@@ -66,7 +66,7 @@ namespace GroupGuardian
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(ResponseObject.errorCode + " " + ResponseObject.description);
                 Console.ResetColor();
-                return null; //Return the resulting object
+                throw new Exception();//Return the resulting object
             }
             return ResponseObject.result; //Return the resulting object
         }
@@ -75,9 +75,9 @@ namespace GroupGuardian
 
         #region Telegram Bot Methods
 
-        public static Update[] getUpdates()
+        public static Update[] getUpdates(long off)
         {
-            Update[] updates = Task.Run(() => sendRequest<Update[]>(Method.getUpdates)).Result;
+            Update[] updates = Task.Run(() => sendRequest<Update[]>(Method.getUpdates, new GetUpdates() { offset = off , timeout = 20, limit=100 }.ToPayload())).Result;
             return updates;
         }
 
@@ -93,19 +93,20 @@ namespace GroupGuardian
 
         public static WebhookInfo getWebhookInfo()
         {
-            return sendRequest<WebhookInfo>(Method.getWebhookInfo);
+            return Task.Run(() => sendRequest<WebhookInfo>(Method.getWebhookInfo)).Result;
         }
 
         public static User getMe()
         {
-            return sendRequest<User>(Method.getMe);
+            return Task.Run(() => sendRequest<User>(Method.getMe)).Result;
         }
 
         public static Message sendMessage(long dest, string msg, string token, object markdown)
         {
+            /*
             SendMessageId SM = new SendMessageId() { chat_id = dest, text = msg };
             MemoryStream ms = new MemoryStream();
-
+            
             if (markdown is InlineKeyboardMarkup)
             {
                 SM.reply_markup = (InlineKeyboardMarkup)markdown;
@@ -114,17 +115,17 @@ namespace GroupGuardian
             {
                 if ((bool)markdown) { SM.parse_mode = "Markdown"; }
             }
-
-
-
+            
+            
+            
             new DataContractJsonSerializer(typeof(SendMessageId)).WriteObject(ms, SM);
             ms.Position = 0;
             string payload = new StreamReader(ms).ReadToEnd();
             Console.WriteLine(payload);
-
-            Message response = sendRequest<Message>(Method.sendMessage, payload);
-
-
+            
+            Message response = Task.Run(() => sendRequest<Message>(Method.sendMessage, payload);
+            
+            
             if (!SendJsonAsync(payload, token, "sendMessage").IsSuccessStatusCode)
             {
                 Console.WriteLine("Failed to Send message.");
@@ -134,13 +135,13 @@ namespace GroupGuardian
                 }
                 else { Console.WriteLine("LOG DIRECTORY MISSING!!!"); }
             }
-
+            */
 
 
             
 
 
-           return msg;
+           return null;
         }
 
         public static Message forwardMessage()
@@ -420,11 +421,13 @@ namespace GroupGuardian
 
         public static Update getOneUpdate(int timeout = 1800)
         {
-            string args = "?limit=1&timeout=" + timeout;
 
-            Result<Update> result = (Result<Update>)sendRequest<Update>(Method.getUpdates, args);
 
-            return result.result;
+            string args = new GetUpdates() { limit=1, timeout=timeout }.ToPayload();
+
+            Update result = Task.Run(() => sendRequest<Update[]>(Method.getUpdates, args)).Result[0];
+
+            return result;
         }
 
         #endregion

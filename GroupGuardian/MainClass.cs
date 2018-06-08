@@ -27,26 +27,24 @@ namespace GroupGuardian
                 Console.WriteLine(e);
             }
 
-            Console.WriteLine(whi.pendingUpdateCount);
-
-            Console.WriteLine("hello world");
-            Console.ReadLine();
-            //Console.ReadLine();
-
             Console.Title = "Group Guardian v" + version;
             //Console.BackgroundColor = ConsoleColor.Blue;
             //Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.WriteLine("Starting Group Guardian...");
 
-            ConfigLoader config = new ConfigLoader();
+            //ConfigLoader config = new ConfigLoader();
 
+            Update first = Methods.getOneUpdate();
+            HandleUpdate(first);
+            long lastUpdate = first.update_id;
             while (true)
             {
                 try
                 {
-                    Update[] updates = Methods.getUpdates();
+                    Update[] updates = Methods.getUpdates(lastUpdate + 1);
                     foreach (var update in updates)
                     {
+                        lastUpdate = update.update_id;
                         HandleUpdate(update);
                     }
                 }
