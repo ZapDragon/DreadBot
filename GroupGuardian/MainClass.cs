@@ -27,8 +27,8 @@ namespace GroupGuardian
             }
 
             Console.WriteLine(whi.pendingUpdateCount);
-            
 
+            Console.WriteLine("hello world");
             Console.ReadLine();
 
             Console.Title = "Group Guardian v" + version;
