@@ -12,15 +12,20 @@ namespace GroupGuardian
     {
         public static long lastUpdate;
         public static string version = "0.0.1-371";
+        private static bool webhookEnabled = false;
 
         static void Main()
         {
-
-            Update first = null;
             try
             {
-                first = Methods.getOneUpdate();
+                Update first = Methods.getOneUpdate();
                 HandleUpdate(first);
+                lastUpdate = first.update_id;
+            }
+            catch (TelegramException te) when (te.code == 409)
+            {
+                //webhook already enabled!
+                webhookEnabled = true;
             }
             catch (Exception e)
             {
@@ -31,14 +36,20 @@ namespace GroupGuardian
                 Environment.Exit(Environment.ExitCode);
             }
 
-            lastUpdate = first.update_id;
-
+            while (true)
+            {
+                if (webhookEnabled)
+                {
+                    WebHookLoop();
+                }
+                else
+                {
+                    GetUpdatesLoop();
+                }
+            }
 
 
         }
-
-
-
 
         private static void GetUpdatesLoop()
         {
@@ -72,9 +83,7 @@ namespace GroupGuardian
         {
 
         }
-
-
-
+        
         private static void HandleUpdate(Update update)
         {
             if (update.message != null && update.message.text != null)
