@@ -19,7 +19,7 @@ namespace GroupGuardian
         //This method is called by EVERY Telegram method. This is used to handle Most error checking, and the variable 'result' object is returned to the method that called this.
         private static async Task<T> sendRequest<T>(Method method, string payload = "", string payloadType = "application/json")
         {
-            HttpResponseMessage HttpResponse = await new HttpClient().PostAsync("https://api.telegram.org/bot583846903:AAGtQ8UMY3YQ0bo0ZxI0qacF46WAOhC59Sk/" + method, new StringContent(payload, Encoding.UTF8, payloadType));
+            HttpResponseMessage HttpResponse = await new HttpClient().PostAsync("https://api.telegram.org/bot" + Configs.RunningConfig.botSettings.Token + "/" + method, new StringContent(payload, Encoding.UTF8, payloadType));
 
             if (!HttpResponse.IsSuccessStatusCode) //HTTP Error handling
             {

@@ -15,6 +15,8 @@ namespace GroupGuardian
 
         static void Main()
         {
+            ConfigLoader configs = new ConfigLoader();
+            Console.WriteLine("Starting Group Guardian...");
 
             Update first = null;
             try
@@ -32,9 +34,6 @@ namespace GroupGuardian
             }
 
             lastUpdate = first.update_id;
-
-
-
         }
 
 
