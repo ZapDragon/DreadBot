@@ -14,11 +14,13 @@ namespace GroupGuardian
     {
         public static long lastUpdate;
         public static string version = "0.0.1-371";
-        private static bool webhookEnabled = false;
+        
 
         static void Main()
         {
             ConfigLoader configs = new ConfigLoader();
+            //DatabaseLoader database = new DatabaseLoader();
+
             Console.WriteLine("Starting Group Guardian...");
             
             try
@@ -30,7 +32,7 @@ namespace GroupGuardian
             catch (TelegramException te) when (te.code == 409)
             {
                 //webhook already enabled!
-                webhookEnabled = true;
+                Configs.RunningConfig.WebHookMode = true;
             }
             catch (Exception e)
             {
@@ -43,7 +45,7 @@ namespace GroupGuardian
 
             while (true)
             {
-                if (webhookEnabled)
+                if (Configs.RunningConfig.WebHookMode)
                 {
                     WebHookLoop();
                 }

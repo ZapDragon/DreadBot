@@ -14,7 +14,7 @@ namespace GroupGuardian
     {
         public static Config RunningConfig;
         public static User Me;
-        public static WebhookInfo webhookInfo;
+        
         public static bool FirstRun = false;
 
         public static int EpochTime() { return (int)(DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalSeconds; }
@@ -41,6 +41,7 @@ namespace GroupGuardian
 
     class ConfigLoader
     {
+        public WebhookInfo webhookInfo;
         public ConfigLoader()
         {
             if (!System.IO.File.Exists(Environment.CurrentDirectory + @"\config.json"))
@@ -92,7 +93,7 @@ namespace GroupGuardian
 
             try
             {
-                Configs.webhookInfo = Methods.getWebhookInfo();
+                webhookInfo = Methods.getWebhookInfo();
                 Configs.Me = Methods.getMe();
             }
             catch (Exception)
@@ -107,15 +108,27 @@ namespace GroupGuardian
             Console.WriteLine("Bot ID: " + Configs.Me.id);
             Console.WriteLine("Bot Username: @" + Configs.Me.username);
             Console.WriteLine("Bot First Name: " + Configs.Me.first_name);
-            Console.WriteLine("Bot Last Name: " + Configs.Me.last_name + "\r\n\r\nWeb Hook Info");
+            Console.WriteLine("Bot Last Name: " + Configs.Me.last_name + "\r\n\r\n");
 
-            Console.WriteLine("Current Webhook URL:" + Configs.webhookInfo.Url);
-            Console.WriteLine("Number of Pending updates: " + Configs.webhookInfo.pendingUpdateCount);
+            if (String.IsNullOrEmpty(webhookInfo.Url))
+            {
+                Console.WriteLine("WebHook Status: Disabled");
+            }
+            else
+            {
+                Configs.RunningConfig.WebHookMode = true;
+                Configs.RunningConfig.WebHookInfo.Url = webhookInfo.Url;
+                Configs.RunningConfig.WebHookInfo.MaxConnextions = webhookInfo.maxConnections;
 
-            int LastErrorEpoch = Configs.webhookInfo.lastErrorEpoch;
+                Console.WriteLine("WebHook Status: Enabled");
+                Console.WriteLine("Current Webhook URL:" + webhookInfo.Url);
+                Console.WriteLine("Number of Pending updates: " + webhookInfo.pendingUpdateCount);
 
-            if (LastErrorEpoch > 0) { Console.WriteLine("Last Error at: " + Configs.NormalTime(LastErrorEpoch) + " With Error Message: " + Configs.webhookInfo.lastError); }
-            else { Console.WriteLine("No pervious errors logged."); }
+                int LastErrorEpoch = webhookInfo.lastErrorEpoch;
+
+                if (LastErrorEpoch > 0) { Console.WriteLine("Last Error at: " + Configs.NormalTime(LastErrorEpoch) + " With Error Message: " + webhookInfo.lastError); }
+                else { Console.WriteLine("No pervious errors logged."); }
+            }
 
             Console.WriteLine("\r\n\r\nPress Pause/Break if you need to pause to review data before loading Group Guardian.\r\n");
 
