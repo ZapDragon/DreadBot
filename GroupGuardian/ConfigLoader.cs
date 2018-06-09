@@ -13,21 +13,18 @@ namespace GroupGuardian
     {
         public static Config RunningConfig;
         public static User Me;
+        public static WebhookInfo webhookInfo;
     }
 
 
     class ConfigLoader
     {
-        
         public ConfigLoader()
         {
-            if (System.IO.File.Exists(Environment.CurrentDirectory + @"\config.json"))
-            {
-
-            }
-            else
+            if (!System.IO.File.Exists(Environment.CurrentDirectory + @"\config.json"))
             {
                 Configs.RunningConfig = new Config();
+                Configs.RunningConfig.FirstLaunchEpoch = DateTime.UtcNow;
                 Configs.RunningConfig.botSettings = new BotSettings();
                 Configs.RunningConfig.DataBase = new DatabaseInfo();
                 Configs.RunningConfig.botSettings.CacheTimer = new CacheTimers();
@@ -37,27 +34,61 @@ namespace GroupGuardian
                 Console.Write("Please enter your token here and press enter: ");
 
                 Configs.RunningConfig.botSettings.Token = Console.ReadLine();
-
-                Console.WriteLine("Verifying token...\r\n\r\n");
-                WebhookInfo face = Methods.getWebhookInfo();
-
-                if (face != null)
-                {
-                    Console.WriteLine("Got your bot's data:\r\n" + face.hasCertificate + "\r\n" + face.pendingUpdateCount + "\r\n" + face.allowedUpdates + "\r\n" + face.lastError + "\r\n\r\n");
-                }
-
-
-
-                Console.ReadLine();
-
             }
+            else
+            {
+                Stream stream = null;
+                Configs.RunningConfig = new Config();
+                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(Config));
+
+                try { stream = System.IO.File.OpenRead(Environment.CurrentDirectory + @"\config.json"); }
+                catch (Exception e) {
+                    Console.WriteLine("Unable to read config.json. Exception details below.\r\n\r\n\r\n");
+                    Console.WriteLine(e);
+                    Console.WriteLine("\r\n\r\n\r\nPress any key to exit...");
+                    Console.ReadKey();
+                    Environment.Exit(Environment.ExitCode);
+                }
+                
+                try { ser.WriteObject(stream, Configs.RunningConfig); }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Unable to deserialize Config.json. Please make sure you arent editing this file unless you know what youre doing. Exception details below.\r\n\r\n\r\n");
+                    Console.WriteLine(e);
+                    Console.WriteLine("\r\n\r\n\r\nPress any key to exit...");
+                    Console.ReadKey();
+                    Environment.Exit(Environment.ExitCode);
+                }
+            }
+
+            Console.WriteLine("Verifying token...\r\n\r\n");
+
+            try
+            {
+                Configs.webhookInfo = Methods.getWebhookInfo();
+                Configs.Me = Methods.getMe();
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Theres a problem with the accesstoken. Please test your token in a web browser.\r\n\r\nhttps://api.telegram.org/bot" + Configs.RunningConfig.botSettings.Token + "/getMe\r\n\r\nIf you still have problems, verify your token is correct from @BotFather.\r\nPress any key to exit...");
+                Console.ReadKey();
+                Environment.Exit(Environment.ExitCode);
+            }
+
+            Console.WriteLine("Verified!\r\nBelow are the details to the bot, and its current settings.");
+
+
+
+            Console.ReadLine();
+
+
+
         }
     }
 
     [DataContract]
     class Config
     {
-
         [DataMember(Name = "Language")]
         public string Language = "en";
 
@@ -66,9 +97,6 @@ namespace GroupGuardian
 
         [DataMember(Name = "UpdateChannel")]
         public string UpdateChannel = "@GroupGuardianUpdates";
-
-        //[DataMember(Name = "source_code")]
-        //public string Source = "";
 
         [DataMember(Name = "HelpGroup")]
         public string HelpGroup = "@GroupGuardianChat";
@@ -89,11 +117,18 @@ namespace GroupGuardian
         public bool WebHookMode = false;
 
         [DataMember(Name = "WebHookDetails", IsRequired = false)]
-        public WebHookDetails WebHookInfo = null;
+        public WebhookConfig WebHookInfo = null;
+
+        [DataMember(Name = "first_launch_epoch")]
+        public int FirstLaunchEpoch { get; set; }
+
+        [DataMember(Name = "last_launch_epoch")]
+        public int LastLaunchEpoch { get; set; }
+
     }
 
     [DataContract]
-    class WebHookDetails
+    class WebhookConfig
     {
         [DataMember(Name = "Url")]
         public string Url { get; set; }
@@ -111,19 +146,19 @@ namespace GroupGuardian
     [DataContract]
     class DatabaseInfo
     {
-        [DataMember(Name = "DataBaseType")]
-        public string DataBaseType = "mysql";
+        [DataMember(Name = "DataBaseType", IsRequired = true, EmitDefaultValue = true)]
+        public string DataBaseType = "sqllite";
 
-        [DataMember(Name = "Host")]
+        [DataMember(Name = "Host", IsRequired = false, EmitDefaultValue = false)]
         public string Host = "localhost";
 
-        [DataMember(Name = "Port")]
+        [DataMember(Name = "Port", IsRequired = false, EmitDefaultValue = false)]
         public int Port = 3306;
 
-        [DataMember(Name = "Username")]
+        [DataMember(Name = "Username", IsRequired = false, EmitDefaultValue = false)]
         public string Username { get; set; }
 
-        [DataMember(Name = "Password")]
+        [DataMember(Name = "Password", IsRequired = false, EmitDefaultValue = false)]
         public string Password { get; set; }
     }
 
