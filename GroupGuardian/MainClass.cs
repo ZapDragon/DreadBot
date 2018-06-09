@@ -10,33 +10,39 @@ namespace GroupGuardian
 {
     class MainClass
     {
+        public static long lastUpdate;
         public static string version = "0.0.1-371";
+
         static void Main()
         {
-            User me = Methods.getMe();
 
-            Console.WriteLine(me.id);
-            WebhookInfo whi;
+            Update first = null;
             try
             {
-                whi = Methods.getWebhookInfo();
-                Console.WriteLine(whi.pendingUpdateCount);
+                first = Methods.getOneUpdate();
+                HandleUpdate(first);
             }
             catch (Exception e)
             {
+                Console.WriteLine("Unable to get first update. Group Guardian Cannot continue. Exception details below.\r\n\r\n\r\n");
                 Console.WriteLine(e);
+                Console.WriteLine("\r\n\r\n\r\nPress any key to exit...");
+                Console.ReadKey();
+                Environment.Exit(Environment.ExitCode);
             }
 
-            Console.Title = "Group Guardian v" + version;
-            //Console.BackgroundColor = ConsoleColor.Blue;
-            //Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine("Starting Group Guardian...");
+            lastUpdate = first.update_id;
 
-            //ConfigLoader config = new ConfigLoader();
 
-            Update first = Methods.getOneUpdate();
-            HandleUpdate(first);
-            long lastUpdate = first.update_id;
+
+        }
+
+
+
+
+        private static void GetUpdatesLoop()
+        {
+
             while (true)
             {
                 try
@@ -44,20 +50,30 @@ namespace GroupGuardian
                     Update[] updates = Methods.getUpdates(lastUpdate + 1);
                     foreach (var update in updates)
                     {
-                        lastUpdate = update.update_id;
-                        HandleUpdate(update);
+                        try
+                        {
+                            lastUpdate = update.update_id;
+                            HandleUpdate(update);
+                        }
+                        catch (Exception)
+                        {
+                            Console.WriteLine("I BROKE, SKIPPING AN UPDATE!");
+                        }
                     }
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine("I BROKE, SKIPPING UPDATE!");
-                    throw;
+                    Console.WriteLine("I BROKE, I MIGHT BE SKIPPING A BUNCH OF UPDATES!");
                 }
             }
-            //Console.WriteLine("Nope");
-
-            //Console.ReadLine();
         }
+
+        private static void WebHookLoop()
+        {
+
+        }
+
+
 
         private static void HandleUpdate(Update update)
         {
