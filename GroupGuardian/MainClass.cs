@@ -18,11 +18,9 @@ namespace GroupGuardian
 
         static void Main()
         {
-            Console.WriteLine("GG Starting");
             ConfigLoader configs = new ConfigLoader();
             Console.WriteLine("Starting Group Guardian...");
-
-            Update first = null;
+            
             try
             {
                 Update first = Methods.getOneUpdate();
@@ -60,7 +58,7 @@ namespace GroupGuardian
 
         private static void GetUpdatesLoop()
         {
-
+            Console.WriteLine("Using GetUpdatesLoop");
             while (true)
             {
                 try
@@ -88,6 +86,7 @@ namespace GroupGuardian
 
         private static void WebHookLoop()
         {
+            Console.WriteLine("Using WebHookLoop");
             #region Load Local Certificate
             string certPath = @"C:\certificate.pkcs12";
             if (System.IO.File.Exists(certPath))

@@ -20,6 +20,7 @@ namespace GroupGuardian
         private static async Task<T> sendRequest<T>(Method method, string payload = "", string payloadType = "application/json")
         {
             HttpResponseMessage HttpResponse = await new HttpClient().PostAsync("https://api.telegram.org/bot" + Configs.RunningConfig.botSettings.Token + "/" + method, new StringContent(payload, Encoding.UTF8, payloadType));
+            
 
             if (!HttpResponse.IsSuccessStatusCode) //HTTP Error handling
             {
@@ -419,15 +420,18 @@ namespace GroupGuardian
 
         #region Group Guardian Methods
 
-        public static Update getOneUpdate(int timeout = 1800)
+        public static Update getOneUpdate(int to = 1800)
         {
 
 
-            string args = new GetUpdates() { limit=1, timeout=timeout }.ToPayload();
-
-            Update result = Task.Run(() => sendRequest<Update[]>(Method.getUpdates, args)).Result[0];
-
-            return result;
+            string args = new GetUpdates() { limit=1, timeout = to }.ToPayload();
+            Update[] result = null;
+            do
+            {
+                result = Task.Run(() => sendRequest<Update[]>(Method.getUpdates, args)).Result;
+            }
+            while (result == null || result.Length != 1);
+            return result[0];
         }
 
         #endregion
