@@ -47,10 +47,14 @@
   <ItemGroup>
     <Compile Include="ConfigLoader.cs" />
     <Compile Include="Database.cs" />
+    <Compile Include="DataReader.cs" />
+    <Compile Include="GGExceptions.cs" />
+    <Compile Include="HttpsServer.cs" />
     <Compile Include="JsonContracts.cs" />
     <Compile Include="MainClass.cs" />
     <Compile Include="Methods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UpdateParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

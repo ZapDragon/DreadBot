@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Media;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GroupGuardian
@@ -16,10 +18,11 @@ namespace GroupGuardian
 
         static void Main()
         {
+            Console.WriteLine("GG Starting");
             try
             {
                 Update first = Methods.getOneUpdate();
-                HandleUpdate(first);
+                new UpdateParser(first);
                 lastUpdate = first.update_id;
             }
             catch (TelegramException te) when (te.code == 409)
@@ -64,7 +67,7 @@ namespace GroupGuardian
                         try
                         {
                             lastUpdate = update.update_id;
-                            HandleUpdate(update);
+                            new UpdateParser(update);
                         }
                         catch (Exception)
                         {
@@ -81,15 +84,32 @@ namespace GroupGuardian
 
         private static void WebHookLoop()
         {
-
-        }
-        
-        private static void HandleUpdate(Update update)
-        {
-            if (update.message != null && update.message.text != null)
+            #region Load Local Certificate
+            string certPath = @"C:\certificate.pkcs12";
+            if (System.IO.File.Exists(certPath))
             {
-                Console.WriteLine(update.message.text);
+                try { HttpsServer.certificate = new X509Certificate2(System.IO.File.ReadAllBytes(certPath), "Drag0ns!"); }
+                catch
+                {
+                    Console.WriteLine("The certificate located at: " + certPath + " Exists, however loading the certificate failed. DreadBot cannot continue.");
+                    Console.ReadKey();
+                    Environment.Exit(-1);
+                }
             }
+            else
+            {
+                Console.WriteLine("The certificate located at: " + certPath + " Does not Exist. DreadBot cannot continue.");
+                Console.ReadKey();
+                Environment.Exit(-1);
+            }
+            #endregion
+            HttpsServer.tcplistener.Start();
+            while (true)
+            {
+                Thread.Sleep(50);
+                if (HttpsServer.tcplistener.Pending()) { HttpsServer.newClient(); } // CONNECTION WAITING ON HTTPS?
+            }
+
         }
     }
 }
