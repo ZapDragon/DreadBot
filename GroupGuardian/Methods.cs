@@ -26,7 +26,7 @@ namespace GroupGuardian
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("HTTP Error: Status Code: " + HttpResponse.StatusCode + " Reason:" + HttpResponse.ReasonPhrase);
                 Console.ResetColor();
-                throw new Exception();
+                throw new HttpRequestException();
             }
 
             Result<T> ResponseObject = null;
@@ -44,12 +44,12 @@ namespace GroupGuardian
             {
                 Console.WriteLine("Error while parsing JSON for " + typeof(T) + " because of " + e + "\r\n\r\n");
                 try { AltResponseObject = (Result<bool>)new DataContractJsonSerializer(typeof(Result<bool>)).ReadObject(stream); }
-                catch //JSON Deserialization error handling
+                catch(Exception e2) //JSON Deserialization error handling
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Error while parsing JSON " + HttpResponse.StatusCode + " Reason:" + HttpResponse.ReasonPhrase);
                     Console.ResetColor();
-                    throw new Exception();
+                    throw e2;
                 }
             }
 
@@ -58,7 +58,7 @@ namespace GroupGuardian
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(ResponseObject.errorCode + " " + ResponseObject.description);
                 Console.ResetColor();
-                return ResponseObject.result; //Return the resulting object
+                throw new TelegramException(ResponseObject.errorCode); //Return the resulting object
             }
             else if (AltResponseObject != null && !AltResponseObject.ok) //Telegram API Error handling
             {
@@ -66,7 +66,7 @@ namespace GroupGuardian
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(ResponseObject.errorCode + " " + ResponseObject.description);
                 Console.ResetColor();
-                throw new Exception();//Return the resulting object
+                throw new TelegramException(ResponseObject.errorCode);//Return the resulting object
             }
             return ResponseObject.result; //Return the resulting object
         }
