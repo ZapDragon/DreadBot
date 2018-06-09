@@ -19,6 +19,10 @@ namespace GroupGuardian
         static void Main()
         {
             Console.WriteLine("GG Starting");
+            ConfigLoader configs = new ConfigLoader();
+            Console.WriteLine("Starting Group Guardian...");
+
+            Update first = null;
             try
             {
                 Update first = Methods.getOneUpdate();

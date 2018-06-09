@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.IO;
+using System.Threading;
 
 namespace GroupGuardian
 {
@@ -14,6 +15,20 @@ namespace GroupGuardian
         public static Config RunningConfig;
         public static User Me;
         public static WebhookInfo webhookInfo;
+
+        public static int EpochTime() { return (int)(DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalSeconds; }
+
+        public static string NormalTime(int e) { return new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Local).AddSeconds(e).ToString(); }
+
+        public static void FlushConfig()
+        {
+            try { new DataContractJsonSerializer(typeof(Config)).WriteObject(System.IO.File.OpenWrite(Environment.CurrentDirectory + @"\config.json"), RunningConfig); }
+            catch (Exception e)
+            {
+                Console.WriteLine("There was a problem with saving the local config file to disk. The exception is below.\r\n\r\n" + e + "\r\n\r\nThe bot CAN continue, but this exception will continue if the issue persists and you proceed. Please make sure you do not run this bot within your Program Files directory, and it has Write permissions. This error may also affect the DataBase, if its an error with writing to Disk.\r\n\r\nPress a Key to continue load... or close this Program to resolve the issue.");
+                Console.ReadKey();
+            }
+        }
     }
 
 
@@ -24,7 +39,7 @@ namespace GroupGuardian
             if (!System.IO.File.Exists(Environment.CurrentDirectory + @"\config.json"))
             {
                 Configs.RunningConfig = new Config();
-                Configs.RunningConfig.FirstLaunchEpoch = DateTime.UtcNow;
+                Configs.RunningConfig.FirstLaunchEpoch = Configs.EpochTime();
                 Configs.RunningConfig.botSettings = new BotSettings();
                 Configs.RunningConfig.DataBase = new DatabaseInfo();
                 Configs.RunningConfig.botSettings.CacheTimer = new CacheTimers();
@@ -37,23 +52,27 @@ namespace GroupGuardian
             }
             else
             {
-                Stream stream = null;
                 Configs.RunningConfig = new Config();
-                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(Config));
 
-                try { stream = System.IO.File.OpenRead(Environment.CurrentDirectory + @"\config.json"); }
-                catch (Exception e) {
-                    Console.WriteLine("Unable to read config.json. Exception details below.\r\n\r\n\r\n");
-                    Console.WriteLine(e);
-                    Console.WriteLine("\r\n\r\n\r\nPress any key to exit...");
-                    Console.ReadKey();
-                    Environment.Exit(Environment.ExitCode);
+                try {
+
+                    using (Stream ConfigStream = System.IO.File.OpenRead(Environment.CurrentDirectory + @"\config.json"))
+                    {
+                        DataContractJsonSerializer ConfigSerializer = new DataContractJsonSerializer(typeof(Config));
+                        try { Configs.RunningConfig = ConfigSerializer.ReadObject(ConfigStream) as Config; }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine("Unable to deserialize Config.json. Please make sure you arent editing this file unless you know what youre doing. Exception details below.\r\n\r\n\r\n");
+                            Console.WriteLine(e);
+                            Console.WriteLine("\r\n\r\n\r\nPress any key to exit...");
+                            Console.ReadKey();
+                            Environment.Exit(Environment.ExitCode);
+                        }
+                    }
                 }
-                
-                try { ser.WriteObject(stream, Configs.RunningConfig); }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Unable to deserialize Config.json. Please make sure you arent editing this file unless you know what youre doing. Exception details below.\r\n\r\n\r\n");
+                    Console.WriteLine("Unable to read config.json. Exception details below.\r\n\r\n\r\n");
                     Console.WriteLine(e);
                     Console.WriteLine("\r\n\r\n\r\nPress any key to exit...");
                     Console.ReadKey();
@@ -77,12 +96,18 @@ namespace GroupGuardian
 
             Console.WriteLine("Verified!\r\nBelow are the details to the bot, and its current settings.");
 
+            Console.WriteLine("Bot ID: " + Configs.Me.id);
+            Console.WriteLine("Bot Username: @" + Configs.Me.username);
+            Console.WriteLine("Bot First Name: " + Configs.Me.first_name);
+            Console.WriteLine("Bot Last Name: " + Configs.Me.last_name + "\r\n\r\nWeb Hook Info");
 
+            Console.WriteLine("Current Webhook URL:" + Configs.webhookInfo.Url);
+            Console.WriteLine("Number of Pending updates: " + Configs.webhookInfo.pendingUpdateCount);
+            Console.WriteLine("Last Error at: " + Configs.NormalTime(Configs.webhookInfo.lastErrorEpoch) + " With Error Message: " + Configs.webhookInfo.lastError + "\r\n\r\nPress Pase/Break if you need to pause to review data before loading Group Guardian.");
 
-            Console.ReadLine();
+            Thread.Sleep(5000);
 
-
-
+            Configs.FlushConfig();
         }
     }
 
