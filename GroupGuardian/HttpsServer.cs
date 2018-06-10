@@ -18,7 +18,8 @@ namespace GroupGuardian
         public static int ListenPort = 443;
         public static TcpListener tcplistener = new TcpListener(IPAddress.Parse("10.0.0.50"), ListenPort); //NEW TCP LISTEN SOCKET
         public static List<HttpsClient> clientList = new List<HttpsClient>();
-
+        
+            
         public static byte[] Http200() {
             //return new HttpsResponse().payload();
             return Encoding.UTF8.GetBytes("HTTP/1.1 200 OK" + Environment.NewLine + "Date: " + System.DateTime.Now.ToString("R") + Environment.NewLine + "Server: TelegramBot-0.0.01a TelegramBotAPI Client" + Environment.NewLine + "X-Powered-By: .NET-4.5.6" + Environment.NewLine + "Connection: Keep-Alive" + Environment.NewLine + "Content-Type: application/json" + Environment.NewLine + Environment.NewLine);
@@ -35,7 +36,6 @@ namespace GroupGuardian
     public class HttpsClient
     {
         private Thread thread;
-        public string address = "";
         public TcpClient opensocket;
         public SslStream securesocket;
         public int CID = 0;
@@ -43,7 +43,6 @@ namespace GroupGuardian
         public HttpsClient(TcpClient opensocket)
         {
             this.opensocket = opensocket;
-            address = ((IPEndPoint)opensocket.Client.RemoteEndPoint).Address.ToString();
             securesocket = new SslStream(opensocket.GetStream());
             try { securesocket.AuthenticateAsServer(HttpsServer.certificate, false, SslProtocols.Tls12, false); }
             catch { return; }
