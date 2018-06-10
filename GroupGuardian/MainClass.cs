@@ -22,27 +22,29 @@ namespace GroupGuardian
             //DatabaseLoader database = new DatabaseLoader();
 
             Console.WriteLine("Starting Group Guardian...");
-            
-            try
-            {
-                Update first = Methods.getOneUpdate();
-                new UpdateParser(first);
-                lastUpdate = first.update_id;
-            }
-            catch (TelegramException te) when (te.code == 409)
-            {
-                //webhook already enabled!
-                Configs.RunningConfig.WebHookMode = true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Unable to get first update. Group Guardian Cannot continue. Exception details below.\r\n\r\n\r\n");
-                Console.WriteLine(e);
-                Console.WriteLine("\r\n\r\n\r\nPress any key to exit...");
-                Console.ReadKey();
-                Environment.Exit(Environment.ExitCode);
-            }
 
+            if (!Configs.RunningConfig.WebHookMode)
+            {
+                try
+                {
+                    Update first = Methods.getOneUpdate();
+                    new UpdateParser(first);
+                    lastUpdate = first.update_id;
+                }
+                catch (TelegramException te) when (te.code == 409)
+                {
+                    //webhook already enabled!
+                    Configs.RunningConfig.WebHookMode = true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Unable to get first update. Group Guardian Cannot continue. Exception details below.\r\n\r\n\r\n");
+                    Console.WriteLine(e);
+                    Console.WriteLine("\r\n\r\n\r\nPress any key to exit...");
+                    Console.ReadKey();
+                    Environment.Exit(Environment.ExitCode);
+                }
+            }
             while (true)
             {
                 if (Configs.RunningConfig.WebHookMode)
