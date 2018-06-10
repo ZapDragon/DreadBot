@@ -42,6 +42,7 @@ namespace GroupGuardian
                 Console.ReadKey();
                 Environment.Exit(Environment.ExitCode);
             }
+            
 
             while (true)
             {

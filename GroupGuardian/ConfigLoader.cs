@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
@@ -119,6 +119,11 @@ namespace GroupGuardian
                 Configs.RunningConfig.WebHookMode = true;
                 Configs.RunningConfig.WebHookInfo.Url = webhookInfo.Url;
                 Configs.RunningConfig.WebHookInfo.MaxConnextions = webhookInfo.maxConnections;
+
+                Match UrlMatch = new Regex(@"^https:\/\/ (?<domain>[a-zA-Z0-9\.]+):?(?<port>\d+)?(?<rest>\/\w+)$").Match(webhookInfo.Url);
+                string domain = UrlMatch.Groups[1].Value;
+                if (UrlMatch.Groups.Count == 3) { HttpsServer.ListenPort = Convert.ToInt32(UrlMatch.Groups[3].Value); }
+                string rest = UrlMatch.Groups[3].Value;
 
                 Console.WriteLine("WebHook Status: Enabled");
                 Console.WriteLine("Current Webhook URL:" + webhookInfo.Url);
