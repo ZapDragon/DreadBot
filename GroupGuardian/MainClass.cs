@@ -14,36 +14,40 @@ namespace GroupGuardian
     {
         public static long lastUpdate;
         public static string version = "0.0.1-371";
-        private static bool webhookEnabled = false;
+        
 
         static void Main()
         {
             ConfigLoader configs = new ConfigLoader();
-            Console.WriteLine("Starting Group Guardian...");
-            
-            try
-            {
-                Update first = Methods.getOneUpdate();
-                new UpdateParser(first);
-                lastUpdate = first.update_id;
-            }
-            catch (TelegramException te) when (te.code == 409)
-            {
-                //webhook already enabled!
-                webhookEnabled = true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Unable to get first update. Group Guardian Cannot continue. Exception details below.\r\n\r\n\r\n");
-                Console.WriteLine(e);
-                Console.WriteLine("\r\n\r\n\r\nPress any key to exit...");
-                Console.ReadKey();
-                Environment.Exit(Environment.ExitCode);
-            }
+            //DatabaseLoader database = new DatabaseLoader();
 
+            Console.WriteLine("Starting Group Guardian...");
+
+            if (!Configs.RunningConfig.WebHookMode)
+            {
+                try
+                {
+                    Update first = Methods.getOneUpdate();
+                    new UpdateParser(first);
+                    lastUpdate = first.update_id;
+                }
+                catch (TelegramException te) when (te.code == 409)
+                {
+                    //webhook already enabled!
+                    Configs.RunningConfig.WebHookMode = true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Unable to get first update. Group Guardian Cannot continue. Exception details below.\r\n\r\n\r\n");
+                    Console.WriteLine(e);
+                    Console.WriteLine("\r\n\r\n\r\nPress any key to exit...");
+                    Console.ReadKey();
+                    Environment.Exit(Environment.ExitCode);
+                }
+            }
             while (true)
             {
-                if (webhookEnabled)
+                if (Configs.RunningConfig.WebHookMode)
                 {
                     WebHookLoop();
                 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
@@ -14,7 +14,8 @@ namespace GroupGuardian
     {
         public static Config RunningConfig;
         public static User Me;
-        public static WebhookInfo webhookInfo;
+        
+        public static bool FirstRun = false;
 
         public static int EpochTime() { return (int)(DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalSeconds; }
 
@@ -25,15 +26,22 @@ namespace GroupGuardian
             try { new DataContractJsonSerializer(typeof(Config)).WriteObject(System.IO.File.OpenWrite(Environment.CurrentDirectory + @"\config.json"), RunningConfig); }
             catch (Exception e)
             {
-                Console.WriteLine("There was a problem with saving the local config file to disk. The exception is below.\r\n\r\n" + e + "\r\n\r\nThe bot CAN continue, but this exception will continue if the issue persists and you proceed. Please make sure you do not run this bot within your Program Files directory, and it has Write permissions. This error may also affect the DataBase, if its an error with writing to Disk.\r\n\r\nPress a Key to continue load... or close this Program to resolve the issue.");
+                Console.WriteLine("There was a problem with saving the local config file to disk. The exception is below.\r\n\r\n" + e + "\r\n\r\nThe bot CAN continue, but this exception will continue if the issue persists and you proceed. Please make sure you do not run this bot within your Program Files directory, and it has Write permissions. This error may also affect the DataBase, if its an error with writing to Disk.\r\n\r\nPress a Key to continue load... or close this Program to resolve the issue.\r\n");
                 Console.ReadKey();
             }
+        }
+
+        public static string CreateAdminToken()
+        {
+            Random rand = new Random();
+            return new string(Enumerable.Repeat("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 8).Select(s => s[rand.Next(s.Length)]).ToArray());
         }
     }
 
 
     class ConfigLoader
     {
+        public WebhookInfo webhookInfo;
         public ConfigLoader()
         {
             if (!System.IO.File.Exists(Environment.CurrentDirectory + @"\config.json"))
@@ -49,6 +57,7 @@ namespace GroupGuardian
                 Console.Write("Please enter your token here and press enter: ");
 
                 Configs.RunningConfig.botSettings.Token = Console.ReadLine();
+                Configs.FirstRun = true;
             }
             else
             {
@@ -84,7 +93,7 @@ namespace GroupGuardian
 
             try
             {
-                Configs.webhookInfo = Methods.getWebhookInfo();
+                webhookInfo = Methods.getWebhookInfo();
                 Configs.Me = Methods.getMe();
             }
             catch (Exception)
@@ -99,11 +108,42 @@ namespace GroupGuardian
             Console.WriteLine("Bot ID: " + Configs.Me.id);
             Console.WriteLine("Bot Username: @" + Configs.Me.username);
             Console.WriteLine("Bot First Name: " + Configs.Me.first_name);
-            Console.WriteLine("Bot Last Name: " + Configs.Me.last_name + "\r\n\r\nWeb Hook Info");
+            Console.WriteLine("Bot Last Name: " + Configs.Me.last_name + "\r\n\r\n");
 
-            Console.WriteLine("Current Webhook URL:" + Configs.webhookInfo.Url);
-            Console.WriteLine("Number of Pending updates: " + Configs.webhookInfo.pendingUpdateCount);
-            Console.WriteLine("Last Error at: " + Configs.NormalTime(Configs.webhookInfo.lastErrorEpoch) + " With Error Message: " + Configs.webhookInfo.lastError + "\r\n\r\nPress Pase/Break if you need to pause to review data before loading Group Guardian.");
+            if (String.IsNullOrEmpty(webhookInfo.Url))
+            {
+                Console.WriteLine("WebHook Status: Disabled");
+            }
+            else
+            {
+                Configs.RunningConfig.WebHookMode = true;
+                Configs.RunningConfig.WebHookInfo.Url = webhookInfo.Url;
+                Configs.RunningConfig.WebHookInfo.MaxConnextions = webhookInfo.maxConnections;
+
+                Match UrlMatch = new Regex(@"^https:\/\/ (?<domain>[a-zA-Z0-9\.]+):?(?<port>\d+)?(?<rest>\/\w+)$").Match(webhookInfo.Url);
+                string domain = UrlMatch.Groups[1].Value;
+                if (UrlMatch.Groups.Count == 3) { HttpsServer.ListenPort = Convert.ToInt32(UrlMatch.Groups[3].Value); }
+                string rest = UrlMatch.Groups[3].Value;
+
+                Console.WriteLine("WebHook Status: Enabled");
+                Console.WriteLine("Current Webhook URL:" + webhookInfo.Url);
+                Console.WriteLine("Number of Pending updates: " + webhookInfo.pendingUpdateCount);
+
+                int LastErrorEpoch = webhookInfo.lastErrorEpoch;
+
+                if (LastErrorEpoch > 0) { Console.WriteLine("Last Error at: " + Configs.NormalTime(LastErrorEpoch) + " With Error Message: " + webhookInfo.lastError); }
+                else { Console.WriteLine("No pervious errors logged."); }
+            }
+
+            Console.WriteLine("\r\n\r\nPress Pause/Break if you need to pause to review data before loading Group Guardian.\r\n");
+
+            if (Configs.RunningConfig.Admins == null)
+            {
+                Console.WriteLine("There are no registered admins. Please use the command below to claim control over this bot.\r\n");
+                Console.WriteLine("/admintoken " + Configs.CreateAdminToken() + "\r\n");
+
+                //Add command here that will register the token for use to claim ownership.
+            }
 
             Thread.Sleep(5000);
 
