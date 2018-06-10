@@ -116,23 +116,37 @@ namespace GroupGuardian
             }
             else
             {
-                Configs.RunningConfig.WebHookMode = true;
-                Configs.RunningConfig.WebHookInfo.Url = webhookInfo.Url;
-                Configs.RunningConfig.WebHookInfo.MaxConnextions = webhookInfo.maxConnections;
+                if (!System.IO.File.Exists(Environment.CurrentDirectory + @"certificate.pk12"))
+                {
+                    bool webhookDisabled = false;
+                    Console.WriteLine("Group Guardian is in 'Webhook' Mode but the local 'certificate.pk12' was not found.\r\nForcing the bot into getUpdates mode.");
+                    try
+                    {
+                        webhookDisabled = Methods.deleteWebhook();
+                    }
+                    catch { }
 
-                Match UrlMatch = new Regex(@"^https:\/\/ (?<domain>[a-zA-Z0-9\.]+):?(?<port>\d+)?(?<rest>\/\w+)$").Match(webhookInfo.Url);
-                string domain = UrlMatch.Groups[1].Value;
-                if (UrlMatch.Groups.Count == 3) { HttpsServer.ListenPort = Convert.ToInt32(UrlMatch.Groups[3].Value); }
-                string rest = UrlMatch.Groups[3].Value;
+                }
+                else
+                {
+                    Configs.RunningConfig.WebHookMode = true;
+                    Configs.RunningConfig.WebHookInfo.Url = webhookInfo.Url;
+                    Configs.RunningConfig.WebHookInfo.MaxConnextions = webhookInfo.maxConnections;
 
-                Console.WriteLine("WebHook Status: Enabled");
-                Console.WriteLine("Current Webhook URL:" + webhookInfo.Url);
-                Console.WriteLine("Number of Pending updates: " + webhookInfo.pendingUpdateCount);
+                    Match UrlMatch = new Regex(@"^https:\/\/ (?<domain>[a-zA-Z0-9\.]+):?(?<port>\d+)?(?<rest>\/\w+)$").Match(webhookInfo.Url);
+                    string domain = UrlMatch.Groups[1].Value;
+                    if (UrlMatch.Groups.Count == 3) { HttpsServer.ListenPort = Convert.ToInt32(UrlMatch.Groups[3].Value); }
+                    string rest = UrlMatch.Groups[3].Value;
 
-                int LastErrorEpoch = webhookInfo.lastErrorEpoch;
+                    Console.WriteLine("WebHook Status: Enabled");
+                    Console.WriteLine("Current Webhook URL:" + webhookInfo.Url);
+                    Console.WriteLine("Number of Pending updates: " + webhookInfo.pendingUpdateCount);
 
-                if (LastErrorEpoch > 0) { Console.WriteLine("Last Error at: " + Configs.NormalTime(LastErrorEpoch) + " With Error Message: " + webhookInfo.lastError); }
-                else { Console.WriteLine("No pervious errors logged."); }
+                    int LastErrorEpoch = webhookInfo.lastErrorEpoch;
+
+                    if (LastErrorEpoch > 0) { Console.WriteLine("Last Error at: " + Configs.NormalTime(LastErrorEpoch) + " With Error Message: " + webhookInfo.lastError); }
+                    else { Console.WriteLine("No pervious errors logged."); }
+                }
             }
 
             Console.WriteLine("\r\n\r\nPress Pause/Break if you need to pause to review data before loading Group Guardian.\r\n");
