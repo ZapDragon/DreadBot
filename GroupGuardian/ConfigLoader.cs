@@ -89,7 +89,7 @@ namespace GroupGuardian
                 }
             }
 
-            Console.WriteLine("Verifying token...\r\n\r\n");
+            Console.Write("Verifying token...");
 
             try
             {
@@ -103,7 +103,7 @@ namespace GroupGuardian
                 Environment.Exit(Environment.ExitCode);
             }
 
-            Console.WriteLine("Verified!\r\nBelow are the details to the bot, and its current settings.");
+            Console.WriteLine("Verified!\r\n\r\nBelow are the details to the bot, and its current settings.");
 
             Console.WriteLine("Bot ID: " + Configs.Me.id);
             Console.WriteLine("Bot Username: @" + Configs.Me.username);
