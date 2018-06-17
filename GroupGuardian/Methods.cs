@@ -59,7 +59,7 @@ namespace GroupGuardian
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(ResponseObject.errorCode + " " + ResponseObject.description);
                 Console.ResetColor();
-                throw new TelegramException(ResponseObject.errorCode); //Return the resulting object
+                throw new TelegramException(ResponseObject.errorCode, ResponseObject.description); //Return the resulting object
             }
             else if (AltResponseObject != null && !AltResponseObject.ok) //Telegram API Error handling
             {
@@ -67,7 +67,7 @@ namespace GroupGuardian
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(ResponseObject.errorCode + " " + ResponseObject.description);
                 Console.ResetColor();
-                throw new TelegramException(ResponseObject.errorCode);//Return the resulting object
+                throw new TelegramException(ResponseObject.errorCode, ResponseObject.description);//Return the resulting object
             }
             return ResponseObject.result; //Return the resulting object
         }
