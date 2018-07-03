@@ -67,7 +67,7 @@ namespace GroupGuardian
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(ResponseObject.errorCode + " " + ResponseObject.description);
                 Console.ResetColor();
-                throw new TelegramException(ResponseObject.errorCode, ResponseObject.description);//Return the resulting object
+                throw new TelegramException(ResponseObject.errorCode, ResponseObject.description); //Return the resulting object
             }
             return ResponseObject.result; //Return the resulting object
         }
@@ -78,7 +78,7 @@ namespace GroupGuardian
 
         public static Update[] getUpdates(long off)
         {
-            Update[] updates = Task.Run(() => sendRequest<Update[]>(Method.getUpdates, new GetUpdates() { offset = off , timeout = 20, limit=100 }.ToPayload())).Result;
+            Update[] updates = Task.Run(() => sendRequest<Update[]>(Method.getUpdates, new GetUpdates() { offset = off , timeout = 20, limit=100 }.GetPayload())).Result;
             return updates;
         }
 
@@ -106,8 +106,7 @@ namespace GroupGuardian
 
         public static Message sendMessage(long dest, string msg, string token, object markdown)
         {
-            /*
-            SendMessageId SM = new SendMessageId() { chat_id = dest, text = msg };
+            SendMessage SM = new SendMessage() { chat_id = dest, text = msg };
             MemoryStream ms = new MemoryStream();
             
             if (markdown is InlineKeyboardMarkup)
@@ -118,33 +117,15 @@ namespace GroupGuardian
             {
                 if ((bool)markdown) { SM.parse_mode = "Markdown"; }
             }
-            
-            
-            
-            new DataContractJsonSerializer(typeof(SendMessageId)).WriteObject(ms, SM);
+
+            new DataContractJsonSerializer(typeof(SendMessage)).WriteObject(ms, SM);
             ms.Position = 0;
             string payload = new StreamReader(ms).ReadToEnd();
             Console.WriteLine(payload);
             
-            Message response = Task.Run(() => sendRequest<Message>(Method.sendMessage, payload);
+            Message response = Task.Run(() => sendRequest<Message>(Method.sendMessage, payload)).Result;
             
-            
-            if (!SendJsonAsync(payload, token, "sendMessage").IsSuccessStatusCode)
-            {
-                Console.WriteLine("Failed to Send message.");
-                if (Directory.Exists(Environment.CurrentDirectory + @"\Logs"))
-                {
-                    //File.Create(Environment.CurrentDirectory + @"\Logs\" + MainClass.EpochTime() + "-SendMessage-Failure.log").Write((new StreamReader(ms).ReadToEnd), 0, ms.Length);
-                }
-                else { Console.WriteLine("LOG DIRECTORY MISSING!!!"); }
-            }
-            */
-
-
-            
-
-
-           return null;
+            return response;
         }
 
         public static Message forwardMessage()
@@ -426,7 +407,7 @@ namespace GroupGuardian
         {
 
 
-            string args = new GetUpdates() { limit=1, timeout = to }.ToPayload();
+            string args = new GetUpdates() { limit=1, timeout = to }.GetPayload();
             Update[] result = null;
             do
             {

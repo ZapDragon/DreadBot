@@ -1774,7 +1774,7 @@ namespace GroupGuardian
     [DataContract]
     public class GetMethod
     {
-        public string ToPayload()
+        public string GetPayload()
         {
             MemoryStream ms = new MemoryStream();
             new DataContractJsonSerializer(GetType()).WriteObject(ms, this);
@@ -1784,12 +1784,12 @@ namespace GroupGuardian
         }
     }
 
-    #region Send Message Contracts
-    
-
     [DataContract]
     public class SendMessage : GetMethod
     {
+        [DataMember(Name = "chat_id")]
+        public long chat_id { get; set; }
+
         [DataMember(Name = "text")]
         public string text { get; set; }
 
@@ -1807,23 +1807,7 @@ namespace GroupGuardian
 
         [DataMember(Name = "reply_markup", EmitDefaultValue = false)]
         public object reply_markup { get; set; }
-
     }
-    [DataContract]
-    public class SendMessageId : SendMessage
-    {
-        [DataMember(Name = "chat_id")]
-        public long chat_id { get; set; }
-    }
-
-    [DataContract]
-    public class SendMessageUsername : SendMessage
-    {
-        [DataMember(Name = "chat_id")]
-        public string chat_id { get; set; }
-    }
-
-    #endregion
 
     [DataContract]
     public class ForwardMessage : GetMethod
@@ -1837,17 +1821,6 @@ namespace GroupGuardian
         [DataMember(Name = "message_id")]
         public long message_id { get; set; }
     }
-
-
-
-
-
-
-
-
-
-
-
 
     [DataContract]
     public class GetChatById : GetMethod
