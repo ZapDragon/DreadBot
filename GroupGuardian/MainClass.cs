@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Media;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
@@ -19,7 +20,7 @@ namespace GroupGuardian
         static void Main()
         {
             ConfigLoader configs = new ConfigLoader();
-            //DatabaseLoader database = new DatabaseLoader();
+
 
             Console.WriteLine("Starting Group Guardian...");
 
@@ -28,7 +29,7 @@ namespace GroupGuardian
                 try
                 {
                     Update first = Methods.getOneUpdate();
-                    new UpdateParser(first);
+                    UpdateHandler.Parse(first);
                     lastUpdate = first.update_id;
                 }
                 catch (TelegramException te) when (te.code == 409)
@@ -59,6 +60,15 @@ namespace GroupGuardian
 
 
         }
+        public static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("EmbedAssembly.System.Data.SQLite.dll"))
+            {
+                byte[] assemblyData = new byte[stream.Length];
+                stream.Read(assemblyData, 0, assemblyData.Length);
+                return Assembly.Load(assemblyData);
+            }
+        }
 
         private static void GetUpdatesLoop()
         {
@@ -73,7 +83,7 @@ namespace GroupGuardian
                         try
                         {
                             lastUpdate = update.update_id;
-                            new UpdateParser(update);
+                            // new UpdateParser(update);
                         }
                         catch (Exception)
                         {

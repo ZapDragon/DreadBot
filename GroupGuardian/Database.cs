@@ -3,61 +3,47 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
+using System.Runtime;
+using System.Data.SQLite;
+using System.IO;
+
 
 namespace GroupGuardian
 {
     class Database
     {
+        SQLiteConnection database;
+
         //Only supporting SQLLite for now.
+        public static void DatabaseInit() {
+            Console.WriteLine("Loading SQLite Database...");
+
+            if (System.IO.File.Exists(Environment.CurrentDirectory + @"\" + Configs.Me.username + ".sqlite"))
+            {
+                
+            }
+            else
+            {
+                SQLiteConnection.CreateFile(Environment.CurrentDirectory + @"\" + Configs.Me.username + ".sqlite");
+                Console.WriteLine("Local Database for " + Configs.Me.username + " has be created.");
+                Console.ReadLine();
+            }
+            
+
+
+
+
+
+        }
 
 
     }
 
-    interface IDBParser
-    {
-
-        
-
-    }
-
-    public enum DatabaseType : int
-    {
-        SQLLite = 0,
-        MySql = 1,
-        Postgres = 2,
-        MongoDB = 3,
-        Redis = 4,
-        MSSQL = 5
-    }
 
 
 
-    class SQLLite : IDBParser
-    {
-
-    }
-
-    class MySql : IDBParser
-    {
-
-    }
-
-    class Postgres : IDBParser
-    {
-
-    }
-
-    class MongoDB : IDBParser
-    {
-
-    }
-
-    class Redis : IDBParser
-    {
-
-    }
-
-    class MSSQL : IDBParser
+    class SQLite
     {
 
     }

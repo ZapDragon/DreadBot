@@ -41,19 +41,17 @@ namespace GroupGuardian
 
             Update update;
             try { update = (Update)new DataContractJsonSerializer(typeof(Update)).ReadObject(new MemoryStream(UpdatePayload, 0, payLoadOffset)); }
-            catch (Exception e) { Console.WriteLine("Exception during deserialization. Line 65.\n" + Encoding.UTF8.GetString(UpdatePayload)); return; }
-            new UpdateParser(update);
+            catch (Exception e) { Console.WriteLine("Exception during deserialization." + Encoding.UTF8.GetString(UpdatePayload)); return; }
+            UpdateHandler.Parse(update);
         }
         private byte[] SocketReader(TcpClient tcpClient, SslStream sslStream)
         {
-            byte[] data = new byte[10240];
+            byte[] data = new byte[65535];
             byte[] payLoad;
             int offSet = 0;
             while (tcpClient.Available > 0)
             {
-                //Console.WriteLine("Availible: " + tcpClient.Available);
                 offSet += sslStream.Read(data, offSet, data.Length - offSet);
-                //Console.WriteLine("Offset: " + offSet);
             }
             payLoad = new byte[offSet];
             payLoad = data.Take(offSet).ToArray();
