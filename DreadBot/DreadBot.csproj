@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FFB74D20-85C9-411E-B9FA-9A9B856F6690}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>DreadBot</RootNamespace>
+    <AssemblyName>DreadBot</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Menus.cs" />
+    <Compile Include="Events.cs" />
+    <Compile Include="LiteDB\Database\Collections\Aggregate.cs" />
+    <Compile Include="LiteDB\Database\Collections\Delete.cs" />
+    <Compile Include="LiteDB\Database\Collections\Find.cs" />
+    <Compile Include="LiteDB\Database\Collections\Include.cs" />
+    <Compile Include="LiteDB\Database\Collections\Index.cs" />
+    <Compile Include="LiteDB\Database\Collections\Insert.cs" />
+    <Compile Include="LiteDB\Database\Collections\LiteCollection.cs" />
+    <Compile Include="LiteDB\Database\Collections\Update.cs" />
+    <Compile Include="LiteDB\Database\Collections\Upsert.cs" />
+    <Compile Include="LiteDB\Database\LiteDatabase.cs" />
+    <Compile Include="LiteDB\Document\BsonArray.cs" />
+    <Compile Include="LiteDB\Document\BsonDocument.cs" />
+    <Compile Include="LiteDB\Document\BsonType.cs" />
+    <Compile Include="LiteDB\Document\BsonValue.cs" />
+    <Compile Include="LiteDB\Document\Bson\BsonReader.cs" />
+    <Compile Include="LiteDB\Document\Bson\BsonSerializer.cs" />
+    <Compile Include="LiteDB\Document\Bson\BsonWriter.cs" />
+    <Compile Include="LiteDB\Document\Expression\BsonExpression.cs" />
+    <Compile Include="LiteDB\Document\Expression\Methods\Aggregate.cs" />
+    <Compile Include="LiteDB\Document\Expression\Methods\DataTypes.cs" />
+    <Compile Include="LiteDB\Document\Expression\Methods\Date.cs" />
+    <Compile Include="LiteDB\Document\Expression\Methods\Misc.cs" />
+    <Compile Include="LiteDB\Document\Expression\Methods\String.cs" />
+    <Compile Include="LiteDB\Document\Expression\Operators\ExpressionOperators.cs" />
+    <Compile Include="LiteDB\Document\Json\JsonReader.cs" />
+    <Compile Include="LiteDB\Document\Json\JsonSerializer.cs" />
+    <Compile Include="LiteDB\Document\Json\JsonTokenizer.cs" />
+    <Compile Include="LiteDB\Document\Json\JsonWriter.cs" />
+    <Compile Include="LiteDB\Document\ObjectId.cs" />
+    <Compile Include="LiteDB\Engine\Disks\FileDiskService.cs" />
+    <Compile Include="LiteDB\Engine\Disks\IDiskService.cs" />
+    <Compile Include="LiteDB\Engine\Disks\StreamDiskService.cs" />
+    <Compile Include="LiteDB\Engine\Disks\TempDiskService.cs" />
+    <Compile Include="LiteDB\Engine\Engine\Aggregate.cs" />
+    <Compile Include="LiteDB\Engine\Engine\Collection.cs" />
+    <Compile Include="LiteDB\Engine\Engine\Delete.cs" />
+    <Compile Include="LiteDB\Engine\Engine\Find.cs" />
+    <Compile Include="LiteDB\Engine\Engine\FindInclude.cs" />
+    <Compile Include="LiteDB\Engine\Engine\FindSort.cs" />
+    <Compile Include="LiteDB\Engine\Engine\Index.cs" />
+    <Compile Include="LiteDB\Engine\Engine\Info.cs" />
+    <Compile Include="LiteDB\Engine\Engine\Insert.cs" />
+    <Compile Include="LiteDB\Engine\Engine\Shell.cs" />
+    <Compile Include="LiteDB\Engine\Engine\Shrink.cs" />
+    <Compile Include="LiteDB\Engine\Engine\Update.cs" />
+    <Compile Include="LiteDB\Engine\Engine\Upsert.cs" />
+    <Compile Include="LiteDB\Engine\Engine\UserVersion.cs" />
+    <Compile Include="LiteDB\Engine\LiteEngine.cs" />
+    <Compile Include="LiteDB\Engine\Pages\BasePage.cs" />
+    <Compile Include="LiteDB\Engine\Pages\CollectionPage.cs" />
+    <Compile Include="LiteDB\Engine\Pages\DataPage.cs" />
+    <Compile Include="LiteDB\Engine\Pages\EmptyPage.cs" />
+    <Compile Include="LiteDB\Engine\Pages\ExtendPage.cs" />
+    <Compile Include="LiteDB\Engine\Pages\HeaderPage.cs" />
+    <Compile Include="LiteDB\Engine\Pages\IndexPage.cs" />
+    <Compile Include="LiteDB\Engine\Query\Query.cs" />
+    <Compile Include="LiteDB\Engine\Query\QueryAll.cs" />
+    <Compile Include="LiteDB\Engine\Query\QueryAnd.cs" />
+    <Compile Include="LiteDB\Engine\Query\QueryBetween.cs" />
+    <Compile Include="LiteDB\Engine\Query\QueryContains.cs" />
+    <Compile Include="LiteDB\Engine\Query\QueryCursor.cs" />
+    <Compile Include="LiteDB\Engine\Query\QueryEmpty.cs" />
+    <Compile Include="LiteDB\Engine\Query\QueryEquals.cs" />
+    <Compile Include="LiteDB\Engine\Query\QueryGreater.cs" />
+    <Compile Include="LiteDB\Engine\Query\QueryIn.cs" />
+    <Compile Include="LiteDB\Engine\Query\QueryLess.cs" />
+    <Compile Include="LiteDB\Engine\Query\QueryNot.cs" />
+    <Compile Include="LiteDB\Engine\Query\QueryNotEquals.cs" />
+    <Compile Include="LiteDB\Engine\Query\QueryOr.cs" />
+    <Compile Include="LiteDB\Engine\Query\QueryStartsWith.cs" />
+    <Compile Include="LiteDB\Engine\Query\QueryWhere.cs" />
+    <Compile Include="LiteDB\Engine\Services\CacheService.cs" />
+    <Compile Include="LiteDB\Engine\Services\CollectionService.cs" />
+    <Compile Include="LiteDB\Engine\Services\DataService.cs" />
+    <Compile Include="LiteDB\Engine\Services\IndexService.cs" />
+    <Compile Include="LiteDB\Engine\Services\LockService.cs" />
+    <Compile Include="LiteDB\Engine\Services\PageService.cs" />
+    <Compile Include="LiteDB\Engine\Services\TransactionService.cs" />
+    <Compile Include="LiteDB\Engine\Structures\CollectionIndex.cs" />
+    <Compile Include="LiteDB\Engine\Structures\DataBlock.cs" />
+    <Compile Include="LiteDB\Engine\Structures\IndexInfo.cs" />
+    <Compile Include="LiteDB\Engine\Structures\IndexNode.cs" />
+    <Compile Include="LiteDB\Engine\Structures\PageAddress.cs" />
+    <Compile Include="LiteDB\Mapper\Attributes\BsonFieldAttribute.cs" />
+    <Compile Include="LiteDB\Mapper\Attributes\BsonIdAttribute.cs" />
+    <Compile Include="LiteDB\Mapper\Attributes\BsonIgnoreAttribute.cs" />
+    <Compile Include="LiteDB\Mapper\Attributes\BsonIndexAttribute.cs" />
+    <Compile Include="LiteDB\Mapper\Attributes\BsonRefAttribute.cs" />
+    <Compile Include="LiteDB\Mapper\BsonMapper.cs" />
+    <Compile Include="LiteDB\Mapper\BsonMapper.Deserialize.cs" />
+    <Compile Include="LiteDB\Mapper\BsonMapper.Serialize.cs" />
+    <Compile Include="LiteDB\Mapper\EntityBuilder.cs" />
+    <Compile Include="LiteDB\Mapper\EntityMapper.cs" />
+    <Compile Include="LiteDB\Mapper\Linq\QueryLinq.cs" />
+    <Compile Include="LiteDB\Mapper\Linq\QueryVisitor.cs" />
+    <Compile Include="LiteDB\Mapper\MemberMapper.cs" />
+    <Compile Include="LiteDB\Mapper\Reflection\Reflection.cs" />
+    <Compile Include="LiteDB\Mapper\Reflection\Reflection.Expression.cs" />
+    <Compile Include="LiteDB\Repository\LiteQueryable.cs" />
+    <Compile Include="LiteDB\Repository\LiteRepository.cs" />
+    <Compile Include="LiteDB\Shell\Collections\BaseCollection.cs" />
+    <Compile Include="LiteDB\Shell\Collections\Bulk.cs" />
+    <Compile Include="LiteDB\Shell\Collections\Count.cs" />
+    <Compile Include="LiteDB\Shell\Collections\Delete.cs" />
+    <Compile Include="LiteDB\Shell\Collections\Drop.cs" />
+    <Compile Include="LiteDB\Shell\Collections\DropIndex.cs" />
+    <Compile Include="LiteDB\Shell\Collections\EnsureIndex.cs" />
+    <Compile Include="LiteDB\Shell\Collections\Find.cs" />
+    <Compile Include="LiteDB\Shell\Collections\Indexes.cs" />
+    <Compile Include="LiteDB\Shell\Collections\Insert.cs" />
+    <Compile Include="LiteDB\Shell\Collections\Max.cs" />
+    <Compile Include="LiteDB\Shell\Collections\Min.cs" />
+    <Compile Include="LiteDB\Shell\Collections\Rename.cs" />
+    <Compile Include="LiteDB\Shell\Collections\Select.cs" />
+    <Compile Include="LiteDB\Shell\Collections\Update.cs" />
+    <Compile Include="LiteDB\Shell\HelpAttribute.cs" />
+    <Compile Include="LiteDB\Shell\ICommand.cs" />
+    <Compile Include="LiteDB\Shell\Info.cs" />
+    <Compile Include="LiteDB\Shell\Storage\BaseStorage.cs" />
+    <Compile Include="LiteDB\Shell\Storage\Delete.cs" />
+    <Compile Include="LiteDB\Shell\Storage\Download.cs" />
+    <Compile Include="LiteDB\Shell\Storage\Find.cs" />
+    <Compile Include="LiteDB\Shell\Storage\Update.cs" />
+    <Compile Include="LiteDB\Shell\Storage\Upload.cs" />
+    <Compile Include="LiteDB\Storage\LiteFileInfo.cs" />
+    <Compile Include="LiteDB\Storage\LiteFileStream.cs" />
+    <Compile Include="LiteDB\Storage\LiteFileStream.Read.cs" />
+    <Compile Include="LiteDB\Storage\LiteFileStream.Write.cs" />
+    <Compile Include="LiteDB\Storage\LiteStorage.cs" />
+    <Compile Include="LiteDB\Upgrade\IDbReader.cs" />
+    <Compile Include="LiteDB\Upgrade\Upgrade.cs" />
+    <Compile Include="LiteDB\Upgrade\V6\DbReader.cs" />
+    <Compile Include="LiteDB\Upgrade\V6\Pages\BasePage.cs" />
+    <Compile Include="LiteDB\Upgrade\V6\Pages\CollectionPage.cs" />
+    <Compile Include="LiteDB\Upgrade\V6\Pages\DataPage.cs" />
+    <Compile Include="LiteDB\Upgrade\V6\Pages\ExtendPage.cs" />
+    <Compile Include="LiteDB\Upgrade\V6\Pages\HeaderPage.cs" />
+    <Compile Include="LiteDB\Upgrade\V6\Pages\IndexPage.cs" />
+    <Compile Include="LiteDB\Upgrade\V6\Services\CollectionService.cs" />
+    <Compile Include="LiteDB\Upgrade\V6\Services\DataService.cs" />
+    <Compile Include="LiteDB\Upgrade\V6\Services\FileDiskService.cs" />
+    <Compile Include="LiteDB\Upgrade\V6\Services\IndexService.cs" />
+    <Compile Include="LiteDB\Upgrade\V6\Services\PageService.cs" />
+    <Compile Include="LiteDB\Upgrade\V6\Structures\CollectionIndex.cs" />
+    <Compile Include="LiteDB\Upgrade\V6\Structures\DataBlock.cs" />
+    <Compile Include="LiteDB\Upgrade\V6\Structures\IndexNode.cs" />
+    <Compile Include="LiteDB\Utils\AesEncryption.cs" />
+    <Compile Include="LiteDB\Utils\ByteReader.cs" />
+    <Compile Include="LiteDB\Utils\ByteWriter.cs" />
+    <Compile Include="LiteDB\Utils\ConnectionString.cs" />
+    <Compile Include="LiteDB\Utils\Extensions\BinaryExtensions.cs" />
+    <Compile Include="LiteDB\Utils\Extensions\ByteArrayExtensions.cs" />
+    <Compile Include="LiteDB\Utils\Extensions\DateExtensions.cs" />
+    <Compile Include="LiteDB\Utils\Extensions\DictionaryExtensions.cs" />
+    <Compile Include="LiteDB\Utils\Extensions\ExpressionExtensions.cs" />
+    <Compile Include="LiteDB\Utils\Extensions\IOExceptionExtensions.cs" />
+    <Compile Include="LiteDB\Utils\Extensions\LinqExtensions.cs" />
+    <Compile Include="LiteDB\Utils\Extensions\StreamExtensions.cs" />
+    <Compile Include="LiteDB\Utils\Extensions\StringExtensions.cs" />
+    <Compile Include="LiteDB\Utils\Extensions\TypeInfoExtensions.cs" />
+    <Compile Include="LiteDB\Utils\Extensions\ZipExtensions.cs" />
+    <Compile Include="LiteDB\Utils\FileHelper.cs" />
+    <Compile Include="LiteDB\Utils\FileOptions.cs" />
+    <Compile Include="LiteDB\Utils\KeyDocument.cs" />
+    <Compile Include="LiteDB\Utils\LazyLoad.cs" />
+    <Compile Include="LiteDB\Utils\LiteException.cs" />
+    <Compile Include="LiteDB\Utils\LockControl.cs" />
+    <Compile Include="LiteDB\Utils\LockState.cs" />
+    <Compile Include="LiteDB\Utils\Logger.cs" />
+    <Compile Include="LiteDB\Utils\MimeTypeConverter.cs" />
+    <Compile Include="LiteDB\Utils\StorageUnitHelper.cs" />
+    <Compile Include="LiteDB\Utils\StringScanner.cs" />
+    <Compile Include="Configs.cs" />
+    <Compile Include="Cron.cs" />
+    <Compile Include="Database.cs" />
+    <Compile Include="JsonContracts.cs" />
+    <Compile Include="Logger.cs" />
+    <Compile Include="MainClass.cs" />
+    <Compile Include="Methods.cs" />
+    <Compile Include="PluginManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
