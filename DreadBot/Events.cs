@@ -73,7 +73,55 @@ namespace DreadBot
                 else if (msg.sticker != null) { events.StickerCall(msg); }
                 else if (msg.photo != null) { events.ImageCall(msg, Args, isEdited); }
                 else if (msg.video_note != null) { events.VideoNoteCall(msg, Args, isEdited); }
-                else if (msg.new_chat_members != null) { events.JoinCall(msg); }
+                else if (msg.new_chat_members != null)
+                {
+                    if (msg.new_chat_members.Length == 1)
+                    {
+                        if (msg.new_chat_members[0].id == Configs.Me.id) { events.MeJoinCall(msg); }
+                        else { events.JoinCall(msg); }
+                        return;
+                    }
+                    else if (msg.new_chat_members.Length == 2)
+                    {
+                        
+                        if (msg.new_chat_members[0].id == Configs.Me.id)
+                        {
+                            //newUsers = new List<User>(1);
+                            User[] newUsers = { msg.new_chat_members[1] };
+                            msg.new_chat_members = newUsers;
+                            events.MeJoinCall(msg);
+                            events.JoinCall(msg);
+                            return;
+                        }
+                        else if (msg.new_chat_members[1].id == Configs.Me.id)
+                        {
+                            User[] newUsers = { msg.new_chat_members[0] };
+                            msg.new_chat_members = newUsers;
+                            events.MeJoinCall(msg);
+                            events.JoinCall(msg);
+                            return;
+                        }
+                        else { events.MassAddCall(msg); }
+                        return;
+                    }
+                    else
+                    {
+                        List<User> newUsers = new List<User>(msg.new_chat_members.Length);
+                        foreach (User newUser in msg.new_chat_members)
+                        {
+                            if (newUser.id == Configs.Me.id)
+                            {
+                                events.MeJoinCall(msg);
+                                continue;
+                            }
+                            else { newUsers.Add(newUser); }
+                        }
+
+                        msg.new_chat_members = newUsers.ToArray();
+                        if (msg.new_chat_members.Length > 1) { events.MassAddCall(msg); }
+                        return;
+                    }
+                }
                 else if (msg.left_chat_member != null) { events.PartCall(msg); }
                 else if (msg.animation != null) { events.AnimationCall(msg, Args, isEdited); }
                 else if (msg.audio != null) { events.AudioCall(msg, Args, isEdited); }
@@ -85,7 +133,10 @@ namespace DreadBot
                 else if (msg.new_chat_title != null) { events.TitleChangeCall(msg, Args); }
                 else if (msg.new_chat_photo != null || (msg.delete_chat_photo)) { events.ChatPhotoCall(msg); }
                 else if (msg.location != null) { events.LocationCall(msg); }
-                else if (msg.group_chat_created) { events.NewGroupCall(msg); }
+                else if (msg.group_chat_created) {
+                    events.MeJoinCall(msg);
+                    events.NewGroupCall(msg);
+                }
                 else if (msg.passport_data != null) { events.PassportDataCall(msg); }
                 else if (msg.migrate_to_chat_id > 0 || msg.migrate_to_chat_id < 0) { events.GroupUpgradeCall(msg); }
                 else if (msg.text != null)
@@ -190,14 +241,17 @@ namespace DreadBot
         #region Events and Delegetes
 
         // Delegates
-        public delegate void DreadBotEventHandler(object source, EventArgs eventArgs);
+        public delegate void DreadBotEventHandler(object o, EventArgs e);
 
         //Event Providers
+        public event DreadBotEventHandler MeJoinEvent;
+        public event DreadBotEventHandler MeKickEvent;
         public event DreadBotEventHandler ForwardEvent;
         public event DreadBotEventHandler StickerEvent;
         public event DreadBotEventHandler ImageEvent;
         public event DreadBotEventHandler VideoNoteEvent;
         public event DreadBotEventHandler JoinEvent;
+        public event DreadBotEventHandler MassAddEvent;
         public event DreadBotEventHandler PartEvent;
         public event DreadBotEventHandler AnimationEvent;
         public event DreadBotEventHandler AudioEvent;
@@ -223,11 +277,14 @@ namespace DreadBot
         #endregion
 
         #region Event Calls
+        public void MeJoinCall(Message Msg) { OnMeJoin(Msg); }
+        public void MeKickCall(Message Msg) { OnMeKick(Msg); }
         public void ForwardCall(Message Msg, string[] args) { OnForward(Msg, args); }
         public void StickerCall(Message Msg) { OnSticker(Msg); }
         public void ImageCall(Message Msg, string[] args, bool isEdited) { OnImage(Msg, args, isEdited); }
         public void VideoNoteCall(Message Msg, string[] args, bool isEdited) { OnVideoNote(Msg, args, isEdited); }
         public void JoinCall(Message Msg) { OnJoin(Msg); }
+        public void MassAddCall(Message Msg) { OnMassAdd(Msg); }
         public void PartCall(Message Msg) { OnPart(Msg); }
         public void AnimationCall(Message Msg, string[] args, bool isEdited) { OnAnimation(Msg, args, isEdited); }
         public void AudioCall(Message Msg, string[] args, bool isEdited) { OnAudio(Msg, args, isEdited); }
@@ -251,11 +308,14 @@ namespace DreadBot
         #endregion
 
         #region Event Triggers
+        protected virtual void OnMeJoin(Message msg) { MeJoinEvent?.Invoke(this, new MeJoinEventArgs() { msg = msg }); }
+        protected virtual void OnMeKick(Message msg) { MeKickEvent?.Invoke(this, new MeKickEventArgs() { msg = msg }); }
         protected virtual void OnForward(Message msg, string[] args) { ForwardEvent?.Invoke(this, new ForwardEventArgs() { msg = msg, Args = args } ); }
         protected virtual void OnSticker(Message msg) { StickerEvent?.Invoke(this, new StickerEventArgs() { msg = msg } ); }
         protected virtual void OnImage(Message msg, string[] args, bool isEdited) { ImageEvent?.Invoke(this, new ImageEventArgs() { msg = msg, Args = args, isEdited = isEdited } ); }
         protected virtual void OnVideoNote(Message msg, string[] args, bool isEdited) { VideoNoteEvent?.Invoke(this, new VideoNoteEventArgs() { msg = msg, Args = args, isEdited = isEdited }); }
         protected virtual void OnJoin(Message msg) { JoinEvent?.Invoke(this, new JoinEventArgs() { msg = msg }); }
+        protected virtual void OnMassAdd(Message msg) { MassAddEvent?.Invoke(this, new MassAddEventArgs() { msg = msg }); }
         protected virtual void OnPart(Message msg) { PartEvent?.Invoke(this, new PartEventArgs() { msg = msg }); }
         protected virtual void OnAnimation(Message msg, string[] args, bool isEdited) { AnimationEvent?.Invoke(this, new AnimationEventArgs() { msg = msg, Args = args, isEdited = isEdited } ); }
         protected virtual void OnAudio(Message msg, string[] args, bool isEdited) { AudioEvent?.Invoke(this, new AudioEventArgs() { msg = msg, Args = args, isEdited = isEdited }); }
@@ -281,7 +341,14 @@ namespace DreadBot
     }
 
     #region Event Args
-
+    public class MeJoinEventArgs : EventArgs
+    {
+        public Message msg { get; set; }
+    }
+    public class MeKickEventArgs : EventArgs
+    {
+        public Message msg { get; set; }
+    }
     public class ForwardEventArgs : EventArgs
     {
         public Message msg { get; set; }
@@ -304,6 +371,10 @@ namespace DreadBot
         public bool isEdited { get; set; }
     }
     public class JoinEventArgs : EventArgs {
+        public Message msg { get; set; }
+    }
+    public class MassAddEventArgs : EventArgs
+    {
         public Message msg { get; set; }
     }
     public class PartEventArgs : EventArgs {
