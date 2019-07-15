@@ -1920,6 +1920,40 @@ namespace DreadBot
         public InlineKeyboardMarkup reply_markup { get; set; }
     }
 
+    [DataContract]
+    public class SendAudioRequest
+    {
+        [DataMember(Name = "chat_id", IsRequired = true)]
+        public long chat_id { get; set; }
+
+        [DataMember(Name = "caption", EmitDefaultValue = false)]
+        public string caption { get; set; }
+
+        [DataMember(Name = "parse_mode", EmitDefaultValue = false)]
+        public string parse_mode { get; set; }
+
+        [DataMember(Name = "duration", EmitDefaultValue = false)]
+        public int duration { get; set; }
+
+        [DataMember(Name = "performer", EmitDefaultValue = false)]
+        public string performer { get; set; }
+
+        [DataMember(Name = "title", EmitDefaultValue = false)]
+        public string title { get; set; }
+
+        [DataMember(Name = "thumb", EmitDefaultValue = false)]
+        public string thumb { get; set; }
+
+        [DataMember(Name = "disable_notification", EmitDefaultValue = false)]
+        public bool disable_notification { get; set; }
+
+        [DataMember(Name = "reply_to_message_id", EmitDefaultValue = false)]
+        public int reply_to_message_id { get; set; }
+
+        [DataMember(Name = "reply_markup", EmitDefaultValue = false)]
+        public InlineKeyboardMarkup reply_markup { get; set; }
+    }
+
 
     [DataContract]
     public class ForwardMessageRequest
