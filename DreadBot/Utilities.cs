@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -41,13 +42,14 @@ namespace DreadBot
             }
         }
 
-        public static bool isCommand(char c)
+        public static string isCommand(string s)
         {
+            char c = s[0];
             switch (c)
             {
-                case '!': return true;
-                case '/': return true;
-                default: return false;
+                case '!': return s.Substring(1);
+                case '/': return s.Substring(1);
+                default: return "";
             }
         }
         public static bool isAdminCommand(char c)

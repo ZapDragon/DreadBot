@@ -132,7 +132,8 @@ namespace DreadBot
                         r++;
                         keyboard.addButton(new InlineKeyboardButton() { text = "🔙", callback_data = "dreadbot adm" }, r);
                         if (r > 1) { text = "*Plugin Manager*\n\nHere you manage your current plugins.\nClick the name of the plugin for basic info about it.\nOr click manage to configure it."; }
-                        Methods.editMessageText(callback.from.id, callback.message.message_id, text, "markdown", keyboard);
+                        Result<object> res = Methods.editMessageText(callback.from.id, callback.message.message_id, text, "markdown", keyboard);
+                        if (!res.ok) { Logger.LogError("Message failed to edit: " + res.description); }
                         return;
                     }
                 case "adm": {

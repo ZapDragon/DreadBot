@@ -66,62 +66,14 @@ namespace DreadBot
             {
                 if (msg.text != null)
                 {
-                    if (Utilities.isCommand(msg.text[0])) { Args = msg.text.Split(' '); }
+                    if (Utilities.isCommand(msg.text) != "") { Args = msg.text.Split(' '); }
                     else if (Utilities.isAdminCommand(msg.text[0])) { Utilities.AdminCommand(msg, msg.text.Split(' ')); return; }
                 }
                 if (msg.forward_from != null) { events.ForwardCall(msg, Args); }
                 else if (msg.sticker != null) { events.StickerCall(msg); }
                 else if (msg.photo != null) { events.ImageCall(msg, Args, isEdited); }
                 else if (msg.video_note != null) { events.VideoNoteCall(msg, Args, isEdited); }
-                else if (msg.new_chat_members != null)
-                {
-                    if (msg.new_chat_members.Length == 1)
-                    {
-                        if (msg.new_chat_members[0].id == Configs.Me.id) { events.MeJoinCall(msg); }
-                        else { events.JoinCall(msg); }
-                        return;
-                    }
-                    else if (msg.new_chat_members.Length == 2)
-                    {
-                        
-                        if (msg.new_chat_members[0].id == Configs.Me.id)
-                        {
-                            //newUsers = new List<User>(1);
-                            User[] newUsers = { msg.new_chat_members[1] };
-                            msg.new_chat_members = newUsers;
-                            events.MeJoinCall(msg);
-                            events.JoinCall(msg);
-                            return;
-                        }
-                        else if (msg.new_chat_members[1].id == Configs.Me.id)
-                        {
-                            User[] newUsers = { msg.new_chat_members[0] };
-                            msg.new_chat_members = newUsers;
-                            events.MeJoinCall(msg);
-                            events.JoinCall(msg);
-                            return;
-                        }
-                        else { events.MassAddCall(msg); }
-                        return;
-                    }
-                    else
-                    {
-                        List<User> newUsers = new List<User>(msg.new_chat_members.Length);
-                        foreach (User newUser in msg.new_chat_members)
-                        {
-                            if (newUser.id == Configs.Me.id)
-                            {
-                                events.MeJoinCall(msg);
-                                continue;
-                            }
-                            else { newUsers.Add(newUser); }
-                        }
-
-                        msg.new_chat_members = newUsers.ToArray();
-                        if (msg.new_chat_members.Length > 1) { events.MassAddCall(msg); }
-                        return;
-                    }
-                }
+                else if (msg.new_chat_members != null) { events.JoinCall(msg); }
                 else if (msg.left_chat_member != null) { events.PartCall(msg); }
                 else if (msg.animation != null) { events.AnimationCall(msg, Args, isEdited); }
                 else if (msg.audio != null) { events.AudioCall(msg, Args, isEdited); }
@@ -133,10 +85,7 @@ namespace DreadBot
                 else if (msg.new_chat_title != null) { events.TitleChangeCall(msg, Args); }
                 else if (msg.new_chat_photo != null || (msg.delete_chat_photo)) { events.ChatPhotoCall(msg); }
                 else if (msg.location != null) { events.LocationCall(msg); }
-                else if (msg.group_chat_created) {
-                    events.MeJoinCall(msg);
-                    events.NewGroupCall(msg);
-                }
+                else if (msg.group_chat_created) { events.NewGroupCall(msg); }
                 else if (msg.passport_data != null) { events.PassportDataCall(msg); }
                 else if (msg.migrate_to_chat_id > 0 || msg.migrate_to_chat_id < 0) { events.GroupUpgradeCall(msg); }
                 else if (msg.text != null)
@@ -151,7 +100,7 @@ namespace DreadBot
                                     TimeSpan t = TimeSpan.FromSeconds(Utilities.EpochTime() - MainClass.LauchTime);
 
                                     string answer = string.Format("{0:D3} Days, {1:D2} Hours, {2:D2} Minutes, {3:D2} Seconds", t.Days, t.Hours, t.Minutes, t.Seconds);
-                                    Methods.sendReply(msg.chat.id, (int)msg.message_id, "Dread Bot v0.0.4a\n\nUptime: " + answer);
+                                    Methods.sendReply(msg.chat.id, (int)msg.message_id, "Dread Bot v4.1-764a\n\nUptime: " + answer);
                                     return;
                                 }
 
@@ -172,6 +121,10 @@ namespace DreadBot
 
                                             Configs.RunningConfig.GULimit = 20;
                                             Configs.RunningConfig.AdminChat = msg.from.id;
+
+                                            Database.FlushConfig();
+                                            Logger.LogDebug("Flushed Database to Disk.");
+
                                         }
 
                                         //else if (Utilities.AdminTokens.Contains(Args[2]))
@@ -182,7 +135,8 @@ namespace DreadBot
                                         else
                                         {
                                             Methods.sendReply(msg.from.id, (int)msg.message_id, "The token you have specified does not exist. This error has been logged.");
-                                            Methods.sendMessage(Configs.RunningConfig.AdminChat, "The token command was attempted by ([" + msg.from.id + "](tg://user?id=" + msg.from.id + ")) using the token " + Args[1]);
+                                            Result<Message> res = Methods.sendMessage(Configs.RunningConfig.AdminChat, "The token command was attempted by ([" + msg.from.id + "](tg://user?id=" + msg.from.id + ")) using the token " + Args[1]);
+                                            if (!res.ok) { Logger.LogError("Error contacting the admin Chat: " + res.description); }
                                         }
                                     }
                                     return;
@@ -195,7 +149,8 @@ namespace DreadBot
                                         return;
                                     }
                                     Logger.LogAdmin("Admin Menu Called: " + msg.from.id);
-                                    Methods.sendMessage(msg.from.id, "*DreadBot Administration Menu*\n\n`DreadBot Managment`\nUsed to fine tune the bot, plus other senstive, and powerful options.\n\n`DataBase Management`\nConfigure Specific Database options, and backup as needed.\n\n`Plugin Manager`\nAdd, Remove and Configure plugins to give DreadBot its purpose.", "Markdown", Menus.AdminMenu());
+                                    Result<Message> res = Methods.sendMessage(msg.from.id, "*DreadBot Administration Menu*\n\n`DreadBot Managment`\nUsed to fine tune the bot, plus other senstive, and powerful options.\n\n`DataBase Management`\nConfigure Specific Database options, and backup as needed.\n\n`Plugin Manager`\nAdd, Remove and Configure plugins to give DreadBot its purpose.", "Markdown", Menus.AdminMenu());
+                                    if (!res.ok) { Logger.LogError("Error contacting the admin Chat: " + res.description); }
                                     return;
                                 }
 
@@ -207,20 +162,23 @@ namespace DreadBot
                                     }
                                     if (msg.chat.type == "private" || msg.chat.type == "channel")
                                     {
-                                        Methods.sendReply(msg.chat.id, msg.message_id, "You can only assign a Group or Supergroup to be the Debug Chat.\nIf you want to reset it back to PM, please use the admin menu.");
+                                        Result<Message> res = Methods.sendReply(msg.chat.id, msg.message_id, "You can only assign a Group or Supergroup to be the Debug Chat.\nIf you want to reset it back to PM, please use the admin menu.");
+                                        if (!res.ok) { Logger.LogError("Error contacting the admin Chat: " + res.description); }
                                         return;
                                     }
                                     else
                                     {
                                         if (msg.chat.id == Configs.RunningConfig.AdminChat)
                                         {
-                                            Methods.sendReply(msg.chat.id, msg.message_id, "Debug Chat is already set to this group.");
+                                            Result<Message> res = Methods.sendReply(msg.chat.id, msg.message_id, "Debug Chat is already set to this group.");
+                                            if (!res.ok) { Logger.LogError("Error contacting the admin Chat: " + res.description); }
                                             return;
                                         }
                                         else
                                         {
                                             Configs.RunningConfig.AdminChat = msg.chat.id;
-                                            Methods.sendReply(msg.chat.id, msg.message_id, "Debug Chat is now set to this group.");
+                                            Result<Message> res = Methods.sendReply(msg.chat.id, msg.message_id, "Debug Chat is now set to this group.");
+                                            if (!res.ok) { Logger.LogError("Error contacting the admin Chat: " + res.description); }
                                             Logger.LogAdmin("Debug Chat has been set to: " + msg.chat.id);
                                             return;
                                         }
@@ -241,17 +199,14 @@ namespace DreadBot
         #region Events and Delegetes
 
         // Delegates
-        public delegate void DreadBotEventHandler(object o, EventArgs e);
+        public delegate void DreadBotEventHandler(object source, EventArgs eventArgs);
 
         //Event Providers
-        public event DreadBotEventHandler MeJoinEvent;
-        public event DreadBotEventHandler MeKickEvent;
         public event DreadBotEventHandler ForwardEvent;
         public event DreadBotEventHandler StickerEvent;
         public event DreadBotEventHandler ImageEvent;
         public event DreadBotEventHandler VideoNoteEvent;
         public event DreadBotEventHandler JoinEvent;
-        public event DreadBotEventHandler MassAddEvent;
         public event DreadBotEventHandler PartEvent;
         public event DreadBotEventHandler AnimationEvent;
         public event DreadBotEventHandler AudioEvent;
@@ -269,7 +224,6 @@ namespace DreadBot
         public event DreadBotEventHandler ShippingQueryEvent;
         public event DreadBotEventHandler ChosenInlineEvent;
         public event DreadBotEventHandler InlineQueryEvent;
-        public event DreadBotEventHandler ChippingQueryEvent;
         public event DreadBotEventHandler PreCheckoutEvent;
         public event DreadBotEventHandler PassportDataEvent;
         public event DreadBotEventHandler TextEvent;
@@ -277,14 +231,11 @@ namespace DreadBot
         #endregion
 
         #region Event Calls
-        public void MeJoinCall(Message Msg) { OnMeJoin(Msg); }
-        public void MeKickCall(Message Msg) { OnMeKick(Msg); }
         public void ForwardCall(Message Msg, string[] args) { OnForward(Msg, args); }
         public void StickerCall(Message Msg) { OnSticker(Msg); }
         public void ImageCall(Message Msg, string[] args, bool isEdited) { OnImage(Msg, args, isEdited); }
         public void VideoNoteCall(Message Msg, string[] args, bool isEdited) { OnVideoNote(Msg, args, isEdited); }
         public void JoinCall(Message Msg) { OnJoin(Msg); }
-        public void MassAddCall(Message Msg) { OnMassAdd(Msg); }
         public void PartCall(Message Msg) { OnPart(Msg); }
         public void AnimationCall(Message Msg, string[] args, bool isEdited) { OnAnimation(Msg, args, isEdited); }
         public void AudioCall(Message Msg, string[] args, bool isEdited) { OnAudio(Msg, args, isEdited); }
@@ -308,14 +259,11 @@ namespace DreadBot
         #endregion
 
         #region Event Triggers
-        protected virtual void OnMeJoin(Message msg) { MeJoinEvent?.Invoke(this, new MeJoinEventArgs() { msg = msg }); }
-        protected virtual void OnMeKick(Message msg) { MeKickEvent?.Invoke(this, new MeKickEventArgs() { msg = msg }); }
         protected virtual void OnForward(Message msg, string[] args) { ForwardEvent?.Invoke(this, new ForwardEventArgs() { msg = msg, Args = args } ); }
         protected virtual void OnSticker(Message msg) { StickerEvent?.Invoke(this, new StickerEventArgs() { msg = msg } ); }
         protected virtual void OnImage(Message msg, string[] args, bool isEdited) { ImageEvent?.Invoke(this, new ImageEventArgs() { msg = msg, Args = args, isEdited = isEdited } ); }
         protected virtual void OnVideoNote(Message msg, string[] args, bool isEdited) { VideoNoteEvent?.Invoke(this, new VideoNoteEventArgs() { msg = msg, Args = args, isEdited = isEdited }); }
         protected virtual void OnJoin(Message msg) { JoinEvent?.Invoke(this, new JoinEventArgs() { msg = msg }); }
-        protected virtual void OnMassAdd(Message msg) { MassAddEvent?.Invoke(this, new MassAddEventArgs() { msg = msg }); }
         protected virtual void OnPart(Message msg) { PartEvent?.Invoke(this, new PartEventArgs() { msg = msg }); }
         protected virtual void OnAnimation(Message msg, string[] args, bool isEdited) { AnimationEvent?.Invoke(this, new AnimationEventArgs() { msg = msg, Args = args, isEdited = isEdited } ); }
         protected virtual void OnAudio(Message msg, string[] args, bool isEdited) { AudioEvent?.Invoke(this, new AudioEventArgs() { msg = msg, Args = args, isEdited = isEdited }); }
@@ -341,14 +289,7 @@ namespace DreadBot
     }
 
     #region Event Args
-    public class MeJoinEventArgs : EventArgs
-    {
-        public Message msg { get; set; }
-    }
-    public class MeKickEventArgs : EventArgs
-    {
-        public Message msg { get; set; }
-    }
+
     public class ForwardEventArgs : EventArgs
     {
         public Message msg { get; set; }
@@ -371,10 +312,6 @@ namespace DreadBot
         public bool isEdited { get; set; }
     }
     public class JoinEventArgs : EventArgs {
-        public Message msg { get; set; }
-    }
-    public class MassAddEventArgs : EventArgs
-    {
         public Message msg { get; set; }
     }
     public class PartEventArgs : EventArgs {

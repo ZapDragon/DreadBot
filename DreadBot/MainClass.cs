@@ -21,8 +21,19 @@ namespace DreadBot
 
             Database.Init();
 
-            Configs.Me = Methods.getMe();
-            Configs.webhookinfo = Methods.getWebhookInfo();
+            Result<User> res = Methods.getMe();
+            if (!res.ok) {
+                Logger.LogFatal("Error getting bot info: " + res.description);
+                Environment.Exit(-1);
+            }
+            Configs.Me = res.result;
+            Result<WebhookInfo> webres = Methods.getWebhookInfo();
+            if (!webres.ok)
+            {
+                Logger.LogFatal("Error getting bot info: " + webres.description);
+                Environment.Exit(-1);
+            }
+            Configs.webhookinfo = webres.result;
 
             PluginManager.Init();
 
@@ -50,7 +61,14 @@ namespace DreadBot
                 {
                     Update[] updates = null;
                     if (UpdateId == 0) {
-                        updates = Methods.getOneUpdate(3600);
+                        Result<Update[]> updateres = Methods.getOneUpdate(3600);
+                        if (!updateres.ok)
+                        {
+                            Logger.LogError("Error fetching first update: (" + updateres.errorCode + ") " + updateres.description);
+                            Thread.Sleep(10000);
+                            continue;
+                        }
+                        updates = updateres.result;
                         if (updates == null || updates.Length < 1) { continue; }
                         else
                         {
@@ -61,7 +79,14 @@ namespace DreadBot
                     else
                     {
                         GetUpdates request = new GetUpdates() { timeout = 20, offset = ++UpdateId, limit = Configs.RunningConfig.GULimit };
-                        updates = Methods.getUpdates(request);
+                        Result<Update[]> updatesres = Methods.getUpdates(request);
+                        if (!updatesres.ok)
+                        {
+                            Logger.LogError("Error fetching updates: (" + updatesres.errorCode + ") " + updatesres.description);
+                            Thread.Sleep(10000);
+                            continue;
+                        }
+                        updates = updatesres.result;
                     }
                     if (updates.Length < 1) { continue; }
                     foreach (Update update in updates)

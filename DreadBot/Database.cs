@@ -29,10 +29,7 @@ namespace DreadBot
                 Configs.Welcome();
                 col.Insert(Configs.RunningConfig);
             }
-            else
-            {
-                Configs.RunningConfig = col.FindAll().First<BotConfig>();
-            }
+            else { Configs.RunningConfig = col.FindAll().First<BotConfig>(); }
             databaseCron = new Thread(DatabaseThread);
             databaseCron.Start();
         }

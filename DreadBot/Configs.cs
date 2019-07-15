@@ -6,7 +6,7 @@ namespace DreadBot
     public class Configs
     {
         public static BotConfig RunningConfig;
-        public static WebhookInfo webhookinfo;
+        public static WebhookInfo webhookinfo = null;
         public static User Me;
         public static bool FirstRun = false;
 
@@ -21,8 +21,24 @@ namespace DreadBot
 
             Console.Write("Verifying token...");
 
-                webhookinfo = Methods.getWebhookInfo();
-                Me = Methods.getMe();
+            Result<WebhookInfo> res = null;
+            res = Methods.getWebhookInfo();
+            if (!res.ok)
+            {
+                Logger.LogFatal(res.description);
+            }
+            else { webhookinfo = res.result; }
+
+
+            Result<User> meres = null;
+            meres = Methods.getMe();
+            if (!meres.ok)
+            {
+                Logger.LogFatal(meres.description);
+                return;
+            }
+            else { Me = meres.result; }
+            
 
             if (webhookinfo == null || Me == null)
             {
@@ -67,6 +83,7 @@ namespace DreadBot
             FirstLaunch = Utilities.EpochTime();
             LastLaunch = Utilities.EpochTime();
             GetupdatesMode = true;
+            SystemSounds = true;
         }
 
         public int id { get; set; } //Database placeholder.
@@ -81,7 +98,6 @@ namespace DreadBot
         public int FirstLaunch { get; set; } //The epoch time when the bot was first launched.
         public int LastLaunch { get; set; } //The epoch time when the bot was last launched.
         public bool GetupdatesMode { get; set; } //Toggle between GetUpdates and Webhook mode. This is controlled by The bot API.
-
-
+        public bool SystemSounds { get; set; } //Enable/Disable the Platform playing sounds on types of events.
     }
 }

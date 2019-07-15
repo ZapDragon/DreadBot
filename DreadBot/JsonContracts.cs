@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Net.Http;
 using System.Runtime.Serialization;
 
 namespace DreadBot
@@ -1873,13 +1874,35 @@ namespace DreadBot
     }
 
     [DataContract]
-    public class SendPhotoRequest
+    public class SendPhotoUrlRequest
     {
         [DataMember(Name = "chat_id", IsRequired = true)]
         public long chat_id { get; set; }
 
         [DataMember(Name = "photo", IsRequired = true)]
         public string photo_url { get; set; }
+
+        [DataMember(Name = "caption", EmitDefaultValue = false)]
+        public string caption { get; set; }
+
+        [DataMember(Name = "parse_mode", EmitDefaultValue = false)]
+        public string parse_mode { get; set; }
+
+        [DataMember(Name = "disable_notification", EmitDefaultValue = false)]
+        public bool disable_notification { get; set; }
+
+        [DataMember(Name = "reply_to_message_id", EmitDefaultValue = false)]
+        public long reply_to_message_id { get; set; }
+
+        [DataMember(Name = "reply_markup", EmitDefaultValue = false)]
+        public InlineKeyboardMarkup reply_markup { get; set; }
+    }
+
+    [DataContract]
+    public class SendPhotoDataRequest
+    {
+        [DataMember(Name = "chat_id", IsRequired = true)]
+        public long chat_id { get; set; }
 
         [DataMember(Name = "caption", EmitDefaultValue = false)]
         public string caption { get; set; }
