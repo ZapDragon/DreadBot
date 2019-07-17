@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DreadBot", "DreadBot\DreadBot.csproj", "{FFB74D20-85C9-411E-B9FA-9A9B856F6690}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroupGuardian", "..\..\..\DreadBot Plugins\Group Guardian\GroupGuardian\GroupGuardian.csproj", "{D565F245-ABA7-42C0-9143-7FBE3778FA70}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{FFB74D20-85C9-411E-B9FA-9A9B856F6690}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFB74D20-85C9-411E-B9FA-9A9B856F6690}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FFB74D20-85C9-411E-B9FA-9A9B856F6690}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D565F245-ABA7-42C0-9143-7FBE3778FA70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D565F245-ABA7-42C0-9143-7FBE3778FA70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D565F245-ABA7-42C0-9143-7FBE3778FA70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D565F245-ABA7-42C0-9143-7FBE3778FA70}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

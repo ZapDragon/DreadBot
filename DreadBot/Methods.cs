@@ -16,6 +16,7 @@ namespace DreadBot
         //This method is called by EVERY Telegram method. This is used to handle Most error checking, and the variable 'result' object is returned to the method that called this.
         private static Result<T> sendRequest<T>(Method method, string payload = "", string payloadType = "application/json", MultipartFormDataContent dataPayload = null)
         {
+            Console.WriteLine(method + " | " + payload);
             HttpResponseMessage response = null;
             int tryCount = 6;
             while (response == null) {
@@ -49,7 +50,7 @@ namespace DreadBot
         //Making sure the object serialized, isnt null, and isnt an error.
         private static void isOk<T>(Result<T> res) {
             if (res == null) { Logger.LogError("Method Error: Method is null"); }
-            if (!res.ok) { Logger.LogError("(" + res.errorCode + ") " + res.description); }
+            else if (!res.ok) { Logger.LogError("(" + res.errorCode + ") " + res.description); }
         }
 
         #endregion
@@ -283,24 +284,29 @@ namespace DreadBot
         {
             return null;
         }
-        public static Result<UserProfilePhotos> getUserProfilePhotos()
+        public static Result<UserProfilePhotos> getUserProfilePhotos(long user_id, int offset = 0, int limit = 0)
         {
-
-            return null;
+            UserProfilePhotosRequest uppr = new UserProfilePhotosRequest() { user_id = user_id };
+            if (offset > 0) { uppr.offset = offset; }
+            if (limit > 0) { uppr.limit = limit; }
+            Result<UserProfilePhotos> result = null;
+            result = sendRequest<UserProfilePhotos>(Method.getUserProfilePhotos, buildRequest<UserProfilePhotosRequest>(uppr));
+            isOk(result);
+            return result;
         }
         public static Result<File> getFile()
         {
             return null;
         }
 
-        public static Result<bool> kickChatMember(long chatId, long userId, int untilEpoch = 1)
+        public static Result<bool> kickChatMember(long chatId, long userId, int untilEpoch = 0)
         {
             KickChatMemberRequest kcmr = new KickChatMemberRequest()
             {
                 chat_id = chatId,
                 user_id = userId,
-                until_date = untilEpoch
             };
+            if (untilEpoch < 30) { kcmr.until_date = Utilities.EpochTime() + 10; }
             Result<bool> result = null;
             result = sendRequest<bool>(Method.kickChatMember, buildRequest<KickChatMemberRequest>(kcmr));
             isOk(result);

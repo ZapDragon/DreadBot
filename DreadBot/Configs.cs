@@ -98,6 +98,6 @@ namespace DreadBot
         public int FirstLaunch { get; set; } //The epoch time when the bot was first launched.
         public int LastLaunch { get; set; } //The epoch time when the bot was last launched.
         public bool GetupdatesMode { get; set; } //Toggle between GetUpdates and Webhook mode. This is controlled by The bot API.
-        public bool SystemSounds { get; set; } //Enable/Disable the Platform playing sounds on types of events.
+        public bool SystemSounds { get; set; } //Enable/Disable the Platform playing sounds on types of Events.
     }
 }

@@ -42,6 +42,15 @@ namespace DreadBot
             }
         }
 
+        public static string Variables(string text, string title, string name, long id, string username)
+        {
+            string a = text.Replace("$username", "@" + username);
+            string b = a.Replace("$title", title);
+            string c = b.Replace("$name", name);
+            string d = c.Replace("$id", id.ToString());
+            return d;
+        }
+
         public static string isCommand(string s)
         {
             char c = s[0];

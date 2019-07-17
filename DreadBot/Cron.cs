@@ -10,8 +10,11 @@ namespace DreadBot
     public class Cron
     {
         public static Thread CronThread;
-        public static CronEvents events = new CronEvents();
 
+        public delegate void CronEventHandler(EventArgs eventArgs);
+        public static void OnCronFire() { CronFireEvent?.Invoke(EventArgs.Empty); }
+
+        public static event CronEventHandler CronFireEvent;
         public static void CronInit()
         {
             CronThread = new Thread(CronCycle);
@@ -23,17 +26,9 @@ namespace DreadBot
             while (true)
             {
                 Logger.LogDebug("Cron");
-                events.OnCronFire();
+                OnCronFire();
                 Thread.Sleep(600000);
             }
         }
-    }
-
-    public class CronEvents
-    {
-        public delegate void CronEventHandler(object source, EventArgs eventArgs);
-        public void OnCronFire() { CronFireEvent?.Invoke(this, EventArgs.Empty); }
-
-        public event CronEventHandler CronFireEvent;
     }
 }

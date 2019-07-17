@@ -2020,6 +2020,18 @@ namespace DreadBot
         public long chat_id { get; set; }
     }
 
+    public class UserProfilePhotosRequest
+    { 
+        [DataMember(Name = "user_id", IsRequired = true)]
+        public long user_id { get; set; }
+
+        [DataMember(Name = "offset", IsRequired = true)]
+        public int offset { get; set; }
+
+        [DataMember(Name = "limit", IsRequired = false)]
+        public int limit { get; set; }
+    }
+
     #endregion
 
     #region Passport Objects
