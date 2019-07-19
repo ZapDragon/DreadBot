@@ -661,6 +661,9 @@ namespace DreadBot
         [DataMember(Name = "can_promote_members", IsRequired = false)]
         public bool can_promote_members { get; set; }
 
+        [DataMember(Name = "is_member", IsRequired = false)]
+        public bool is_member { get; set; }
+
         [DataMember(Name = "can_send_messages", IsRequired = false)]
         public bool can_send_messages { get; set; }
 

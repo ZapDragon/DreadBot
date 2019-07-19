@@ -2,6 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
+using DreadBot;
 
 namespace DreadBot
 {
@@ -24,6 +25,7 @@ namespace DreadBot
             //Cron.NewJob();
             return token;
         }
+
 
         public static void AdminCommand(Message msg, string[] Args)
         {

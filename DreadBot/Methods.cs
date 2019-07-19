@@ -365,9 +365,13 @@ namespace DreadBot
             isOk(result);
             return result;
         }
-        public static Result<ChatMember[]> getChatAdministrators()
+        public static Result<ChatMember[]> getChatAdministrators(long chat_id)
         {
-            return null;
+            GetChatRequest gcr = new GetChatRequest() { chat_id = chat_id };
+            Result<ChatMember[]> result = null;
+            result = sendRequest<ChatMember[]>(Method.getChatAdministrators, buildRequest<GetChatRequest>(gcr));
+            isOk(result);
+            return result;
         }
         public static Result<int> getChatMembersCount()
         {
@@ -572,7 +576,9 @@ namespace DreadBot
         editMessageCaption = 43,
         editMessageMedia = 44,
         editMessageReplyMarkup = 45,
-        deleteMessage = 46
+        deleteMessage = 46,
+        sendPoll = 47,
+        stopPoll = 48
     }
     #endregion
 }
