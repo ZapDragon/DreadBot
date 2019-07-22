@@ -100,7 +100,7 @@ namespace DreadBot
             try { assembly = Assembly.Load(assemblyName); }
             catch (Exception e) { Logger.LogFatal("While loading Plugin " + DllFile + " threw loading assembly: " + e); throw e; }
 
-            if (assembly == null) { Logger.LogFatal("While loading Plugin " + DllFile + " assemly is null"); throw new NullAssemplyPluginException(); }
+            if (assembly == null) { Logger.LogFatal("While loading Plugin " + DllFile + " assembly is null"); throw new NullAssemplyPluginException(); }
 
             try { types = assembly.GetTypes(); }
             catch (Exception e) { Logger.LogFatal("While loading Plugin " + DllFile + " failed getting it's types: " + e); throw e; }

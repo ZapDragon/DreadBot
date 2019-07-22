@@ -76,20 +76,15 @@ namespace DreadBot
             Console.WriteLine(PluginManager.getPluginList() + "\n");
             Console.WriteLine("DreadBot Loaded, and Started!\n");
 
+            if (!String.IsNullOrEmpty(Configs.webhookinfo.Url)) { Configs.RunningConfig.GetupdatesMode = false; } //WebHook is enabled. Launch in Webhook mode.
+
             while (true)
             {
                 if (Configs.RunningConfig.GetupdatesMode) //GetUpdates Mode
                 {
                     Update[] updates = null;
                     if (UpdateId == 0) {
-                        Result<Update[]> updateres = Methods.getOneUpdate(3600);
-                        if (!updateres.ok)
-                        {
-                            Logger.LogError("Error fetching first update: (" + updateres.errorCode + ") " + updateres.description);
-                            Thread.Sleep(10000);
-                            continue;
-                        }
-                        updates = updateres.result;
+                        updates = Methods.getFirstUpdates(3600);
                         if (updates == null || updates.Length < 1) { continue; }
                         else
                         {
@@ -118,7 +113,15 @@ namespace DreadBot
                 }
                 else // Webhook mode
                 {
-                    // Webhook mode init Code.
+                    //// Webhook Not Implemented.
+                    Logger.LogError("DreadBot Cannot continue:\n\nWebhook Mode is enabled for this bot. This version of DreadBot does not have Webhook support and will close.\n\n");
+                    ExitCleanUp(null, null);
+                    Thread.Sleep(10000);
+                    throw new NotImplementedException("This version of DreadBot does not have Webhook support and will terminate.");
+
+
+
+                    
                 }
             }
         }

@@ -26,6 +26,7 @@ namespace DreadBot
 {
     public class Configs
     {
+        public static string Version = "4.1.12.776";
         public static BotConfig RunningConfig;
         public static WebhookInfo webhookinfo = null;
         public static User Me;

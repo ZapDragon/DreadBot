@@ -20,6 +20,7 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Net.Sockets;
@@ -37,7 +38,7 @@ namespace DreadBot
         //This method is called by EVERY Telegram method. This is used to handle Most error checking, and the variable 'result' object is returned to the method that called this.
         private static Result<T> sendRequest<T>(Method method, string payload = "", string payloadType = "application/json", MultipartFormDataContent dataPayload = null)
         {
-            Console.WriteLine(method + " | " + payload);
+            //Console.WriteLine(method + " | " + payload);
             HttpResponseMessage response = null;
             int tryCount = 6;
             while (response == null) {
@@ -529,20 +530,35 @@ namespace DreadBot
 
         #endregion
 
-        #region Group Guardian Methods
+        #region DreadBot Methods
 
-        public static Result<Update[]> getOneUpdate(int to = 1800)
+        public static Update[] getFirstUpdates(int to = 1800)
         {
-            GetUpdates request = new GetUpdates() { limit = 100, timeout = to };
             Result<Update[]> result = null;
-            MemoryStream ms = new MemoryStream();
-            new DataContractJsonSerializer(typeof(GetUpdates)).WriteObject(ms, request);
-            ms.Position = 0;
-            StreamReader sr = new StreamReader(ms);
-            result = sendRequest<Update[]>(Method.getUpdates, sr.ReadToEnd());
+            List<Update> updates = new List<Update>();
+            result = sendRequest<Update[]>(Method.getUpdates, buildRequest<GetUpdates>(new GetUpdates() { limit = 1, timeout = to }));
+
+            if (result == null)
+            {
+                Logger.LogFatal("Getting First Update: Shit broke.");
+                return null;
+            }
+            updates.Add(result.result[0]);
 
             isOk(result);
-            return result;
+            try { MainClass.UpdateId = result.result[0].update_id; }
+            catch { return null; }
+
+            long uid = MainClass.UpdateId;
+            while (uid + Configs.webhookinfo.pendingUpdateCount > MainClass.UpdateId)
+            {
+                result = sendRequest<Update[]>(Method.getUpdates, buildRequest<GetUpdates>(new GetUpdates() { limit = 100, timeout = to, offset = MainClass.UpdateId + 1}));
+                MainClass.UpdateId += result.result.Length;
+                isOk(result);
+                updates.AddRange(result.result);
+            }
+
+            return updates.ToArray();
         }
         #endregion
     }
