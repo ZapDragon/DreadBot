@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DreadBot", "DreadBot\DreadBot.csproj", "{FFB74D20-85C9-411E-B9FA-9A9B856F6690}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroupGuardian", "..\..\GroupGuardian\GroupGuardian\GroupGuardian.csproj", "{D565F245-ABA7-42C0-9143-7FBE3778FA70}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroupGuardian", "..\..\..\DreadBot Plugins\Group Guardian\GroupGuardian\GroupGuardian.csproj", "{D565F245-ABA7-42C0-9143-7FBE3778FA70}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

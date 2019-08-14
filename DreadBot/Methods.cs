@@ -532,34 +532,57 @@ namespace DreadBot
 
         #region DreadBot Methods
 
-        public static Update[] getFirstUpdates(int to = 1800)
-        {
-            Result<Update[]> result = null;
-            List<Update> updates = new List<Update>();
-            result = sendRequest<Update[]>(Method.getUpdates, buildRequest<GetUpdates>(new GetUpdates() { limit = 1, timeout = to }));
+        //public static Update[] getFirstUpdates(int to = 1800)
+        //{
+        //    Result<Update[]> result = null;
+        //    List<Update> updates = new List<Update>();
+        //    result = sendRequest<Update[]>(Method.getUpdates, buildRequest<GetUpdates>(new GetUpdates() { limit = 1, timeout = to }));
+        //
+        //    if (result == null)
+        //    {
+        //        Logger.LogFatal("Getting First Update: Shit broke.");
+        //        return null;
+        //    }
+        //    if (result.result.Length < 1)
+        //    {
+        //        return null;
+        //    }
+        //    updates.Add(result.result[0]);
+        //
+        //    isOk(result);
+        //    try { MainClass.UpdateId = result.result[0].update_id; }
+        //    catch { return null; }
+        //
+        //    long uid = MainClass.UpdateId;
+        //    while (uid + Configs.webhookinfo.pendingUpdateCount > MainClass.UpdateId)
+        //    {
+        //        result = sendRequest<Update[]>(Method.getUpdates, buildRequest<GetUpdates>(new GetUpdates() { limit = 100, timeout = to, offset = MainClass.UpdateId + 1}));
+        //        MainClass.UpdateId += result.result.Length;
+        //        isOk(result);
+        //        updates.AddRange(result.result);
+        //    }
+        //
+        //    return updates.ToArray();
+        //}
 
-            if (result == null)
+        public static Update[] getFirstUpdates(int to = 3600)
+        {
+            GetUpdates request = new GetUpdates() { limit = 1, timeout = to };
+            
+            Result<Update[]> result = sendRequest<Update[]>(Method.getUpdates, buildRequest<GetUpdates>(request));
+
+            if (result.ok)
             {
-                Logger.LogFatal("Getting First Update: Shit broke.");
+                return result.result;
+            }
+            else
+            {
+                Logger.LogError("(" + result.errorCode + ") " + result.description);
                 return null;
             }
-            updates.Add(result.result[0]);
-
-            isOk(result);
-            try { MainClass.UpdateId = result.result[0].update_id; }
-            catch { return null; }
-
-            long uid = MainClass.UpdateId;
-            while (uid + Configs.webhookinfo.pendingUpdateCount > MainClass.UpdateId)
-            {
-                result = sendRequest<Update[]>(Method.getUpdates, buildRequest<GetUpdates>(new GetUpdates() { limit = 100, timeout = to, offset = MainClass.UpdateId + 1}));
-                MainClass.UpdateId += result.result.Length;
-                isOk(result);
-                updates.AddRange(result.result);
-            }
-
-            return updates.ToArray();
         }
+
+
         #endregion
     }
     //Telegram Bot Method Enums

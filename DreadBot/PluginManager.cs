@@ -79,7 +79,6 @@ namespace DreadBot
     {
         string PluginID { get; }
         void Init();
-
     }
 
     public class Plugin
