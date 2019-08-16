@@ -64,6 +64,10 @@ namespace DreadBot
                     }
                     catch { continue; }
                 }
+                foreach (Plugin plugin in plugins.Values)
+                {
+                    plugin.plugin.PostInit();
+                }
             }
             else { Directory.CreateDirectory(@"Plugins"); }
         }
@@ -79,6 +83,7 @@ namespace DreadBot
     {
         string PluginID { get; }
         void Init();
+        void PostInit();
     }
 
     public class Plugin
