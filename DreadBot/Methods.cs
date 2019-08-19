@@ -321,7 +321,7 @@ namespace DreadBot
             return null;
         }
 
-        public static Result<bool> kickChatMember(long chatId, long userId, int untilEpoch = 0)
+        public static Result<bool> banChatMember(long chatId, long userId, int untilEpoch = 0)
         {
             KickChatMemberRequest kcmr = new KickChatMemberRequest()
             {
@@ -334,6 +334,28 @@ namespace DreadBot
             isOk(result);
             return result;
         }
+
+        public static Result<bool> kickChatMember(long chatId, long userId)
+        {
+            KickChatMemberRequest kcmr = new KickChatMemberRequest()
+            {
+                chat_id = chatId,
+                user_id = userId,
+            };
+            string Payload = buildRequest<KickChatMemberRequest>(kcmr);
+            Result<bool> result = null;
+            Result<bool> unbanResult = null;
+            result = sendRequest<bool>(Method.kickChatMember, Payload);
+            isOk(result);
+
+            if (result.ok)
+            {
+                unbanResult = sendRequest<bool>(Method.unbanChatMember, Payload);
+            }
+            return unbanResult;
+        }
+
+
         public static Result<bool> unbanChatMember()
         {
             return null;
