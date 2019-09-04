@@ -1,4 +1,5 @@
-﻿//MIT License
+﻿#region License
+//MIT License
 //Copyright(c) [2019]
 //[Xylex Sirrush Rayne]
 //
@@ -19,6 +20,8 @@
 //LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
+
+#endregion
 using System;
 using System.Collections.Generic;
 
@@ -40,6 +43,7 @@ namespace DreadBot
             RunningConfig = new BotConfig();
 
             RunningConfig.token = Console.ReadLine();
+            Database.SaveConfig();
 
             Console.Write("Verifying token...");
 
@@ -66,7 +70,7 @@ namespace DreadBot
             {
                 Console.WriteLine("Nope.\n\nTheres a problem with the accesstoken. Please test your token in a web browser.\r\n\r\nhttps://api.telegram.org/bot" + RunningConfig.token + "/getMe\r\n\r\nIf you still have problems, verify your token is correct from @BotFather.\r\nPress any key to exit...");
                 Console.ReadKey();
-                Database.db.Dispose();
+                Database.DestroyDB();
                 System.IO.File.Delete(Environment.CurrentDirectory + @"Dreadbot.db");
                 Environment.Exit(Environment.ExitCode);
             }
@@ -83,11 +87,13 @@ namespace DreadBot
             {
                 Console.WriteLine("WebHook Status: Disabled");
                 RunningConfig.GetupdatesMode = true;
+                Database.SaveConfig();
             }
             else
             {
                 Console.WriteLine("WebHook Status: Enabled?!?!");
                 RunningConfig.GetupdatesMode = false;
+                Database.SaveConfig();
             }
         }
     }

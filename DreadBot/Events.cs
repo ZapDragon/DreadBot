@@ -1,4 +1,5 @@
-﻿//MIT License
+﻿#region License
+//MIT License
 //Copyright(c) [2019]
 //[Xylex Sirrush Rayne]
 //
@@ -19,6 +20,8 @@
 //LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
+
+#endregion
 using System;
 
 namespace DreadBot
@@ -137,7 +140,7 @@ namespace DreadBot
                       Configs.RunningConfig.GULimit = 20;
                       Configs.RunningConfig.AdminChat = msg.from.id;
 
-                      Database.FlushConfig();
+                      Database.SaveConfig();
                       Logger.LogDebug("Flushed Database to Disk.");
 
                     }
@@ -192,6 +195,7 @@ namespace DreadBot
                     else
                     {
                       Configs.RunningConfig.AdminChat = msg.chat.id;
+                      Database.SaveConfig();
                       Result<Message> res = Methods.sendReply(msg.chat.id, msg.message_id, "Debug Chat is now set to this group.");
                       if (!res.ok) { Logger.LogError("Error contacting the admin Chat: " + res.description); }
                       Logger.LogAdmin("Debug Chat has been set to: " + msg.chat.id);

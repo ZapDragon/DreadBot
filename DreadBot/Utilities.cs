@@ -1,4 +1,5 @@
-﻿//MIT License
+﻿#region License
+//MIT License
 //Copyright(c) [2019]
 //[Xylex Sirrush Rayne]
 //
@@ -19,6 +20,8 @@
 //LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
+
+#endregion
 using System;
 using System.Text;
 using System.Collections.Generic;
@@ -55,7 +58,7 @@ namespace DreadBot
                 switch (Args[0].Substring(1))
                 {
                     case "save": {
-                            Database.FlushConfig();
+                            Database.SaveConfig();
                             Methods.sendReply(msg.chat.id, msg.message_id, "Flushed Database To Disk.");
                             break;
                         }

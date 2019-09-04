@@ -1,4 +1,5 @@
-﻿//MIT License
+﻿#region License
+//MIT License
 //Copyright(c) [2019]
 //[Xylex Sirrush Rayne]
 //
@@ -19,6 +20,8 @@
 //LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
+
+#endregion
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -31,7 +34,7 @@ using System.Threading.Tasks;
 
 namespace DreadBot
 {
-    public class Methods
+    public static class Methods
     {
         #region Global Method Execution Object
 
@@ -306,6 +309,14 @@ namespace DreadBot
         {
             return null;
         }
+
+        /// <summary>
+        /// Returns a UserProfilePhotos object which contains an array of PhotoSize objects. These can be used to request the images from Telegram as Files to downlaod.
+        /// </summary>
+        /// <param name="user_id">The Numeric long that represents a user or bot</param>
+        /// <param name="offset">The int offset from which to begin returning an image array.</param>
+        /// <param name="limit">Limit the number of images returned. Limit zero assumes no limit.</param>
+        /// <returns></returns>
         public static Result<UserProfilePhotos> getUserProfilePhotos(long user_id, int offset = 0, int limit = 0)
         {
             UserProfilePhotosRequest uppr = new UserProfilePhotosRequest() { user_id = user_id };
@@ -321,6 +332,13 @@ namespace DreadBot
             return null;
         }
 
+        /// <summary>
+        /// This method takes 2 actions on the API. The first removes the user from the group, then promptly removes the ban from the group. This mimics the IRC Kick command, as it doesnt actually ban the user.
+        /// </summary>
+        /// <param name="chatId">The Numeric Long that represents a group or channel ID. You cannot use a bot or user ID here.</param>
+        /// <param name="userId">The Numeric long that represents a user or bot to kick.</param>
+        /// <param name="untilEpoch">The Epoch date in which Telegram will automatically unban the users. Less then 30 seconds, or more than 365 days, the ban is permanant.</param>
+        /// <returns></returns>
         public static Result<bool> banChatMember(long chatId, long userId, int untilEpoch = 0)
         {
             KickChatMemberRequest kcmr = new KickChatMemberRequest()
@@ -335,6 +353,12 @@ namespace DreadBot
             return result;
         }
 
+        /// <summary>
+        /// This method is the same as kick, except it leaves the restriction on the user.
+        /// </summary>
+        /// <param name="chatId">The Numeric Long that represents a group or channel ID. You cannot use a bot or user ID here.</param>
+        /// <param name="userId">The Numeric long that represents a user or bot to kick.</param>
+        /// <returns></returns>
         public static Result<bool> kickChatMember(long chatId, long userId)
         {
             KickChatMemberRequest kcmr = new KickChatMemberRequest()
@@ -352,6 +376,7 @@ namespace DreadBot
             {
                 unbanResult = sendRequest<bool>(Method.unbanChatMember, Payload);
             }
+            else return result;
             return unbanResult;
         }
 

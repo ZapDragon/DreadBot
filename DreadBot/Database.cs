@@ -1,4 +1,5 @@
-﻿//MIT License
+﻿#region License
+//MIT License
 //Copyright(c) [2019]
 //[Xylex Sirrush Rayne]
 //
@@ -19,6 +20,8 @@
 //LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
+
+#endregion
 using System;
 using System.IO;
 using System.Data.Common;
@@ -35,58 +38,40 @@ namespace DreadBot
 
     public class Database {
 
-        public static Thread databaseCron;
-        public static DataBaseEvent dbEvent = new DataBaseEvent();
-        public static LiteDatabase db;
-        public static bool newInstance = false;
+        internal static Thread databaseCron;
+        private static LiteDatabase db;
+        private static LiteCollection<BotConfig> DreadBotCol;
+        internal static bool newInstance = false;
 
-        public static void Init() {
+        internal static void Init() {
             if (!System.IO.File.Exists(Environment.CurrentDirectory + @"\DreadBot.db")) { newInstance = true; }
             db = new LiteDatabase(@"DreadBot.db");
 
-            LiteCollection<BotConfig> col = db.GetCollection<BotConfig>("dreadbot");
+            DreadBotCol = db.GetCollection<BotConfig>("dreadbot");
 
             if (newInstance) {
                 Configs.Welcome();
-                col.Insert(Configs.RunningConfig);
+                DreadBotCol.Insert(Configs.RunningConfig);
             }
-            else { Configs.RunningConfig = col.FindAll().First<BotConfig>(); }
-            databaseCron = new Thread(DatabaseThread);
-            databaseCron.Start();
+            else { Configs.RunningConfig = DreadBotCol.FindAll().First<BotConfig>(); }
         }
 
-        private static void DatabaseThread()
+        internal static void SaveConfig()
         {
-            Thread.Sleep(10000);
-            while (true)
-            {
-                dbEvent.OnDatabseFire();
-                FlushConfig();
-                Logger.LogDebug("Flushed Database to Disk.");
-                Thread.Sleep(300000);
-            }
-        }
-
-        public static void FlushConfig(object obj = null, EventArgs eventArgs = null) //Database Thread
-        {
-            LiteDatabase tempDB;
-            lock (db)
-            {
-                tempDB = db;
-            }
-
             lock (Configs.RunningConfig)
             {
-                tempDB.GetCollection<BotConfig>("dreadbot").Update(Configs.RunningConfig);
+                DreadBotCol.Update(Configs.RunningConfig);
             }
         }
-    }
 
-    public class DataBaseEvent
-    {
-        public delegate void DatabaseEventHandler(object source, EventArgs eventArgs);
-        public void OnDatabseFire() { DatabaseFireEvent?.Invoke(this, EventArgs.Empty); }
+        internal static void DestroyDB()
+        {
+            db.Dispose();
+        }
 
-        public event DatabaseEventHandler DatabaseFireEvent;
+        public static LiteCollection<T> GetCollection<T>(string CollectionName)
+        {
+            return db.GetCollection<T>(CollectionName);
+        }
     }
 }
