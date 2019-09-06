@@ -24,18 +24,19 @@
 #endregion
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace DreadBot
 {
     public class Configs
     {
-        public static string Version = "4.1.12.776";
+        public static string Version = FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).FileVersion;
         public static BotConfig RunningConfig;
         public static WebhookInfo webhookinfo = null;
         public static User Me;
-        public static bool FirstRun = false;
+        internal static bool FirstRun = false;
 
-        public static void Welcome()
+        internal static void Welcome()
         {
             Console.WriteLine("Welcome to DreadBot!\r\nIn order to setup your bot, you will need an access token provided by @BotFather on Telegram.\r\n");
             Console.Write("Please enter your token here and press enter: ");
@@ -70,7 +71,7 @@ namespace DreadBot
             {
                 Console.WriteLine("Nope.\n\nTheres a problem with the accesstoken. Please test your token in a web browser.\r\n\r\nhttps://api.telegram.org/bot" + RunningConfig.token + "/getMe\r\n\r\nIf you still have problems, verify your token is correct from @BotFather.\r\nPress any key to exit...");
                 Console.ReadKey();
-                Database.DestroyDB();
+                Database.DisposeDB();
                 System.IO.File.Delete(Environment.CurrentDirectory + @"Dreadbot.db");
                 Environment.Exit(Environment.ExitCode);
             }
@@ -105,9 +106,7 @@ namespace DreadBot
             Owner = 0;
             Admins = new List<long>(16);
             AdminChat = 0;
-            RetainChatTtiles = false;
             GULimit = 1;
-            AdminListTimer = 1800;
             FirstLaunch = Utilities.EpochTime();
             LastLaunch = Utilities.EpochTime();
             GetupdatesMode = true;
@@ -120,12 +119,12 @@ namespace DreadBot
         public List<long> Admins { get; set; } //List of User IDs to allow Administrative control over the bot.
         public long AdminChat { get; set; } //The id of a user, Group or Supergroup. This is used for debug information. Optionally also used for administrative commands.
         public bool AdminChatCommands { get; set; } //If AdminChat is a Group or Supergroup, this can be enabled to allow anyone in the chat to perform administrative commands.
-        public bool RetainChatTtiles { get; set; } //Bool to enable to the bot to keep Chat titles after a certain amount of time. The related timer will still run for updating this list.
         public int GULimit { get; set; } //Abreveated "Get Updates Limit" - This is a value is used for how many updates at a time the bot should request in Get Updates mode. Use this setting CAREFULLY.
-        public int AdminListTimer { get; set; } //Timer in seconds for cron to automatically update the local cache admin list of a group.
         public int FirstLaunch { get; set; } //The epoch time when the bot was first launched.
         public int LastLaunch { get; set; } //The epoch time when the bot was last launched.
         public bool GetupdatesMode { get; set; } //Toggle between GetUpdates and Webhook mode. This is controlled by The bot API.
         public bool SystemSounds { get; set; } //Enable/Disable the Platform playing sounds on types of Events.
+        public bool LastVersion { get; set; } //The last known version of the bot by the Database. If the structure changes to much, you cant use too new of a version without data corruption.
+
     }
 }

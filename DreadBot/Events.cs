@@ -118,7 +118,7 @@ namespace DreadBot
                   TimeSpan t = TimeSpan.FromSeconds(Utilities.EpochTime() - MainClass.LauchTime);
 
                   string answer = string.Format("{0:D3} Days, {1:D2} Hours, {2:D2} Minutes, {3:D2} Seconds", t.Days, t.Hours, t.Minutes, t.Seconds);
-                  Methods.sendReply(msg.chat.id, (int)msg.message_id, "Dread Bot v4.1-764a\n\nUptime: " + answer);
+                  Methods.sendReply(msg.chat.id, (int)msg.message_id, "Dread Bot " + Configs.Version + "\n\nUptime: " + answer);
                   return;
                 }
 
@@ -133,15 +133,18 @@ namespace DreadBot
 
                       Console.WriteLine("Ownership of this bot has been claimed.");
                       Console.WriteLine("Owner ID: " + Configs.RunningConfig.Owner);
-                      Console.WriteLine("Username: " + msg.from.username); //username can be null
+                      if (!String.IsNullOrEmpty(msg.from.username)) //username can be null
+                                            {
+                          Console.WriteLine("Username: " + msg.from.username); 
+                      }
+                      else { Console.WriteLine("Username: -none-"); }
 
-                      Methods.sendReply(msg.from.id, (int)msg.message_id, "You have claimed ownership over this bot.\nPlease check out the Wiki on getting me setup.\n\nFrom this point on, please use /adminmenu for DreadBot specific configuration.");
+                      Methods.sendReply(msg.from.id, msg.message_id, "You have claimed ownership over this bot.\nPlease check out the [Wiki](http://dreadbot.net/wiki/) on getting me setup.\n\nFrom this point on, please use /adminmenu for DreadBot specific configuration.");
 
                       Configs.RunningConfig.GULimit = 20;
                       Configs.RunningConfig.AdminChat = msg.from.id;
 
                       Database.SaveConfig();
-                      Logger.LogDebug("Flushed Database to Disk.");
 
                     }
 

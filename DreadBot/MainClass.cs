@@ -30,6 +30,7 @@ using System.Threading.Tasks;
 using System.Data.Common;
 using System.IO;
 using System.Threading;
+using System.Diagnostics;
 
 namespace DreadBot
 {
@@ -37,8 +38,8 @@ namespace DreadBot
     {
         #region Main GetUpdates Loop
 
-        public static long UpdateId = 0;
-        public static readonly int LauchTime = Utilities.EpochTime();
+        internal static long UpdateId = 0;
+        internal static readonly int LauchTime = Utilities.EpochTime();
         static void Main()
         {
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(ExitCleanUp);
@@ -61,6 +62,8 @@ namespace DreadBot
 
             PluginManager.Init();
 
+            SoundSystem.Init();
+
             Cron.CronInit();
 
             if (Configs.RunningConfig.Owner == 0)
@@ -75,7 +78,7 @@ namespace DreadBot
                 Methods.sendMessage(Configs.RunningConfig.AdminChat, text);
             }
 
-            Console.Title = "DreadBot: @" + Configs.Me.username;
+            Console.Title = "DreadBot v" + Configs.Version + " @" + Configs.Me.username;
             Console.WriteLine(PluginManager.getPluginList() + "\n");
             Console.WriteLine("DreadBot Loaded, and Started!\n");
 
@@ -137,8 +140,7 @@ namespace DreadBot
         {
             Logger.LogAdmin("Exiting DreadBot. Cleaning up...");
 
-            Database.databaseCron.Abort();
-            Database.DestroyDB();
+            Database.DisposeDB();
 
             Cron.CronThread.Abort();
 

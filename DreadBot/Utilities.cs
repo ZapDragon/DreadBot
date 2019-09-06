@@ -53,17 +53,21 @@ namespace DreadBot
 
         public static void AdminCommand(Message msg, string[] Args)
         {
-            if (Configs.RunningConfig.Admins.Contains(msg.from.id) || Configs.RunningConfig.Owner == msg.from.id)
+            if (msg != null)
             {
-                switch (Args[0].Substring(1))
+                if (Configs.RunningConfig.Admins.Contains(msg.from.id) || Configs.RunningConfig.Owner == msg.from.id)
                 {
-                    case "save": {
-                            Database.SaveConfig();
-                            Methods.sendReply(msg.chat.id, msg.message_id, "Flushed Database To Disk.");
-                            break;
-                        }
+                    switch (Args[0].Substring(1))
+                    {
+                        case "save":
+                            {
+                                Database.SaveConfig();
+                                Methods.sendReply(msg.chat.id, msg.message_id, "Flushed Database To Disk.");
+                                break;
+                            }
 
 
+                    }
                 }
             }
         }

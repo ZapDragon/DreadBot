@@ -38,7 +38,6 @@ namespace DreadBot
 
     public class Database {
 
-        internal static Thread databaseCron;
         private static LiteDatabase db;
         private static LiteCollection<BotConfig> DreadBotCol;
         internal static bool newInstance = false;
@@ -64,7 +63,7 @@ namespace DreadBot
             }
         }
 
-        internal static void DestroyDB()
+        internal static void DisposeDB()
         {
             db.Dispose();
         }
