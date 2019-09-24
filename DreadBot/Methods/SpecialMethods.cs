@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DreadBot
 {
-    partial class Methods
+    public partial class Methods
     {
 
         //public static Update[] getFirstUpdates(int to = 1800)
@@ -78,7 +78,6 @@ namespace DreadBot
             if (untilEpoch < 30) { kcmr.until_date = Utilities.EpochTime() + 10; }
             Result<bool> result = null;
             result = sendRequest<bool>(Method.kickChatMember, buildRequest<KickChatMemberRequest>(kcmr));
-            isOk(result);
             return result;
         }
 
@@ -103,7 +102,6 @@ namespace DreadBot
             };
             if (keyboard != null) { smr.reply_markup = keyboard; }
             Result<Message> result = sendRequest<Message>(Method.sendMessage, buildRequest<SendMessageRequest>(smr));
-            isOk<Message>(result);
             return result;
         }
 

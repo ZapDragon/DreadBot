@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DreadBot
 {
-    partial class Methods
+    public partial class Methods
     {
         /// <summary>
         /// Returns a User object which contains the user data about the bot. In Most cases, you wont need this.
@@ -38,7 +39,6 @@ namespace DreadBot
             if (keyboard != null) { smr.reply_markup = keyboard; }
             Result<Message> result = null;
             result = sendRequest<Message>(Method.sendMessage, buildRequest<SendMessageRequest>(smr));
-            isOk<Message>(result);
             return result;
         }
 
@@ -101,7 +101,6 @@ namespace DreadBot
                     form.Add(new StringContent(payload1, Encoding.UTF8), "reply_markup");
                 }
                 Result<Message> result = sendRequest<Message>(Method.sendPhoto, "", "", form);
-                isOk(result);
                 return result;
             }
         }
@@ -130,7 +129,6 @@ namespace DreadBot
             if (keyboard != null) { spr.reply_markup = keyboard; }
             Result<Message> result;
             result = sendRequest<Message>(Method.sendPhoto, buildRequest<SendPhotoUrlRequest>(spr));
-            isOk(result);
             return result;
         }
 
@@ -195,7 +193,6 @@ namespace DreadBot
                     form.Add(new StringContent(payload1, Encoding.UTF8), "reply_markup");
                 }
                 Result<Message> result = sendRequest<Message>(Method.sendAudio, "", "", form);
-                isOk(result);
                 return result;
             }
         }
@@ -248,14 +245,94 @@ namespace DreadBot
                     form.Add(new StringContent(payload1, Encoding.UTF8), "reply_markup");
                 }
                 Result<Message> result = sendRequest<Message>(Method.sendDocument, "", "", form);
-                isOk(result);
                 return result;
             }
         }
 
-        public static Result<Message> sendVideo()
+        public static Result<Message> sendVideo(long chat_id, Stream content, string fileName, string caption, string parse_mode = "markdown", 
+                                                int duration = 0, int width = 0, int height = 0, string thumb = "", bool supports_streaming = false, 
+                                                bool disable_notification = false, int reply_to_message_id = 0, InlineKeyboardMarkup keyboard = null)
+
         {
-            return null;
+            SendVideoRequest svr = new SendVideoRequest()
+            {
+                reply_markup = keyboard
+            };
+            using (MultipartFormDataContent form = new MultipartFormDataContent())
+            {
+                form.Add(new StringContent(chat_id.ToString(), Encoding.UTF8), "chat_id");
+                fileName = fileName ?? "video";
+                string contentDisposision = $@"form-data; name=""video""; filename=""{fileName}""";
+                HttpContent mediaPartContent = new StreamContent(content)
+                {
+                    Headers =
+                    {
+                        {"Content-Type", "application/octet-stream"},
+                        {"Content-Disposition", contentDisposision}
+                    }
+                };
+
+                form.Add(mediaPartContent, "video");
+                if (duration != 0)
+                {
+                    form.Add(new StringContent(duration.ToString(), Encoding.UTF8), "duration");
+                }
+                if (width != 0)
+                {
+                    form.Add(new StringContent(width.ToString(), Encoding.UTF8), "width");
+                }
+                if (height != 0)
+                {
+                    form.Add(new StringContent(height.ToString(), Encoding.UTF8), "height");
+                }
+                if (caption != null)
+                {
+                    form.Add(new StringContent(caption.ToString(), Encoding.UTF8), "caption");
+                }
+                if (!string.IsNullOrEmpty(thumb))
+                {
+                    form.Add(new StringContent(thumb.ToString(), Encoding.UTF8), "thumb");
+                }
+                if (parse_mode != null)
+                {
+                    form.Add(new StringContent(parse_mode.ToString(), Encoding.UTF8), "parse_mode");
+                }
+                if (supports_streaming)
+                {
+                    form.Add(new StringContent(supports_streaming.ToString(), Encoding.UTF8), "supports_streaming");
+                }
+                if (disable_notification)
+                {
+                    form.Add(new StringContent(disable_notification.ToString(), Encoding.UTF8), "disable_notification");
+                }
+                if (reply_to_message_id != 0)
+                {
+                    form.Add(new StringContent(reply_to_message_id.ToString(), Encoding.UTF8), "reply_to_message_id");
+                }
+                if (keyboard != null)
+                {
+                    string payload1 = buildRequest<SendPhotoDataRequest>(svr);
+                    form.Add(new StringContent(payload1, Encoding.UTF8), "reply_markup");
+                }
+                Result<Message> result = sendRequest<Message>(Method.sendVideo, "", "", form);
+                return result;
+            }
+        }
+        public static Result<Message> sendAnimation(long chat_id, string url, string caption, string parse_mode = "markdown", bool disable_notification = false, int reply_to_message_id = 0, InlineKeyboardMarkup keyboard = null)
+        {
+            SendAnimationUrlRequest anur = new SendAnimationUrlRequest()
+            {
+                animation_url = url,
+                chat_id = chat_id,
+                caption = caption,
+                parse_mode = parse_mode,
+            };
+            if (disable_notification) { anur.disable_notification = true; }
+            if (reply_to_message_id != 0) { anur.reply_to_message_id = reply_to_message_id; }
+            if (keyboard != null) { anur.reply_markup = keyboard; }
+            Result<Message> result;
+            result = sendRequest<Message>(Method.sendAnimation, buildRequest<SendAnimationUrlRequest>(anur));
+            return result;
         }
         public static Result<Message> sendVoice()
         {
@@ -295,9 +372,16 @@ namespace DreadBot
             return null;
         }
 
-        public static Result<bool> sendChatAction()
+        public static Result<bool> sendChatAction(long chat_id, string action)
         {
-            return null;
+            SendChatActionRequest scar = new SendChatActionRequest()
+            {
+                chat_id = chat_id,
+                action = action
+            };
+            Result<bool> result = sendRequest<bool>(Method.sendChatAction, buildRequest<SendChatActionRequest>(scar));
+            return result;
+
         }
 
         /// <summary>
@@ -314,7 +398,6 @@ namespace DreadBot
             if (limit > 0) { uppr.limit = limit; }
             Result<UserProfilePhotos> result = null;
             result = sendRequest<UserProfilePhotos>(Method.getUserProfilePhotos, buildRequest<UserProfilePhotosRequest>(uppr));
-            isOk(result);
             return result;
         }
         /// <summary>
@@ -327,7 +410,6 @@ namespace DreadBot
             GetFileRequest gfr = new GetFileRequest() { file_id = file_id };
             Result<File> result = null;
             result = sendRequest<File>(Method.getFile, buildRequest<GetFileRequest>(gfr));
-            isOk(result);
             return result;
         }
 
@@ -348,7 +430,6 @@ namespace DreadBot
             Result<bool> result = null;
             Result<bool> unbanResult = null;
             result = sendRequest<bool>(Method.kickChatMember, Payload);
-            isOk(result);
 
             if (result.ok)
             {
@@ -373,7 +454,6 @@ namespace DreadBot
             };
             Result<bool> unbanResult = null;
             unbanResult = sendRequest<bool>(Method.unbanChatMember, buildRequest<KickChatMemberRequest>(kcmr));
-            isOk(unbanResult);
             return unbanResult;
         }
         public static Result<bool> restrictChatMember()
@@ -398,7 +478,6 @@ namespace DreadBot
             GetChatRequest gcr = new GetChatRequest() { chat_id = chat_id };
             Result<string> result = null;
             result = sendRequest<string>(Method.exportChatInviteLink, buildRequest<KickChatMemberRequest>(gcr));
-            isOk(result);
             return result;
         }
 
@@ -436,7 +515,6 @@ namespace DreadBot
             GetChatRequest gcr = new GetChatRequest() { chat_id = chat_id };
             Result<bool> result = null;
             result = sendRequest<bool>(Method.leaveChat, buildRequest<GetChatRequest>(gcr));
-            isOk(result);
             return result;
         }
         /// <summary>
@@ -449,7 +527,6 @@ namespace DreadBot
             GetChatRequest gcr = new GetChatRequest() { chat_id = chat_id };
             Result<Chat> result = null;
             result = sendRequest<Chat>(Method.getChat, buildRequest<GetChatRequest>(gcr));
-            isOk(result);
             return result;
         }
         /// <summary>
@@ -462,7 +539,6 @@ namespace DreadBot
             GetChatRequest gcr = new GetChatRequest() { chat_id = chat_id };
             Result<ChatMember[]> result = null;
             result = sendRequest<ChatMember[]>(Method.getChatAdministrators, buildRequest<GetChatRequest>(gcr));
-            isOk(result);
             return result;
         }
         /// <summary>
@@ -475,7 +551,6 @@ namespace DreadBot
             GetChatRequest gcr = new GetChatRequest() { chat_id = chat_id };
             Result<int> result = null;
             result = sendRequest<int>(Method.getChatMembersCount, buildRequest<GetChatRequest>(gcr));
-            isOk(result);
             return result;
         }
 
@@ -494,7 +569,6 @@ namespace DreadBot
             };
             Result<ChatMember> result;
             result = sendRequest<ChatMember>(Method.getChatMember, buildRequest<ChatMemberRequest>(gcmr));
-            isOk(result);
             return result;
         }
         public static Result<bool> setChatStickerSet()
@@ -527,7 +601,6 @@ namespace DreadBot
 
             Result<bool> result = null;
             result = sendRequest<bool>(Method.answerCallbackQuery, buildRequest<AnswerCallBackRequest>(acbr));
-            isOk(result);
             return result;
         }
     }

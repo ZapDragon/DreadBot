@@ -31,7 +31,7 @@ using System.Threading.Tasks;
 
 namespace DreadBot
 {
-    partial class Methods
+    public partial class Methods
     {
         #region Global Method Execution Object
 
@@ -39,6 +39,8 @@ namespace DreadBot
         private static Result<T> sendRequest<T>(Method method, string payload = "", string payloadType = "application/json", MultipartFormDataContent dataPayload = null)
         {
             //Console.WriteLine(method + " | " + payload);
+            string uriMethod = "https://api.telegram.org/bot" + Configs.RunningConfig.token + "/" + method;
+            HttpClient client = new HttpClient();
             HttpResponseMessage response = null;
             int tryCount = 6;
             while (response == null)
@@ -50,8 +52,11 @@ namespace DreadBot
                 }
                 try
                 {
-                    if (dataPayload == null) { response = Task.Run(() => new HttpClient().PostAsync("https://api.telegram.org/bot" + Configs.RunningConfig.token + "/" + method, new StringContent(payload, Encoding.UTF8, payloadType))).Result; }
-                    else { response = Task.Run(() => new HttpClient().PostAsync("https://api.telegram.org/bot" + Configs.RunningConfig.token + "/" + method, dataPayload)).Result; }
+                    if (dataPayload == null) {
+                        StringContent content = new StringContent(payload, Encoding.UTF8, payloadType);
+                        response = Task.Run(() => client.PostAsync(uriMethod, content)).Result;
+                    }
+                    else { response = Task.Run(() => new HttpClient().PostAsync(uriMethod, dataPayload)).Result; }
                 }
                 catch
                 {
@@ -60,24 +65,19 @@ namespace DreadBot
                 }
                 tryCount--;
             }
+            client.Dispose();
+            Stream stream = Task.Run(() => response.Content.ReadAsStreamAsync()).Result;
+            DataContractJsonSerializer dcjs = new DataContractJsonSerializer(typeof(Result<T>));
+            Result<T> result = (dcjs.ReadObject(stream)) as Result<T>;
             if (!response.IsSuccessStatusCode) //HTTP Error handling
             {
                 Logger.LogFatal("Http Status Code: (" + response.StatusCode + ") Reason:" + response.ReasonPhrase);
-                return null;
             }
-            else
-            {
-                Stream stream = Task.Run(() => response.Content.ReadAsStreamAsync()).Result;
-                Result<T> result = ((new DataContractJsonSerializer(typeof(Result<T>))).ReadObject(stream)) as Result<T>;
-                return result;
-            }
+            if (result == null) { Logger.LogError("Method Error: Result is null"); }
+            else if (!result.ok) { Logger.LogError("(" + result.errorCode + ") " + result.description); }
+            return result;
+            
         }
-        private static void isOk<T>(Result<T> res)
-        {
-            if (res == null) { Logger.LogError("Method Error: Method is null"); }
-            else if (!res.ok) { Logger.LogError("(" + res.errorCode + ") " + res.description); }
-        }
-
         #endregion
 
         #region Request Builder
@@ -99,19 +99,16 @@ namespace DreadBot
             Result<Update[]> result = null;
             if (args == null) { result = sendRequest<Update[]>(Method.getUpdates); }
             else { result = sendRequest<Update[]>(Method.getUpdates, buildRequest<GetUpdates>(args)); }
-            isOk(result);
             return result;
         }
         internal static Result<bool> setWebhook(SetWebHook args)
         {
             Result<bool> result = sendRequest<bool>(Method.setWebhook, buildRequest<SetWebHook>(args));
-            isOk<bool>(result);
             return result;
         }
         internal static Result<bool> deleteWebhook()
         {
             Result<bool> result = sendRequest<bool>(Method.deleteWebhook);
-            isOk<bool>(result);
             return result;
         }
         /// <summary>
@@ -120,9 +117,7 @@ namespace DreadBot
         /// <returns></returns>
         public static Result<WebhookInfo> getWebhookInfo()
         {
-            Result<WebhookInfo> result = sendRequest<WebhookInfo>(Method.getWebhookInfo);
-            isOk<WebhookInfo>(result);
-            return result;
+            return sendRequest<WebhookInfo>(Method.getWebhookInfo);
         }
 
         #endregion

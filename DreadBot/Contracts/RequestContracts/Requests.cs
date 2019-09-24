@@ -60,8 +60,13 @@ namespace DreadBot
         public string[] allowed_updates { get; set; }
     }
 
+    #region Edit Messages
+
+
+
+
     [DataContract]
-    public class EditMessageRequest
+    public class EditMessageTextRequest
     {
         [DataMember(Name = "chat_id", EmitDefaultValue = false)]
         public long chat_id { get; set; }
@@ -84,6 +89,62 @@ namespace DreadBot
         [DataMember(Name = "reply_markup", EmitDefaultValue = false)]
         public InlineKeyboardMarkup reply_markup { get; set; }
     }
+
+    [DataContract]
+    public class EditMessageCaptionRequest
+    {
+        [DataMember(Name = "chat_id", EmitDefaultValue = false)]
+        public long chat_id { get; set; }
+
+        [DataMember(Name = "message_id", EmitDefaultValue = false)]
+        public long message_id { get; set; }
+
+        [DataMember(Name = "inline_message_id", EmitDefaultValue = false)]
+        public long inline_message_id { get; set; }
+
+        [DataMember(Name = "caption", IsRequired = true)]
+        public string caption { get; set; }
+
+        [DataMember(Name = "parse_mode", EmitDefaultValue = false)]
+        public string parse_mode { get; set; }
+
+        [DataMember(Name = "reply_markup", EmitDefaultValue = false)]
+        public InlineKeyboardMarkup reply_markup { get; set; }
+    }
+
+    [DataContract]
+    public class EditMessageMediaRequest
+    {
+        [DataMember(Name = "chat_id", EmitDefaultValue = false)]
+        public long chat_id { get; set; }
+
+        [DataMember(Name = "message_id", EmitDefaultValue = false)]
+        public long message_id { get; set; }
+
+        [DataMember(Name = "inline_message_id", EmitDefaultValue = false)]
+        public long inline_message_id { get; set; }
+
+        [DataMember(Name = "reply_markup", EmitDefaultValue = false)]
+        public InlineKeyboardMarkup reply_markup { get; set; }
+    }
+
+    [DataContract]
+    public class editMessageReplyMarkup
+    {
+        [DataMember(Name = "chat_id", EmitDefaultValue = false)]
+        public long chat_id { get; set; }
+
+        [DataMember(Name = "message_id", EmitDefaultValue = false)]
+        public long message_id { get; set; }
+
+        [DataMember(Name = "inline_message_id", EmitDefaultValue = false)]
+        public long inline_message_id { get; set; }
+
+        [DataMember(Name = "reply_markup", EmitDefaultValue = false)]
+        public InlineKeyboardMarkup reply_markup { get; set; }
+    }
+
+    #endregion
 
     [DataContract]
     public class SendMessageRequest
@@ -192,6 +253,43 @@ namespace DreadBot
     }
 
     [DataContract]
+    public class SendVideoRequest
+    {
+        [DataMember(Name = "chat_id", IsRequired = true)]
+        public long chat_id { get; set; }
+
+        [DataMember(Name = "duration", EmitDefaultValue = false)]
+        public int duration { get; set; }
+
+        [DataMember(Name = "width", EmitDefaultValue = false)]
+        public int width { get; set; }
+
+        [DataMember(Name = "height", EmitDefaultValue = false)]
+        public int height { get; set; }
+
+        [DataMember(Name = "thumb", EmitDefaultValue = false)]
+        public string thumb { get; set; }
+
+        [DataMember(Name = "caption", EmitDefaultValue = false)]
+        public string caption { get; set; }
+
+        [DataMember(Name = "parse_mode", EmitDefaultValue = false)]
+        public string parse_mode { get; set; }
+
+        [DataMember(Name = "supports_streaming", EmitDefaultValue = false)]
+        public bool supports_streaming { get; set; }
+
+        [DataMember(Name = "disable_notification", EmitDefaultValue = false)]
+        public bool disable_notification { get; set; }
+
+        [DataMember(Name = "reply_to_message_id", EmitDefaultValue = false)]
+        public int reply_to_message_id { get; set; }
+
+        [DataMember(Name = "reply_markup", EmitDefaultValue = false)]
+        public InlineKeyboardMarkup reply_markup { get; set; }
+    }
+
+    [DataContract]
     public class SendDocumentDataRequest
     {
         [DataMember(Name = "chat_id", IsRequired = true)]
@@ -213,7 +311,45 @@ namespace DreadBot
         public InlineKeyboardMarkup reply_markup { get; set; }
     }
 
+    [DataContract]
+    public class SendAnimationUrlRequest
+    {
+        [DataMember(Name = "chat_id", IsRequired = true)]
+        public long chat_id { get; set; }
 
+        [DataMember(Name = "animation", IsRequired = true)]
+        public string animation_url { get; set; }
+
+        [DataMember(Name = "duration", EmitDefaultValue = false)]
+        public string duration { get; set; }
+
+        [DataMember(Name = "width", EmitDefaultValue = false)]
+        public string width { get; set; }
+
+        [DataMember(Name = "caption", EmitDefaultValue = false)]
+        public string caption { get; set; }
+
+        [DataMember(Name = "parse_mode", EmitDefaultValue = false)]
+        public string parse_mode { get; set; }
+
+        [DataMember(Name = "disable_notification", EmitDefaultValue = false)]
+        public bool disable_notification { get; set; }
+
+        [DataMember(Name = "reply_to_message_id", EmitDefaultValue = false)]
+        public long reply_to_message_id { get; set; }
+
+        [DataMember(Name = "reply_markup", EmitDefaultValue = false)]
+        public InlineKeyboardMarkup reply_markup { get; set; }
+    }
+    [DataContract]
+    public class SendChatActionRequest
+    {
+        [DataMember(Name = "chat_id", IsRequired = true)]
+        public long chat_id { get; set; }
+
+        [DataMember(Name = "action", IsRequired = true)]
+        public string action { get; set; }
+    }
     [DataContract]
     public class ForwardMessageRequest
     {

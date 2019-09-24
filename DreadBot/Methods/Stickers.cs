@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DreadBot
 {
-    partial class Methods
+    public partial class Methods
     {
         public static Result<Message> sendSticker()
         {

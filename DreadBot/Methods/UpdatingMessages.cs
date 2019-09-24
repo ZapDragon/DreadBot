@@ -30,13 +30,13 @@ using System.Threading.Tasks;
 
 namespace DreadBot
 {
-    partial class Methods
+    public partial class Methods
     {
         /// <summary>
-        /// Sends a message to a Chat, Group, Channel, or User. Returns the Result<Message> object on success.
+        /// Edit a message within a Chat, Group, Channel, or User. Returns the Result<Message> object on success, or Result<bool> if the edited message was the bot's</bool>.
         /// </summary>
-        /// <param name="chat_id">The Id number od the chat to send a message. Can be a User, Channel, Or group. Cannot be a bot.</param>
-        /// <param name="message_id">The Id number od the chat to send a message. Required if inline_message_id is not specified. Identifier of the message to edit. Can be a User, Channel, Or group. Cannot be a bot.</param>
+        /// <param name="chat_id">The id number of the chat where the message to edit is. Can be a User, Channel, Or group. Cannot be a bot.</param>
+        /// <param name="message_id">Identifier of the message to edit. Can be a User, Channel, Or group. Cannot be a bot.</param>
         /// <param name="inline_message_id">Required if chat_id and message_id are not specified. Identifier of the inline message.</param>
         /// <param name="text">The new text to of the Message. Character Limit of 4096.</param>
         /// <param name="parse_mode">Makrkdown, HTML, or Empty. Tells telegram how to parse special markdown flags in the text. Makrdown by default.</param>
@@ -45,7 +45,7 @@ namespace DreadBot
         /// <returns></returns>
         public static Result<object> editMessageText(long chat_id, long message_id, string text, string parse_mode = "markdown", InlineKeyboardMarkup keyboard = null) //Can apprently return a bool as well. 
         {
-            EditMessageRequest smr = new EditMessageRequest()
+            EditMessageTextRequest emr = new EditMessageTextRequest()
             {
                 chat_id = chat_id,
                 message_id = message_id,
@@ -53,23 +53,56 @@ namespace DreadBot
                 parse_mode = parse_mode
             };
 
-            if (keyboard != null) { smr.reply_markup = keyboard; }
+            if (keyboard != null) { emr.reply_markup = keyboard; }
             Result<object> result = null;
             try
             {
-                result = sendRequest<object>(Method.editMessageText, buildRequest<EditMessageRequest>(smr));
-                isOk(result);
+                result = sendRequest<object>(Method.editMessageText, buildRequest<EditMessageTextRequest>(emr));
                 return result;
             }
-            catch { Logger.LogWarn("Failed to Parse wrong datatype 1"); }
+            catch { Logger.LogWarn("Failed to Parse wrong datatype 1 EditMessageText()"); }
             return null;
         }
-
-        public static Result<Message> editMessageCaption() //Can apprently return a bool as well. 
+        /// <summary>
+        /// Edit a photo caption within a Chat, Group, Channel, or User. Returns the Result<Message> object on success, or Result<bool> if the edited message was the bot's</bool>.
+        /// </summary>
+        /// <param name="chat_id">The Id number of the chat where the message to be edited is. Can be a User, Channel, Or group. Cannot be a bot.</param>
+        /// <param name="message_id">Identifier of the caption to edit. Can be a User, Channel, Or group. Cannot be a bot.</param>
+        /// <param name="inline_message_id">Required if chat_id and message_id are not specified. Identifier of the inline message.</param>
+        /// <param name="caption">The new caption for the Image. Character Limit of 1024.</param>
+        /// <param name="parse_mode">Makrkdown, HTML, or Empty. Tells telegram how to parse special markdown flags in the text. Makrdown by default.</param>
+        /// <param name="keyboard">InlineKeyboardMarkup Object. Pass a built Keyboard object in here to include it in your messages.</param>
+        /// <returns></returns>
+        public static Result<object> editMessageCaption(long chat_id, long message_id, string caption, string parse_mode = "markdown", InlineKeyboardMarkup keyboard = null) //Can apprently return a bool as well. 
         {
+            EditMessageCaptionRequest emr = new EditMessageCaptionRequest()
+            {
+                chat_id = chat_id,
+                message_id = message_id,
+                caption = caption,
+                parse_mode = parse_mode
+            };
+
+            if (keyboard != null) { emr.reply_markup = keyboard; }
+            Result<object> result = null;
+            try
+            {
+                result = sendRequest<object>(Method.editMessageCaption, buildRequest<EditMessageCaptionRequest>(emr));
+                return result;
+            }
+            catch { Logger.LogWarn("Failed to Parse wrong datatype 1 EditMessageText()"); }
             return null;
         }
-
+        /// <summary>
+        /// Use this method to edit animation, audio, document, photo, or video messages. If a message is a part of a message album, then it can be edited only to a photo or a video. Otherwise, message type can be changed arbitrarily. When inline message is edited, new file can't be uploaded. Use previously uploaded file via its file_id or specify a URL. On success, if the edited message was sent by the bot, returns Result<Message> object otherwise returns Result<bool> = true
+        /// </summary>
+        /// <param name="chat_id">The Id number od the chat where the image was sent. Can be a User, Channel, Or group. Cannot be a bot.</param>
+        /// <param name="message_id">The id number of the Message containing the Photo to edit. Can be a User, Channel, Or group. Cannot be a bot.</param>
+        /// <param name="inline_message_id">Required if chat_id and message_id are not specified. Identifier of the inline message.</param>
+        /// <param name="caption">The new caption for the Image. Character Limit of 1024.</param>
+        /// <param name="parse_mode">Makrkdown, HTML, or Empty. Tells telegram how to parse special markdown flags in the text. Makrdown by default.</param>
+        /// <param name="keyboard">InlineKeyboardMarkup Object. Pass a built Keyboard object in here to include it in your messages.</param>
+        /// <returns></returns>
         public static Result<Message> editMessageMedia() //Can apprently return a bool as well. 
         {
             return null;
@@ -96,7 +129,6 @@ namespace DreadBot
             Result<bool> result = null;
 
             result = sendRequest<bool>(Method.deleteMessage, buildRequest<DeleteMessageRequest>(dmr));
-            isOk(result);
             return result;
         }
     }

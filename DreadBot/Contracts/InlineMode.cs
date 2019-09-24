@@ -27,6 +27,7 @@ using System.Runtime.Serialization;
 
 namespace DreadBot
 {
+
     [DataContract]
     public class InlineQuery
     {
@@ -46,23 +47,22 @@ namespace DreadBot
         public string offset { get; set; }
     }
 
-    //TO DO: Figure This BS out. Not touched after consolidation.
+    
     #region Inline Query Result Types
     [DataContract]
     public class InlineQueryResult
-    {
-        //This is a mess.
-        // No fields are specified in the documentation for this, but is allegedly supposed to be an array of results which can be one or several differnet Types entirely.
-    }
-
-    [DataContract]
-    public class InlineQueryResultArticle
     {
         [DataMember(Name = "type")]
         public string type { get; set; }
 
         [DataMember(Name = "id")]
         public string id { get; set; }
+    }
+
+    [DataContract]
+    public class InlineQueryResultArticle : InlineQueryResult
+    {
+
 
         [DataMember(Name = "title")]
         public string title { get; set; }
@@ -93,14 +93,8 @@ namespace DreadBot
     }
 
     [DataContract]
-    public class InlineQueryResultPhoto
+    public class InlineQueryResultPhoto : InlineQueryResult
     {
-        [DataMember(Name = "type")]
-        public string type { get; set; }
-
-        [DataMember(Name = "id")]
-        public string id { get; set; }
-
         [DataMember(Name = "photo_url")]
         public string photo_url { get; set; }
 
@@ -133,13 +127,8 @@ namespace DreadBot
     }
 
     [DataContract]
-    public class InlineQueryResultGif
+    public class InlineQueryResultGif : InlineQueryResult
     {
-        [DataMember(Name = "type")]
-        public string type { get; set; }
-
-        [DataMember(Name = "id")]
-        public string id { get; set; }
 
         [DataMember(Name = "gif_url")]
         public string gif_url { get; set; }
@@ -173,12 +162,8 @@ namespace DreadBot
     }
 
     [DataContract]
-    public class InlineQueryResultMpeg4Gif
+    public class InlineQueryResultMpeg4Gif : InlineQueryResult
     {
-        [DataMember(Name = "type")]
-        public string type { get; set; }
-
-        [DataMember(Name = "id")]
         public string id { get; set; }
 
         [DataMember(Name = "mpeg4_url")]
@@ -213,13 +198,8 @@ namespace DreadBot
     }
 
     [DataContract]
-    public class InlineQueryResultVideo
+    public class InlineQueryResultVideo : InlineQueryResult
     {
-        [DataMember(Name = "type")]
-        public string type { get; set; }
-
-        [DataMember(Name = "id")]
-        public string id { get; set; }
 
         [DataMember(Name = "video_url")]
         public string video_url { get; set; }
@@ -259,14 +239,8 @@ namespace DreadBot
     }
 
     [DataContract]
-    public class InlineQueryResultAudio
+    public class InlineQueryResultAudio : InlineQueryResult
     {
-        [DataMember(Name = "type")]
-        public string type { get; set; }
-
-        [DataMember(Name = "id")]
-        public string id { get; set; }
-
         [DataMember(Name = "audio_url")]
         public string audio_url { get; set; }
 
@@ -293,14 +267,8 @@ namespace DreadBot
     }
 
     [DataContract]
-    public class InlineQueryResultVoice
+    public class InlineQueryResultVoice : InlineQueryResult
     {
-        [DataMember(Name = "type")]
-        public string type { get; set; }
-
-        [DataMember(Name = "id")]
-        public string id { get; set; }
-
         [DataMember(Name = "voice_url")]
         public string voice_url { get; set; }
 
@@ -324,13 +292,8 @@ namespace DreadBot
     }
 
     [DataContract]
-    public class InlineQueryResultDocument
+    public class InlineQueryResultDocument : InlineQueryResult
     {
-        [DataMember(Name = "type")]
-        public string type { get; set; }
-
-        [DataMember(Name = "id")]
-        public string id { get; set; }
 
         [DataMember(Name = "title")]
         public string title { get; set; }
@@ -367,13 +330,8 @@ namespace DreadBot
     }
 
     [DataContract]
-    public class InlineQueryResultLocation
+    public class InlineQueryResultLocation : InlineQueryResult
     {
-        [DataMember(Name = "type")]
-        public string type { get; set; }
-
-        [DataMember(Name = "id")]
-        public string id { get; set; }
 
         [DataMember(Name = "latitude")]
         public float latitude { get; set; }
@@ -404,14 +362,8 @@ namespace DreadBot
     }
 
     [DataContract]
-    public class InlineQueryResultVenue
+    public class InlineQueryResultVenue : InlineQueryResult
     {
-        [DataMember(Name = "type")]
-        public string type { get; set; }
-
-        [DataMember(Name = "id")]
-        public string id { get; set; }
-
         [DataMember(Name = "latitude")]
         public float latitude { get; set; }
 
@@ -444,13 +396,8 @@ namespace DreadBot
     }
 
     [DataContract]
-    public class InlineQueryResultContact
+    public class InlineQueryResultContact : InlineQueryResult
     {
-        [DataMember(Name = "type")]
-        public string type { get; set; }
-
-        [DataMember(Name = "id")]
-        public string id { get; set; }
 
         [DataMember(Name = "phone_number")]
         public string phone_number { get; set; }
@@ -478,14 +425,8 @@ namespace DreadBot
     }
 
     [DataContract]
-    public class InlineQueryResultGame
+    public class InlineQueryResultGame : InlineQueryResult
     {
-        [DataMember(Name = "type")]
-        public string type { get; set; }
-
-        [DataMember(Name = "id")]
-        public string id { get; set; }
-
         [DataMember(Name = "game_short_name")]
         public string game_short_name { get; set; }
 
@@ -494,14 +435,8 @@ namespace DreadBot
     }
 
     [DataContract]
-    public class InlineQueryResultCachedPhoto
+    public class InlineQueryResultCachedPhoto : InlineQueryResult
     {
-        [DataMember(Name = "type")]
-        public string type { get; set; }
-
-        [DataMember(Name = "id")]
-        public string id { get; set; }
-
         [DataMember(Name = "photo_file_id")]
         public string photo_file_id { get; set; }
 
@@ -525,14 +460,8 @@ namespace DreadBot
     }
 
     [DataContract]
-    public class InlineQueryResultCachedGif
+    public class InlineQueryResultCachedGif : InlineQueryResult
     {
-        [DataMember(Name = "type")]
-        public string type { get; set; }
-
-        [DataMember(Name = "id")]
-        public string id { get; set; }
-
         [DataMember(Name = "gif_file_id")]
         public string gif_file_id { get; set; }
 
@@ -553,14 +482,8 @@ namespace DreadBot
     }
 
     [DataContract]
-    public class InlineQueryResultCachedMpeg4Gif
+    public class InlineQueryResultCachedMpeg4Gif : InlineQueryResult
     {
-        [DataMember(Name = "type")]
-        public string type { get; set; }
-
-        [DataMember(Name = "id")]
-        public string id { get; set; }
-
         [DataMember(Name = "mpeg4_file_id")]
         public string mpeg4_file_id { get; set; }
 
@@ -581,14 +504,8 @@ namespace DreadBot
     }
 
     [DataContract]
-    public class InlineQueryResultCachedSticker
+    public class InlineQueryResultCachedSticker : InlineQueryResult
     {
-        [DataMember(Name = "type")]
-        public string type { get; set; }
-
-        [DataMember(Name = "id")]
-        public string id { get; set; }
-
         [DataMember(Name = "sticker_file_id")]
         public string sticker_file_id { get; set; }
 
@@ -602,14 +519,8 @@ namespace DreadBot
     }
 
     [DataContract]
-    public class InlineQueryResultCachedDocument
+    public class InlineQueryResultCachedDocument : InlineQueryResult
     {
-        [DataMember(Name = "type")]
-        public string type { get; set; }
-
-        [DataMember(Name = "id")]
-        public string id { get; set; }
-
         [DataMember(Name = "title")]
         public string title { get; set; }
 
@@ -633,14 +544,8 @@ namespace DreadBot
     }
 
     [DataContract]
-    public class InlineQueryResultCachedVideo
+    public class InlineQueryResultCachedVideo : InlineQueryResult
     {
-        [DataMember(Name = "type")]
-        public string type { get; set; }
-
-        [DataMember(Name = "id")]
-        public string id { get; set; }
-
         [DataMember(Name = "video_file_id")]
         public string video_file_id { get; set; }
 
@@ -664,14 +569,8 @@ namespace DreadBot
     }
 
     [DataContract]
-    public class InlineQueryResultCachedVoice
+    public class InlineQueryResultCachedVoice : InlineQueryResult
     {
-        [DataMember(Name = "type")]
-        public string type { get; set; }
-
-        [DataMember(Name = "id")]
-        public string id { get; set; }
-
         [DataMember(Name = "voice_file_id")]
         public string voice_file_id { get; set; }
 
@@ -692,14 +591,8 @@ namespace DreadBot
     }
 
     [DataContract]
-    public class InlineQueryResultCachedAudio
+    public class InlineQueryResultCachedAudio : InlineQueryResult
     {
-        [DataMember(Name = "type")]
-        public string type { get; set; }
-
-        [DataMember(Name = "id")]
-        public string id { get; set; }
-
         [DataMember(Name = "audio_file_id")]
         public string audio_file_id { get; set; }
 
@@ -719,11 +612,10 @@ namespace DreadBot
 
     #endregion
 
-    [DataContract]
-
-    //Here too...
+    //TO DO: Figure This BS out. Not touched after consolidation.
     #region InputMessageContent Types
 
+    [DataContract]
     public class InputMessageContent
     {
         //This is a mess.
