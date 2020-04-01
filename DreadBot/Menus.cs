@@ -295,21 +295,6 @@ namespace DreadBot
                         }
                         return;
                     }
-                case "systemsounds":
-                    {
-                        if (callback.from.id == Configs.RunningConfig.Owner)
-                        {
-                            Methods.answerCallbackQuery(callback.id);
-                            Methods.editMessageText(callback.from.id, callback.message.message_id, "*Sound System*\n\nThis system enables DreadBot to play any WAV/MP3 from the console where DreadBot is running as an event sound clip.\n\n- Sned Me any WAV/MP3 No larger than 20MB. \n- Reply to the Uploaded file with /addsound\n\nThe Sound System MUST be enable or the file will be ignored.\n\nClick \"Sound Assignments\" to assign sounds to events.", "makrdown", SoundSystem());
-                        }
-                        else
-                        {
-                            Methods.answerCallbackQuery(callback.id, "You are no longer allowed to view these options.", true);
-                            Methods.deleteMessage(callback.from.id, callback.message.message_id);
-                            Logger.LogAdmin("User Attempted to use a senitive menu Option. (" + callback.from.id + ") " + callback.from.first_name);
-                        }
-                        return;
-                    }
             }
         }
 
@@ -449,20 +434,6 @@ namespace DreadBot
             keyboard.addButton(new InlineKeyboardButton() { text = "🔙", callback_data = "dreadbot botadm" }, 5);
             return keyboard;
 
-        }
-
-        private static InlineKeyboardMarkup SoundSystem()
-        {
-            InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
-            keyboard.SetRowCount(3);
-            string snd = "🔇";
-            if (Configs.RunningConfig.SystemSounds) { snd = "🔊"; }
-            keyboard.addButton(new InlineKeyboardButton() { text = "Enable/Disable Sounds", callback_data = "dreadbot sndtogglehelp" }, 0);
-            keyboard.addButton(new InlineKeyboardButton() { text = snd, callback_data = "dreadbot toggle" }, 0);
-
-            keyboard.addButton(new InlineKeyboardButton() { text = "Sound Assignments", callback_data = "dreadbot soundselect" }, 1);
-            keyboard.addButton(new InlineKeyboardButton() { text = "🔙", callback_data = "dreadbot botadm" }, 2);
-            return keyboard;
         }
 
         internal static InlineKeyboardMarkup BackOnly(string CallBack)

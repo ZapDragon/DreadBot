@@ -22,6 +22,7 @@
 //SOFTWARE.
 
 #endregion
+using System;
 using System.IO;
 using System.Net.Http;
 using System.Runtime.Serialization.Json;
@@ -56,13 +57,22 @@ namespace DreadBot
                         StringContent content = new StringContent(payload, Encoding.UTF8, payloadType);
                         response = Task.Run(() => client.PostAsync(uriMethod, content)).Result;
                     }
-                    else { response = Task.Run(() => new HttpClient().PostAsync(uriMethod, dataPayload)).Result; }
+                    else {
+                        //string a = Task.Run(() => dataPayload.ReadAsStringAsync()).Result;
+                        response = Task.Run(() => new HttpClient().PostAsync(uriMethod, dataPayload)).Result; 
+                    }
                 }
-                catch
+                catch (ObjectDisposedException e)
                 {
-                    Logger.LogError("Socket Exception: Cannot connect to telegram. Waiting 60 seconds before next attempt.");
+                    Logger.LogError("(" + method + ") Object Disposed before it could be used: " + e + "\nBreaking out.");
+                    return null;
+                }
+                catch (Exception e)
+                {
+                    Logger.LogError("(" + method + ") Socket Exception: " + e + "\nWaiting 60 seconds before next attempt.");
                     Thread.Sleep(60000);
                 }
+
                 tryCount--;
             }
             client.Dispose();

@@ -71,11 +71,9 @@ namespace DreadBot
         {
             SendPhotoDataRequest spr = new SendPhotoDataRequest()
             {
-                chat_id = chatId,
-                caption = caption,
-                parse_mode = parse_mode,
+                chat_id = chatId
             };
-            using (var form = new MultipartFormDataContent())
+            using (MultipartFormDataContent form = new MultipartFormDataContent())
             {
                 form.Add(new StringContent(chatId.ToString(), Encoding.UTF8), "chat_id");
                 form.Add(fileData, "photo", filename);
@@ -97,8 +95,8 @@ namespace DreadBot
                 }
                 if (keyboard != null)
                 {
-                    string payload1 = buildRequest<SendPhotoDataRequest>(spr);
-                    form.Add(new StringContent(payload1, Encoding.UTF8), "reply_markup");
+                    //spr.reply_markup = keyboard;
+                    form.Add(new StringContent(buildRequest<InlineKeyboardMarkup>(keyboard), Encoding.UTF8), "reply_markup");
                 }
                 Result<Message> result = sendRequest<Message>(Method.sendPhoto, "", "", form);
                 return result;
@@ -155,8 +153,8 @@ namespace DreadBot
                 caption = caption,
                 parse_mode = parse_mode,
             };
-            using (var form = new MultipartFormDataContent())
-            {
+            MultipartFormDataContent form = new MultipartFormDataContent();
+
                 form.Add(new StringContent(chatId.ToString(), Encoding.UTF8), "chat_id");
                 form.Add(fileData, "audio", filename);
                 if (caption != null)
@@ -194,7 +192,7 @@ namespace DreadBot
                 }
                 Result<Message> result = sendRequest<Message>(Method.sendAudio, "", "", form);
                 return result;
-            }
+            
         }
 
         /// <summary>
@@ -217,12 +215,16 @@ namespace DreadBot
                 caption = caption,
                 parse_mode = parse_mode,
             };
-            using (var form = new MultipartFormDataContent())
-            {
-                form.Add(fileData, "document");
-                if (thumb != null) { form.Add(thumb, "thumb"); }
+            MultipartFormDataContent form = new MultipartFormDataContent();
+
                 form.Add(new StringContent(chatId.ToString(), Encoding.UTF8), "chat_id");
 
+                form.Add(fileData, "document");
+
+                if (thumb != null)
+                {
+                    form.Add(thumb, "thumb");
+                }
                 if (caption != null)
                 {
                     form.Add(new StringContent(caption.ToString(), Encoding.UTF8), "caption");
@@ -244,9 +246,11 @@ namespace DreadBot
                     string payload1 = buildRequest<SendDocumentDataRequest>(sddr);
                     form.Add(new StringContent(payload1, Encoding.UTF8), "reply_markup");
                 }
+                string a = Task.Run(() => form.ReadAsStringAsync()).Result;
+                Console.WriteLine(a);
                 Result<Message> result = sendRequest<Message>(Method.sendDocument, "", "", form);
                 return result;
-            }
+            
         }
 
         public static Result<Message> sendVideo(long chat_id, Stream content, string fileName, string caption, string parse_mode = "markdown", 
@@ -254,10 +258,6 @@ namespace DreadBot
                                                 bool disable_notification = false, int reply_to_message_id = 0, InlineKeyboardMarkup keyboard = null)
 
         {
-            SendVideoRequest svr = new SendVideoRequest()
-            {
-                reply_markup = keyboard
-            };
             using (MultipartFormDataContent form = new MultipartFormDataContent())
             {
                 form.Add(new StringContent(chat_id.ToString(), Encoding.UTF8), "chat_id");
@@ -311,8 +311,7 @@ namespace DreadBot
                 }
                 if (keyboard != null)
                 {
-                    string payload1 = buildRequest<SendPhotoDataRequest>(svr);
-                    form.Add(new StringContent(payload1, Encoding.UTF8), "reply_markup");
+                    form.Add(new StringContent(buildRequest<InlineKeyboardMarkup>(keyboard), Encoding.UTF8), "reply_markup");
                 }
                 Result<Message> result = sendRequest<Message>(Method.sendVideo, "", "", form);
                 return result;
@@ -344,8 +343,11 @@ namespace DreadBot
         }
         public static Result<Message[]> sendMediaGroup()
         {
+
+
             return null;
         }
+
         public static Result<Message> sendLocation()
         {
             return null;

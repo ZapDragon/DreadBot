@@ -108,8 +108,23 @@ namespace DreadBot
             return null;
         }
 
-        public static Result<Message> editMessageReplyMarkup() //Can apprently return a bool as well. 
+        public static Result<object> editMessageReplyMarkup(long chat_id, long message_id, string inline_message_id = "", InlineKeyboardMarkup keyboard = null) //Can apprently return a bool as well. 
         {
+            EditReplyMarkupRequest ermr = new EditReplyMarkupRequest()
+            {
+                chat_id = chat_id,
+                message_id = message_id,
+                //inline_message_id = inline_message_id,
+                reply_markup = keyboard
+            };
+
+            Result<object> result = null;
+            try
+            {
+                result = sendRequest<object>(Method.editMessageReplyMarkup, buildRequest<EditReplyMarkupRequest>(ermr));
+                return result;
+            }
+            catch { Logger.LogWarn("Edit Keyboard Failed " + chat_id); }
             return null;
         }
 

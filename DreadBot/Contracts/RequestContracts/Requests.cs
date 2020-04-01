@@ -91,6 +91,22 @@ namespace DreadBot
     }
 
     [DataContract]
+    public class EditReplyMarkupRequest
+    {
+        [DataMember(Name = "chat_id", EmitDefaultValue = false, IsRequired = true)]
+        public long chat_id { get; set; }
+
+        [DataMember(Name = "message_id", EmitDefaultValue = false, IsRequired = true)]
+        public long message_id { get; set; }
+
+        [DataMember(Name = "inline_message_id", EmitDefaultValue = false)]
+        public string inline_message_id { get; set; }
+
+        [DataMember(Name = "reply_markup", EmitDefaultValue = false)]
+        public InlineKeyboardMarkup reply_markup { get; set; }
+    }
+
+    [DataContract]
     public class EditMessageCaptionRequest
     {
         [DataMember(Name = "chat_id", EmitDefaultValue = false)]

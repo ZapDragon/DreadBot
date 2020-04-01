@@ -106,11 +106,11 @@ namespace DreadBot
             Owner = 0;
             Admins = new List<long>(16);
             AdminChat = 0;
-            GULimit = 1;
+            GULimit = 100;
             FirstLaunch = Utilities.EpochTime();
             LastLaunch = Utilities.EpochTime();
             GetupdatesMode = true;
-            SystemSounds = true;
+            ChatCacheTimer = 600;
         }
 
         public int id { get; set; } //Database placeholder.
@@ -123,7 +123,7 @@ namespace DreadBot
         public int FirstLaunch { get; set; } //The epoch time when the bot was first launched.
         public int LastLaunch { get; set; } //The epoch time when the bot was last launched.
         public bool GetupdatesMode { get; set; } //Toggle between GetUpdates and Webhook mode. This is controlled by The bot API.
-        public bool SystemSounds { get; set; } //Enable/Disable the Platform playing sounds on types of Events.
+        public int ChatCacheTimer { get; set; } //Time in seconds that a group's Cache is updated. (Default 600)
         public bool LastVersion { get; set; } //The last known version of the bot by the Database. If the structure changes to much, you cant use too new of a version without data corruption.
 
     }

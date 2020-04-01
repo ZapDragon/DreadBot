@@ -71,9 +71,6 @@ namespace DreadBot
         [DataMember(Name = "last_name", IsRequired = false)]
         public string last_name { get; set; }
 
-        [DataMember(Name = "all_members_are_administrators", IsRequired = false)]
-        public bool all_members_are_administrators { get; set; }
-
         [DataMember(Name = "photo", IsRequired = false)]
         public ChatPhoto photo { get; set; }
 
@@ -85,6 +82,9 @@ namespace DreadBot
 
         [DataMember(Name = "pinned_message", IsRequired = false)]
         public Message pinned_message { get; set; }
+
+        [DataMember(Name = "permissions", IsRequired = false)]
+        public ChatPermissions permissions { get; set; }
 
         [DataMember(Name = "sticker_set_name", IsRequired = false)]
         public string sticker_set_name { get; set; }
@@ -183,6 +183,9 @@ namespace DreadBot
         [DataMember(Name = "venue", IsRequired = false)]
         public Venue venue { get; set; }
 
+        [DataMember(Name = "poll", IsRequired = false)]
+        public Poll poll { get; set; }
+
         [DataMember(Name = "new_chat_members", IsRequired = false)]
         public User[] new_chat_members { get; set; }
 
@@ -208,10 +211,10 @@ namespace DreadBot
         public bool channel_chat_created { get; set; }
 
         [DataMember(Name = "migrate_to_chat_id", IsRequired = false)]
-        public long migrate_to_chat_id { get; set; }
+        public long migrate_to_chat_id { get; set; } = 0;
 
         [DataMember(Name = "migrate_from_chat_id", IsRequired = false)]
-        public long migrate_from_chat_id { get; set; }
+        public long migrate_from_chat_id { get; set; } = 0;
 
         [DataMember(Name = "pinned_message", IsRequired = false)]
         public Message pinned_message { get; set; }
@@ -667,6 +670,9 @@ namespace DreadBot
 
         [DataMember(Name = "can_send_media_messages", IsRequired = false)]
         public bool can_send_media_messages { get; set; }
+
+        [DataMember(Name = "can_send_polls", IsRequired = false)]
+        public bool can_send_polls { get; set; }
 
         [DataMember(Name = "can_send_other_messages", IsRequired = false)]
         public bool can_send_other_messages { get; set; }

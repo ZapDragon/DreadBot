@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DreadBot
@@ -11,55 +12,48 @@ namespace DreadBot
     public partial class Methods
     {
 
-        //public static Update[] getFirstUpdates(int to = 1800)
-        //{
-        //    Result<Update[]> result = null;
-        //    List<Update> updates = new List<Update>();
-        //    result = sendRequest<Update[]>(Method.getUpdates, buildRequest<GetUpdates>(new GetUpdates() { limit = 1, timeout = to }));
-        //
-        //    if (result == null)
-        //    {
-        //        Logger.LogFatal("Getting First Update: Shit broke.");
-        //        return null;
-        //    }
-        //    if (result.result.Length < 1)
-        //    {
-        //        return null;
-        //    }
-        //    updates.Add(result.result[0]);
-        //
-        //    isOk(result);
-        //    try { MainClass.UpdateId = result.result[0].update_id; }
-        //    catch { return null; }
-        //
-        //    long uid = MainClass.UpdateId;
-        //    while (uid + Configs.webhookinfo.pendingUpdateCount > MainClass.UpdateId)
-        //    {
-        //        result = sendRequest<Update[]>(Method.getUpdates, buildRequest<GetUpdates>(new GetUpdates() { limit = 100, timeout = to, offset = MainClass.UpdateId + 1}));
-        //        MainClass.UpdateId += result.result.Length;
-        //        isOk(result);
-        //        updates.AddRange(result.result);
-        //    }
-        //
-        //    return updates.ToArray();
-        //}
-
-        internal static Update[] getFirstUpdates(int to = 3600)
+        public static Update[] getFirstUpdates(int to = 1800)
         {
-            GetUpdates request = new GetUpdates() { limit = 1, timeout = to };
+            SortedDictionary<long, Update> updates = new SortedDictionary<long, Update>();
+            Result<Update[]> result = null;
 
-            Result<Update[]> result = sendRequest<Update[]>(Method.getUpdates, buildRequest<GetUpdates>(request));
+            if (Configs.webhookinfo.pendingUpdateCount == 0) { Configs.webhookinfo.pendingUpdateCount = 1; } //make it wait for first post anyways
 
-            if (result.ok)
+            while (updates.Count() < Configs.webhookinfo.pendingUpdateCount)
             {
-                return result.result;
+                GetUpdates u = new GetUpdates() { limit = 100, timeout = to };
+                if (MainClass.UpdateId > 0) { u.offset = MainClass.UpdateId + 1; }
+
+                result = sendRequest<Update[]>(Method.getUpdates, buildRequest<GetUpdates>(u));
+
+                if (result == null || !result.ok || result.result.Length < 1) { continue; }
+
+                foreach (Update update in result.result)
+                {
+                    updates.Add(update.update_id, update);
+                    if (update.update_id > MainClass.UpdateId) { MainClass.UpdateId = update.update_id; }
+                }
             }
-            else
-            {
-                Logger.LogError("(" + result.errorCode + ") " + result.description);
-                return null;
-            }
+
+            return updates.Values.ToArray();
         }
+
+        //internal static Update[] getFirstUpdates(int to = 3600)
+        //{
+        //    GetUpdates request = new GetUpdates() { limit = 100, timeout = to };
+        //
+        //    Result<Update[]> result = sendRequest<Update[]>(Method.getUpdates, buildRequest<GetUpdates>(request));
+        //
+        //    if (result.ok)
+        //    {
+        //        return result.result;
+        //    }
+        //    else
+        //    {
+        //        Logger.LogError("(" + result.errorCode + ") " + result.description);
+        //        return null;
+        //    }
+        //}
 
         /// <summary>
         /// This method is the same as kick, except it leaves the restriction on the user.

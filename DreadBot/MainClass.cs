@@ -23,34 +23,42 @@
 
 #endregion
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.Common;
-using System.IO;
 using System.Threading;
 using System.Diagnostics;
 
 namespace DreadBot
 {
-    class MainClass
+    public class MainClass
     {
-        #region Main GetUpdates Loop
+        #region Main Class
 
         internal static long UpdateId = 0;
         internal static readonly int LauchTime = Utilities.EpochTime();
+        public static Stopwatch sw; 
         static void Main()
         {
+            #region Bot Initialization Phase
+
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(ExitCleanUp);
 
             Database.Init();
 
-            Result<User> res = Methods.getMe();
-            if (!res.ok) {
-                Logger.LogFatal("Error getting bot info: " + res.description);
-                Environment.Exit(-1);
+            Result<User> res = null;
+            while (res == null) {
+                res = Methods.getMe();
+                if (res == null)
+                {
+                    Logger.LogError("Error getting bot info. Reattempting..");
+                }
+                else if (!res.ok)
+                {
+                    Logger.LogFatal("Error getting bot info (" + res.errorCode + ") " + res.description);
+                    Logger.LogFatal("Press anykey to terminate...");
+                    Console.ReadKey();
+                    Environment.Exit(-1);
+                }
             }
+
             Configs.Me = res.result;
             Result<WebhookInfo> webres = Methods.getWebhookInfo();
             if (!webres.ok)
@@ -60,9 +68,9 @@ namespace DreadBot
             }
             Configs.webhookinfo = webres.result;
 
-            PluginManager.Init();
+            ChatCaching.Init();
 
-            SoundSystem.Init();
+            PluginManager.Init();
 
             Cron.CronInit();
 
@@ -84,23 +92,25 @@ namespace DreadBot
 
             if (!String.IsNullOrEmpty(Configs.webhookinfo.Url)) { Configs.RunningConfig.GetupdatesMode = false; } //WebHook is enabled. Launch in Webhook mode.
 
+            #endregion
+
             while (true)
             {
+                #region Main GetUpdates Loop
+
                 if (Configs.RunningConfig.GetupdatesMode) //GetUpdates Mode
                 {
                     Update[] updates = null;
                     if (UpdateId == 0) {
-                        updates = Methods.getFirstUpdates(3600);
+                        if (Configs.webhookinfo.pendingUpdateCount > 3) { Logger.LogInfo("Playing catchup; " + Configs.webhookinfo.pendingUpdateCount + " updates behind."); }
+                        updates = Methods.getFirstUpdates(60);
                         if (updates == null || updates.Length < 1) { continue; }
-                        else
-                        {
-                            UpdateId = updates[0].update_id;
-                            if (Configs.webhookinfo.pendingUpdateCount > 3) { Logger.LogInfo("Playing catchup; " + Configs.webhookinfo.pendingUpdateCount + " updates behind."); }
-                        }
                     }
                     else
                     {
                         GetUpdates request = new GetUpdates() { timeout = 20, offset = ++UpdateId, limit = Configs.RunningConfig.GULimit };
+                        sw = new Stopwatch();
+                        sw.Start();
                         Result<Update[]> updatesres = Methods.getUpdates(request);
                         if (!updatesres.ok)
                         {
@@ -114,9 +124,15 @@ namespace DreadBot
                     foreach (Update update in updates)
                     {
                         UpdateId = update.update_id;
+                        //Console.WriteLine("Parsing Update: " + UpdateId);
                         Events.ParseUpdate(update);
                     }
                 }
+
+                #endregion
+
+                #region WebHook Loop
+
                 else // Webhook mode
                 {
                     //// Webhook Not Implemented.
@@ -124,11 +140,9 @@ namespace DreadBot
                     ExitCleanUp(null, null);
                     Thread.Sleep(10000);
                     throw new NotImplementedException("This version of DreadBot does not have Webhook support and will terminate.");
-
-
-
-                    
                 }
+
+                #endregion
             }
         }
 

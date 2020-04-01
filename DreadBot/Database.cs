@@ -29,8 +29,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using LiteDB;
 using System.Threading;
+using System.Runtime.Serialization.Json;
 
 namespace DreadBot
 {
@@ -52,7 +54,19 @@ namespace DreadBot
                 Configs.Welcome();
                 DreadBotCol.Insert(Configs.RunningConfig);
             }
-            else { Configs.RunningConfig = DreadBotCol.FindAll().First<BotConfig>(); }
+            else {
+                try { Configs.RunningConfig = DreadBotCol.FindAll().First<BotConfig>(); }
+                catch {
+                    db.Dispose();
+                    System.IO.File.Delete(@"\DreadBot.db");
+                    db = new LiteDatabase(@"DreadBot.db");
+                    DreadBotCol = db.GetCollection<BotConfig>("dreadbot");
+                    newInstance = true;
+                    Configs.Welcome();
+                    DreadBotCol.Insert(Configs.RunningConfig);
+                }
+
+            }
         }
 
         internal static void SaveConfig()
@@ -71,6 +85,25 @@ namespace DreadBot
         public static LiteCollection<T> GetCollection<T>(string CollectionName)
         {
             return db.GetCollection<T>(CollectionName);
+        }
+
+        public static Stream ExportCollection<T>(string CollectionName)
+        {
+            LiteCollection<T> col = null;
+            try { col = db.GetCollection<T>(CollectionName); }
+            catch { return null; }
+            if (col == null) { return null; }
+
+            MemoryStream ms = new MemoryStream();
+            new DataContractJsonSerializer(typeof(T)).WriteObject(ms, DreadBotCol.FindAll().First<BotConfig>());
+            ms.Position = 0;
+            return ms;
+
+        }
+
+        internal static Stream ExportDreadBotDB()
+        {
+            return ExportCollection<BotConfig>("dreadbot");
         }
     }
 }
