@@ -722,6 +722,11 @@ namespace DreadBot
     #region Input Media
 
     [DataContract]
+    [KnownType(typeof(InputMediaPhoto))]
+    [KnownType(typeof(InputMediaAnimation))]
+    [KnownType(typeof(InputMediaVideo))]
+    [KnownType(typeof(InputMediaAudio))]
+    [KnownType(typeof(InputMediaDocument))]
     public class InputMedia
     {
         [DataMember(Name = "type")]
@@ -731,10 +736,10 @@ namespace DreadBot
         public string media { get; set; }
 
         [DataMember(Name = "caption", IsRequired = false)]
-        public string caption { get; set; }
+        public string caption { get; set; } = "";
 
         [DataMember(Name = "parse_mode", IsRequired = false)]
-        public string parse_mode { get; set; }
+        public string parse_mode { get; set; } = "";
     }
 
     [DataContract]

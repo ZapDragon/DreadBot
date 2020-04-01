@@ -460,7 +460,21 @@ namespace DreadBot
         public string file_id { get; set; }
     }
 
+    [DataContract]
+    public class SendMediaGroupRequest
+    {
+        [DataMember(Name = "chat_id", IsRequired = true)]
+        public long chat_id { get; set; }
 
+        [DataMember(Name = "media", IsRequired = true)]
+        public InputMedia[] media { get; set; }
 
-    #endregion
+        [DataMember(Name = "disable_notification", IsRequired = false)]
+        public bool disable_notification { get; set; }
+
+        [DataMember(Name = "reply_to_message_id", IsRequired = false)]
+        public int reply_to_message_id { get; set; }
+
+    }
+	#endregion
 }

@@ -341,11 +341,19 @@ namespace DreadBot
         {
             return null;
         }
-        public static Result<Message[]> sendMediaGroup()
+        public static Result<Message[]> sendMediaGroup(long chat_id, InputMedia[] media, bool disable_notification = false, int reply_to_message_id = 0)
         {
+            SendMediaGroupRequest mg = new SendMediaGroupRequest()
+            {
+                chat_id = chat_id,
+                media = media
+            };
+            if (disable_notification) { mg.disable_notification = true; }
+            if (reply_to_message_id != 0) { mg.reply_to_message_id = reply_to_message_id; }
 
-
-            return null;
+            Result<Message[]> result;
+            result = sendRequest<Message[]>(Method.sendMediaGroup, buildRequest<SendMediaGroupRequest>(mg));
+            return result;
         }
 
         public static Result<Message> sendLocation()
