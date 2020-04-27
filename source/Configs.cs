@@ -125,6 +125,6 @@ namespace DreadBot
         public bool GetupdatesMode { get; set; } //Toggle between GetUpdates and Webhook mode. This is controlled by The bot API.
         public int ChatCacheTimer { get; set; } //Time in seconds that a group's Cache is updated. (Default 600)
         public bool LastVersion { get; set; } //The last known version of the bot by the Database. If the structure changes to much, you cant use too new of a version without data corruption.
-
+        public WebhookInfo webhookInfo { get; set; } //Webhook info set here, should only be used if GetupdatesMode is false
     }
 }

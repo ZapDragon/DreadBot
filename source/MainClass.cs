@@ -25,6 +25,7 @@
 using System;
 using System.Threading;
 using System.Diagnostics;
+using Microsoft.Owin.Hosting;
 
 namespace DreadBot
 {
@@ -101,7 +102,8 @@ namespace DreadBot
                 if (Configs.RunningConfig.GetupdatesMode) //GetUpdates Mode
                 {
                     Update[] updates = null;
-                    if (UpdateId == 0) {
+                    if (UpdateId == 0)
+                    {
                         if (Configs.webhookinfo.pendingUpdateCount > 3) { Logger.LogInfo("Playing catchup; " + Configs.webhookinfo.pendingUpdateCount + " updates behind."); }
                         updates = Methods.getFirstUpdates(60);
                         if (updates == null || updates.Length < 1) { continue; }
@@ -135,13 +137,27 @@ namespace DreadBot
 
                 else // Webhook mode
                 {
-                    //// Webhook Not Implemented.
-                    Logger.LogError("DreadBot Cannot continue:\n\nWebhook Mode is enabled for this bot. This version of DreadBot does not have Webhook support and will close.\n\n");
-                    ExitCleanUp(null, null);
-                    Thread.Sleep(10000);
-                    throw new NotImplementedException("This version of DreadBot does not have Webhook support and will terminate.");
-                }
 
+                    using (WebApp.Start<WebHookStartup>("https://+:8443"))
+                    {
+                        Methods.setWebhook(new SetWebHook() { url = Configs.RunningConfig.webhookInfo.Url });
+                        Console.WriteLine("Server Started");
+
+                        // Stop Server after <Enter>
+                        Console.ReadLine();
+
+                        //Methods.deleteWebhook();
+                        
+
+
+
+                        //// Webhook Not Implemented.
+                        //Logger.LogError("DreadBot Cannot continue:\n\nWebhook Mode is enabled for this bot. This version of DreadBot does not have Webhook support and will close.\n\n");
+                        //ExitCleanUp(null, null);
+                        //Thread.Sleep(10000);
+                        //throw new NotImplementedException("This version of DreadBot does not have Webhook support and will terminate.");
+                    }
+                }
                 #endregion
             }
         }

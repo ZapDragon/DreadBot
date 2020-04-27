@@ -48,7 +48,7 @@ namespace DreadBot
     public class SetWebHook
     {
         [DataMember(Name = "url", IsRequired = true)]
-        public long url { get; set; }
+        public string url { get; set; }
 
         [DataMember(Name = "certificate")]
         public int certificate { get; set; }
