@@ -127,7 +127,7 @@ namespace DreadBot
         public Message reply_to_message { get; set; }
 
         [DataMember(Name = "edit_date", IsRequired = false)]
-        public long edit_date { get; set; }
+        public long edit_date { get; set; } = 0;
 
         [DataMember(Name = "media_group_id", IsRequired = false)]
         public string media_group_id { get; set; }
@@ -230,6 +230,9 @@ namespace DreadBot
 
         [DataMember(Name = "passport_data", IsRequired = false)]
         public PassportData passport_data { get; set; }
+
+        [DataMember(Name = "reply_markup", IsRequired = false)]
+        public InlineKeyboardMarkup reply_markup { get; set; }
     }
 
     [DataContract]
