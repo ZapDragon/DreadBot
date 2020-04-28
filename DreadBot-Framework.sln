@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29209.62
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DreadBot", "source\DreadBot.csproj", "{FFB74D20-85C9-411E-B9FA-9A9B856F6690}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DreadBot", "source\DreadBot-Framework.csproj", "{FFB74D20-85C9-411E-B9FA-9A9B856F6690}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

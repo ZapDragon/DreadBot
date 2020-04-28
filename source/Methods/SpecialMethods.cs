@@ -26,7 +26,10 @@ namespace DreadBot
 
                 result = sendRequest<Update[]>(Method.getUpdates, buildRequest<GetUpdates>(u));
 
-                if (result == null || !result.ok || result.result.Length < 1) { continue; }
+                if (result == null || !result.ok || result.result.Length < 1) {
+                    if (MainClass.UpdateId > 0) { return null; }
+                    else { continue; }
+                }
 
                 foreach (Update update in result.result)
                 {

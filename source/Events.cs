@@ -44,13 +44,10 @@ namespace DreadBot
             //Message Events
             if (update.message != null)
             {
-                msg = update.message;
                 if (msg.text != null) { Args = msg.text.Split(' '); }
             }
             else if (update.edited_message != null)
             {
-                isEdited = true;
-                msg = update.edited_message;
                 if (msg.text != null) { Args = msg.text.Split(' '); }
             }
             else if (update.channel_post != null)
@@ -374,7 +371,10 @@ namespace DreadBot
         public static void OnInlineQuery(InlineQuery inlineQuery) { InlineQueryEvent?.Invoke(new InlineQueryEventArgs() { inlineQuery = inlineQuery }); }
         public static void OnPreCheckout(PreCheckoutQuery checkoutQuery) { PreCheckoutEvent?.Invoke(new PreCheckoutEventArgs() { preCheckoutQuery = checkoutQuery }); }
         public static void OnPassportData(Message msg) { PassportDataEvent?.Invoke(new MessageEventArgs() { msg = msg }); }
-        public static void OnText(Message Msg, string[] args, bool isEdited) { TextEvent?.Invoke(new MessageEventArgs() { msg = Msg, Args = args, isEdited = isEdited }); }
+        public static void OnText(Message Msg, string[] args, bool isEdited) { TextEvent?.Invoke(new MessageEventArgs() { msg = Msg }); }
+        public static void OnEditedText(Message Msg, string[] args, bool isEdited) { TextEvent?.Invoke(new MessageEventArgs() { msg = Msg }); }
+        public static void OnChannelPost(Message Msg, string[] args, bool isEdited) { TextEvent?.Invoke(new MessageEventArgs() { msg = Msg }); }
+        public static void OnEditedChannelPost(Message Msg, string[] args, bool isEdited) { TextEvent?.Invoke(new MessageEventArgs() { msg = Msg }); }
 
         #endregion
 

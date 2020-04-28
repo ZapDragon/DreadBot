@@ -59,7 +59,7 @@ namespace DreadBot
                     }
                     else {
                         //string a = Task.Run(() => dataPayload.ReadAsStringAsync()).Result;
-                        response = Task.Run(() => new HttpClient().PostAsync(uriMethod, dataPayload)).Result; 
+                        response = Task.Run(() => client.PostAsync(uriMethod, dataPayload)).Result; 
                     }
                 }
                 catch (ObjectDisposedException e)

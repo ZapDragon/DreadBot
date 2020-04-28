@@ -35,7 +35,6 @@ namespace DreadBot
 
         internal static long UpdateId = 0;
         internal static readonly int LauchTime = Utilities.EpochTime();
-        public static Stopwatch sw; 
         static void Main()
         {
             #region Bot Initialization Phase
@@ -111,8 +110,6 @@ namespace DreadBot
                     else
                     {
                         GetUpdates request = new GetUpdates() { timeout = 20, offset = ++UpdateId, limit = Configs.RunningConfig.GULimit };
-                        sw = new Stopwatch();
-                        sw.Start();
                         Result<Update[]> updatesres = Methods.getUpdates(request);
                         if (!updatesres.ok)
                         {
