@@ -12,6 +12,7 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -269,11 +270,12 @@
     <Compile Include="Methods\Stickers.cs" />
     <Compile Include="Methods\UpdatingMessages.cs" />
     <Compile Include="PluginManager.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\FrameworkFiles\Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="..\FrameworkFiles\App.config" />
+	<None Include="..\FrameworkFiles\packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
