@@ -63,6 +63,9 @@ namespace DreadBot
         [DataMember(Name = "poll", IsRequired = false)]
         public Poll poll { get; set; }
 
+        [DataMember(Name = "poll_answer", IsRequired = false)]
+        public PollAnswer poll_answer { get; set; }
+
     }
 
     [DataContract]
