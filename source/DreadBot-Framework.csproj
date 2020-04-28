@@ -275,7 +275,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\FrameworkFiles\App.config" />
-	<None Include="packages.DreadBot-Framework.config" />
+	<None Include="..\FrameworkFiles\packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
