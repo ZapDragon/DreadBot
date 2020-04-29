@@ -137,7 +137,6 @@ namespace DreadBot
 
                     using (WebApp.Start<WebHookStartup>("https://+:8443/" + Configs.Me.username))
                     {
-                        Methods.setWebhook(new SetWebHook() { url = Configs.webhookinfo.Url });
                         Console.WriteLine("Server Started");
 
                         // Stop Server after <Enter>

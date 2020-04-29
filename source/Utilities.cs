@@ -167,6 +167,12 @@ namespace DreadBot
                             {
                                 break;
                             }
+                        case "setwebhook":
+                            {
+                                Methods.setWebhook(new SetWebHook() { url = Args[1] });
+                                Methods.sendMessage(msg.chat.id, "Webhook set!");
+                                break;
+                            }
                     }
                 }
             }

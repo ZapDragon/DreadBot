@@ -114,11 +114,20 @@ namespace DreadBot
         internal static Result<bool> setWebhook(SetWebHook args)
         {
             Result<bool> result = sendRequest<bool>(Method.setWebhook, buildRequest<SetWebHook>(args));
+            Configs.RunningConfig.GetupdatesMode = !result.ok;
+            if (result.ok)
+            {
+                Result<WebhookInfo> info = Methods.getWebhookInfo();
+                Configs.webhookinfo = info.result;
+            }
+            Database.SaveConfig();
             return result;
         }
         internal static Result<bool> deleteWebhook()
         {
             Result<bool> result = sendRequest<bool>(Method.deleteWebhook);
+            Configs.RunningConfig.GetupdatesMode = true;
+            Database.SaveConfig();
             return result;
         }
         /// <summary>
