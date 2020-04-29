@@ -120,6 +120,9 @@ namespace DreadBot
         [DataMember(Name = "forward_signature", IsRequired = false)]
         public string forward_signature { get; set; }
 
+        [DataMember(Name = "forward_sender_name", IsRequired = false)]
+        public string forward_sender_name { get; set; }
+
         [DataMember(Name = "forward_date", IsRequired = false)]
         public int forward_date { get; set; }
 
@@ -185,6 +188,9 @@ namespace DreadBot
 
         [DataMember(Name = "poll", IsRequired = false)]
         public Poll poll { get; set; }
+
+        [DataMember(Name = "dice", IsRequired = false)]
+        public Dice dice { get; set; }
 
         [DataMember(Name = "new_chat_members", IsRequired = false)]
         public User[] new_chat_members { get; set; }
@@ -427,6 +433,9 @@ namespace DreadBot
 
         [DataMember(Name = "foursquare_id", IsRequired = false)]
         public string foursquare_id { get; set; }
+
+        [DataMember(Name = "foursquare_type", IsRequired = false)]
+        public string foursquare_type { get; set; }
     }
 
     [DataContract]
@@ -437,6 +446,19 @@ namespace DreadBot
 
         [DataMember(Name = "voter_count")]
         public int voter_count { get; set; }
+    }
+
+    [DataContract]
+    public class PollAnswer
+    {
+        [DataMember(Name = "poll_id")]
+        public string text { get; set; }
+
+        [DataMember(Name = "user")]
+        public User user { get; set; }
+
+        [DataMember(Name = "option_ids")]
+        public int[] option_ids { get; set; }
     }
 
     [DataContract]
@@ -451,8 +473,45 @@ namespace DreadBot
         [DataMember(Name = "options")]
         public PollOption[] options { get; set; }
 
+        [DataMember(Name = "total_voter_count")]
+        public int total_voter_count { get; set; }
+
         [DataMember(Name = "is_closed")]
         public bool is_closed { get; set; }
+
+        [DataMember(Name = "is_anonymous")]
+        public bool is_anonymous { get; set; }
+
+        [DataMember(Name = "type")]
+        public string type { get; set; }
+
+        [DataMember(Name = "allows_multiple_answers")]
+        public bool allows_multiple_answers { get; set; }
+
+        [DataMember(Name = "correct_option_id")]
+        public int correct_option_id { get; set; }
+
+        [DataMember(Name = "explanation")]
+        public string explanation { get; set; }
+
+        [DataMember(Name = "explanation_entities")]
+        public MessageEntity[] explanation_entities { get; set; }
+
+        [DataMember(Name = "open_period")]
+        public int open_period { get; set; }
+
+        [DataMember(Name = "close_date")]
+        public int close_date { get; set; }
+    }
+
+    [DataContract]
+    public class Dice
+    {
+        [DataMember(Name = "emoji")]
+        public string emoji { get; set; }
+
+        [DataMember(Name = "value")]
+        public int value { get; set; }
     }
 
     [DataContract]

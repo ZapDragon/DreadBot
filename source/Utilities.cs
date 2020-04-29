@@ -30,6 +30,7 @@ using DreadBot;
 using System.Net.Http;
 using System.IO;
 using System.IO.Compression;
+using System.Reflection;
 
 namespace DreadBot
 {
@@ -61,7 +62,19 @@ namespace DreadBot
 
         #region Permission Checking
 
-        public static bool isOwner(long userID, long chatID)
+        public static bool isBotAdmin(User user)
+        {
+            if (Configs.RunningConfig.Admins.Contains(user.id) || (Configs.RunningConfig.Owner == user.id)) { return true; }
+            else return false;
+        }
+
+        public static bool isBotOwner(User user)
+        {
+            if (Configs.RunningConfig.Owner == user.id) { return true; }
+            else return false;
+        }
+
+        public static bool isChatOwner(long userID, long chatID)
         {
             ChatCache cChat = ChatCaching.GetCache(chatID);
             if (cChat == null) { return false; }
@@ -69,7 +82,7 @@ namespace DreadBot
             return false;
         }
 
-        public static bool isAdmin(long userID, long chatID)
+        public static bool isChatAdmin(long userID, long chatID)
         {
             ChatCache chat = ChatCaching.GetCache(chatID);
             if ((EpochTime() - ToEpoch(chat.LastUpdate)) >= Configs.RunningConfig.ChatCacheTimer) { ChatCaching.UpdateCache(chat); }
@@ -117,65 +130,226 @@ namespace DreadBot
 
         #endregion
 
-        public static void AdminCommand(Message msg, string[] Args)
+        public static bool AdminCommand(Message msg)
         {
-            if (msg != null)
-            {
-                if (Configs.RunningConfig.Admins.Contains(msg.from.id) || Configs.RunningConfig.Owner == msg.from.id)
-                {
-                    switch (Args[0].Substring(1))
-                    {
-                        case "save":
-                            {
-                                Database.SaveConfig();
-                                Methods.sendReply(msg.chat.id, msg.message_id, "Flushed Database To Disk.");
-                                break;
-                            }
-                        case "export":
-                            {
-                                if (Args.Length == 1)
-                                {
-                                    if ((msg.chat.id != Configs.RunningConfig.AdminChat) && (msg.chat.type == "group" || msg.chat.type == "supergroup"))
-                                    {
-                                        Methods.sendReply(msg.chat.id, msg.message_id, "Please PM me this command. These backups contain sensitive data, and I will not risk sharing it.");
-                                        return;
-                                    }
-                                    else
-                                    {
-                                        //Methods.sendChatAction(msg.from.id, "upload_document");
-                                        FileStream f = new FileStream(Environment.CurrentDirectory + "\\DreadBot-Export-" + Utilities.EpochTime() + ".json", FileMode.CreateNew);
-                                        Stream s = Database.ExportDreadBotDB();
-                                        byte[] b = new byte[s.Length];
-                                        s.Read(b, 0, (int)s.Length);
-                                        f.Write(b, 0, b.Length);
-                                        f.Close();
+            if (!Configs.RunningConfig.Admins.Contains(msg.from.id) && (Configs.RunningConfig.Owner != msg.from.id)) { return false; }
 
-                                        Methods.sendReply(msg.chat.id, msg.message_id, "The file has been written to a JSON file in the DreadBot dirrectory.");
-                                        //Result<Message> res = Methods.sendDocument(msg.from.id, new StreamContent(compressedData), "DreadBot Database Export");
-                                        //if (res == null || !res.ok) { Methods.sendReply(msg.chat.id, msg.message_id, "There was an error sending the Backup. Please consult the error log."); }
-                                        break;
-                                    }
-                                }
-                                else if (Args.Length == 2)
-                                {
-                                    Events.OnDatabaseExport(Args);
-                                    break;
-                                }
-                                break;
-                            }
-                        case "import":
-                            {
-                                break;
-                            }
-                        case "setwebhook":
-                            {
-                                Methods.setWebhook(new SetWebHook() { url = Args[1] });
-                                Methods.sendMessage(msg.chat.id, "Webhook set!");
-                                break;
-                            }
+            string[] cmd = msg.text.Split(' ');
+            switch (Utilities.isAdminCommand(cmd[0]))
+            {
+                case "run":
+                    {
+                       //if (cmd.Length == 1) { return false; }
+                       //Type thisType = typeof(Methods);
+                       //MethodInfo theMethod = thisType.GetMethod(cmd[1]);
+                       //theMethod.Invoke(this, userParameters);
+
+                        return false;
                     }
-                }
+
+                case "save":
+                    {
+                        Database.SaveConfig();
+                        Methods.sendReply(msg.chat.id, msg.message_id, "Flushed Database To Disk.");
+                        return true;
+                    }
+
+                case "token":
+                    {
+                        if (msg.chat.type != "private") { return false; }
+                        if (cmd.Length == 2)
+                        {
+                            if (Utilities.OwnerToken == cmd[1])
+                            {
+                                StringBuilder sb = new StringBuilder();
+
+                                Utilities.OwnerToken = "";
+                                Configs.RunningConfig.Owner = msg.from.id;
+
+                                sb.Append("Ownership of this bot has been claimed by " + msg.from.id + "\n");
+
+                                if (!String.IsNullOrEmpty(msg.from.username)) //username can be null
+                                {
+                                    sb.Append("Username: @" + msg.from.username + "\n");
+                                }
+                                else { sb.Append("Username: -none-\n"); }
+
+                                Methods.sendReply(msg.from.id, msg.message_id, "You have claimed ownership over this bot.\nPlease check out the [Wiki](http://dreadbot.net/wiki/) on getting me setup.\n\nFrom this point on, please use the admin command $adminmenu for DreadBot specific configuration.");
+
+                                Configs.RunningConfig.GULimit = 100;
+                                Configs.RunningConfig.AdminChat = msg.from.id;
+
+                                Logger.LogAdmin(sb.ToString());
+
+                                Database.SaveConfig();
+
+                            }
+
+                            else if (Utilities.AdminTokens.Contains(cmd[1]))
+                            {
+                                StringBuilder sb = new StringBuilder();
+
+                                if (Configs.RunningConfig.Admins.Contains(msg.from.id))
+                                {
+                                    sb.Append("You are already an admin of this bot. No need to use a token.");
+                                    Methods.sendReply(msg.from.id, msg.message_id, sb.ToString());
+                                    Logger.LogAdmin("User tried to validate a token, despite already being an admin: " + msg.from.id);
+                                    return true;
+                                }
+                                Utilities.AdminTokens.Remove(cmd[1]);
+                                Configs.RunningConfig.Admins.Add(msg.from.id);
+                                sb.Append(msg.from.first_name + " is now an admin of @" + Configs.Me.username);
+                                Methods.sendReply(msg.from.id, msg.message_id, "You are now an admin. Welcome. :)");
+                                Logger.LogAdmin(sb.ToString());
+                                Methods.sendMessage(Configs.RunningConfig.AdminChat, sb.ToString());
+                                return true;
+                            }
+
+                            else
+                            {
+                                Methods.sendReply(msg.from.id, (int)msg.message_id, "The token you have specified does not exist. This error has been logged.");
+                                Result<Message> res = Methods.sendMessage(Configs.RunningConfig.AdminChat, "The token command was attempted by ([" + msg.from.id + "](tg://user?id=" + msg.from.id + ")) using the token " + cmd[1]);
+                                if (res == null || !res.ok) { Logger.LogError("Error contacting the admin Chat: " + res.description); }
+                                return true;
+                            }
+                        }
+                        return true;
+                    }
+                case "adminmenu":
+                    {
+                        if (msg.from.id != Configs.RunningConfig.Owner)
+                        {
+                            Logger.LogWarn("User attempted to use /adminmenu command: " + msg.from.id);
+                            return true;
+                        }
+                        Logger.LogAdmin("Admin Menu Called: " + msg.from.id);
+                        Result<Message> res = Methods.sendMessage(msg.from.id, "*DreadBot Administration Menu*\n\n`DreadBot Managment`\nUsed to fine tune the bot, plus other senstive, and powerful options.\n\n`DataBase Management`\nConfigure Specific Database options, and backup as needed.\n\n`Plugin Manager`\nAdd, Remove and Configure plugins to give DreadBot its purpose.", "Markdown", Menus.AdminMenu());
+                        if (!res.ok) { Logger.LogError("Error contacting the admin Chat: " + res.description); }
+                        return true;
+                    }
+                case "admin":
+                    {
+
+                        return true;
+                    }
+
+                case "setdebug":
+                    {
+                        if (msg.from.id != Configs.RunningConfig.Owner)
+                        {
+                            Logger.LogWarn("User attempted to use /setdebug command: " + msg.from.id);
+                            return true;
+                        }
+                        if (msg.chat.type == "private" || msg.chat.type == "channel")
+                        {
+                            Result<Message> res = Methods.sendReply(msg.chat.id, msg.message_id, "You can only assign a Group or Supergroup to be the Debug Chat.\nIf you want to reset it back to PM, please use the admin menu.");
+                            if (!res.ok) { Logger.LogError("Error contacting the admin Chat: " + res.description); }
+                            return true;
+                        }
+                        else
+                        {
+                            if (msg.chat.id == Configs.RunningConfig.AdminChat)
+                            {
+                                Result<Message> res = Methods.sendReply(msg.chat.id, msg.message_id, "Debug Chat is already set to this group.");
+                                if (!res.ok) { Logger.LogError("Error contacting the admin Chat: " + res.description); }
+                                return true;
+                            }
+                            else
+                            {
+                                Configs.RunningConfig.AdminChat = msg.chat.id;
+                                Database.SaveConfig();
+                                Result<Message> res = Methods.sendReply(msg.chat.id, msg.message_id, "Debug Chat is now set to this group.");
+                                if (!res.ok) { Logger.LogError("Error contacting the admin Chat: " + res.description); }
+                                Logger.LogAdmin("Debug Chat has been set to: " + msg.chat.id);
+                                return true;
+                            }
+                        }
+                    }
+
+
+                default: return false;
             }
+
+
+        }
+
+        internal static bool Commands(Message msg)
+        {
+            string[] cmd = msg.text.Split(' ');
+            switch (isCommand(cmd[0])) {
+                  case "version":
+                        {
+                             TimeSpan t = TimeSpan.FromSeconds(Utilities.EpochTime() - MainClass.LauchTime);
+
+                             string answer = string.Format("{0:D3} Days, {1:D2} Hours, {2:D2} Minutes, {3:D2} Seconds", t.Days, t.Hours, t.Minutes, t.Seconds);
+                             Methods.sendReply(msg.chat.id, (int)msg.message_id, "Dread Bot " + Configs.Version + "\n\nUptime: " + answer);
+                             return true;
+                        }
+
+                    case "updatecache":
+                    {
+                        if (Utilities.isChatAdmin(msg.from.id, msg.chat.id))
+                        {
+                            ChatCache chat = ChatCaching.GetCache(msg.chat.id);
+                            if ((Utilities.EpochTime() - Utilities.ToEpoch(chat.LastUpdate)) >= 3600)
+                            {
+                                ChatCaching.UpdateCache(chat);
+                                chat.LastForcedUpdate = DateTime.Now;
+                                ChatCaching.Save(chat);
+                                Methods.sendReply(msg.chat.id, msg.message_id, "The Cache for the group has been updated. You will be unable to use this command again for atleast 1 hour.");
+                            }
+                            else { Methods.sendReply(msg.chat.id, msg.message_id, "You can use this command only once per hour."); }
+                        }
+                        return true;
+                    }
+
+                    case "adminlist":
+                    {
+                        if (msg.chat.type == "group" || msg.chat.type == "supergroup")
+                        {
+                            ChatCache chat = ChatCaching.GetCache(msg.chat.id);
+                            if ((Utilities.EpochTime() - Utilities.ToEpoch(chat.LastUpdate)) >= Configs.RunningConfig.ChatCacheTimer) { ChatCaching.UpdateCache(chat); }
+
+                            StringBuilder sb = new StringBuilder();
+                            sb.Append("👑 Creator\n");
+                            List<string> Admins = new List<string>();
+                            int i = 0;
+                            foreach (ChatMember admin in chat.Admins.Values)
+                            {
+                                if (admin.status == "creator") { sb.Append("└" + admin.user.first_name + "\n\n"); }
+                                else
+                                {
+                                    i++;
+                                    Admins.Add(admin.user.first_name);
+                                }
+                            }
+
+                            sb.Append("👮‍♂️ Admins (" + i + ")\n");
+                            int j = 0;
+                            foreach (string name in Admins)
+                            {
+                                if (i == j) { sb.Append("└ " + name); }
+                                else { sb.Append("├" + name + "\n"); }
+                                j++;
+                            }
+                            Methods.sendReply(msg.chat.id, msg.message_id, sb.ToString());
+                        }
+                        return true;
+                    }
+                    case "setwebhook":
+                    {
+                        Methods.setWebhook(new SetWebHook() { url = Args[1] });
+                        Methods.sendMessage(msg.chat.id, "Webhook set!");
+                        return true;
+                    }
+
+                default: return false;
+            }
+        }
+
+        internal static bool isBlacklisted(User from)
+        {
+            throw new NotImplementedException();
         }
 
         public static string Variables(string text, string title, string name, long id, string username)
@@ -184,7 +358,7 @@ namespace DreadBot
             string b = a.Replace("$title", title);
             string c = b.Replace("$name", name);
             string d = c.Replace("$id", id.ToString());
-            string e = d.Replace("$link", "[" + id + "](tg://user?id=" + id + ")");
+            string e = d.Replace("$idlink", "[" + id + "](tg://user?id=" + id + ")");
             return e;
         }
 
@@ -198,12 +372,13 @@ namespace DreadBot
                 default: return "";
             }
         }
-        public static bool isAdminCommand(char c)
+        public static string isAdminCommand(string s)
         {
+            char c = s[0];
             switch (c)
             {
-                case '$': return true;
-                default: return false;
+                case '$': return s.Substring(1);
+                default: return "";
             }
         }
 
