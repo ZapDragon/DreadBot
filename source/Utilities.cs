@@ -153,68 +153,6 @@ namespace DreadBot
                         Methods.sendReply(msg.chat.id, msg.message_id, "Flushed Database To Disk.");
                         return true;
                     }
-
-                case "token":
-                    {
-                        if (msg.chat.type != "private") { return false; }
-                        if (cmd.Length == 2)
-                        {
-                            if (Utilities.OwnerToken == cmd[1])
-                            {
-                                StringBuilder sb = new StringBuilder();
-
-                                Utilities.OwnerToken = "";
-                                Configs.RunningConfig.Owner = msg.from.id;
-
-                                sb.Append("Ownership of this bot has been claimed by " + msg.from.id + "\n");
-
-                                if (!String.IsNullOrEmpty(msg.from.username)) //username can be null
-                                {
-                                    sb.Append("Username: @" + msg.from.username + "\n");
-                                }
-                                else { sb.Append("Username: -none-\n"); }
-
-                                Methods.sendReply(msg.from.id, msg.message_id, "You have claimed ownership over this bot.\nPlease check out the [Wiki](http://dreadbot.net/wiki/) on getting me setup.\n\nFrom this point on, please use the admin command $adminmenu for DreadBot specific configuration.");
-
-                                Configs.RunningConfig.GULimit = 100;
-                                Configs.RunningConfig.AdminChat = msg.from.id;
-
-                                Logger.LogAdmin(sb.ToString());
-
-                                Database.SaveConfig();
-
-                            }
-
-                            else if (Utilities.AdminTokens.Contains(cmd[1]))
-                            {
-                                StringBuilder sb = new StringBuilder();
-
-                                if (Configs.RunningConfig.Admins.Contains(msg.from.id))
-                                {
-                                    sb.Append("You are already an admin of this bot. No need to use a token.");
-                                    Methods.sendReply(msg.from.id, msg.message_id, sb.ToString());
-                                    Logger.LogAdmin("User tried to validate a token, despite already being an admin: " + msg.from.id);
-                                    return true;
-                                }
-                                Utilities.AdminTokens.Remove(cmd[1]);
-                                Configs.RunningConfig.Admins.Add(msg.from.id);
-                                sb.Append(msg.from.first_name + " is now an admin of @" + Configs.Me.username);
-                                Methods.sendReply(msg.from.id, msg.message_id, "You are now an admin. Welcome. :)");
-                                Logger.LogAdmin(sb.ToString());
-                                Methods.sendMessage(Configs.RunningConfig.AdminChat, sb.ToString());
-                                return true;
-                            }
-
-                            else
-                            {
-                                Methods.sendReply(msg.from.id, (int)msg.message_id, "The token you have specified does not exist. This error has been logged.");
-                                Result<Message> res = Methods.sendMessage(Configs.RunningConfig.AdminChat, "The token command was attempted by ([" + msg.from.id + "](tg://user?id=" + msg.from.id + ")) using the token " + cmd[1]);
-                                if (res == null || !res.ok) { Logger.LogError("Error contacting the admin Chat: " + res.description); }
-                                return true;
-                            }
-                        }
-                        return true;
-                    }
                 case "adminmenu":
                     {
                         if (msg.from.id != Configs.RunningConfig.Owner)
@@ -336,14 +274,76 @@ namespace DreadBot
                         }
                         return true;
                     }
+                case "token":
+                    {
+                        if (msg.chat.type != "private") { return false; }
+                        if (cmd.Length == 2)
+                        {
+                            if (Utilities.OwnerToken == cmd[1])
+                            {
+                                StringBuilder sb = new StringBuilder();
+
+                                Utilities.OwnerToken = "";
+                                Configs.RunningConfig.Owner = msg.from.id;
+
+                                sb.Append("Ownership of this bot has been claimed by " + msg.from.id + "\n");
+
+                                if (!String.IsNullOrEmpty(msg.from.username)) //username can be null
+                                {
+                                    sb.Append("Username: @" + msg.from.username + "\n");
+                                }
+                                else { sb.Append("Username: -none-\n"); }
+
+                                Methods.sendReply(msg.from.id, msg.message_id, "You have claimed ownership over this bot.\nPlease check out the [Wiki](http://dreadbot.net/wiki/) on getting me setup.\n\nFrom this point on, please use the admin command $adminmenu for DreadBot specific configuration.");
+
+                                Configs.RunningConfig.GULimit = 100;
+                                Configs.RunningConfig.AdminChat = msg.from.id;
+
+                                Logger.LogAdmin(sb.ToString());
+
+                                Database.SaveConfig();
+
+                            }
+
+                            else if (Utilities.AdminTokens.Contains(cmd[1]))
+                            {
+                                StringBuilder sb = new StringBuilder();
+
+                                if (Configs.RunningConfig.Admins.Contains(msg.from.id))
+                                {
+                                    sb.Append("You are already an admin of this bot. No need to use a token.");
+                                    Methods.sendReply(msg.from.id, msg.message_id, sb.ToString());
+                                    Logger.LogAdmin("User tried to validate a token, despite already being an admin: " + msg.from.id);
+                                    return true;
+                                }
+                                Utilities.AdminTokens.Remove(cmd[1]);
+                                Configs.RunningConfig.Admins.Add(msg.from.id);
+                                sb.Append(msg.from.first_name + " is now an admin of @" + Configs.Me.username);
+                                Methods.sendReply(msg.from.id, msg.message_id, "You are now an admin. Welcome. :)");
+                                Logger.LogAdmin(sb.ToString());
+                                Methods.sendMessage(Configs.RunningConfig.AdminChat, sb.ToString());
+                                return true;
+                            }
+
+                            else
+                            {
+                                Methods.sendReply(msg.from.id, (int)msg.message_id, "The token you have specified does not exist. This error has been logged.");
+                                Result<Message> res = Methods.sendMessage(Configs.RunningConfig.AdminChat, "The token command was attempted by ([" + msg.from.id + "](tg://user?id=" + msg.from.id + ")) using the token " + cmd[1]);
+                                if (res == null || !res.ok) { Logger.LogError("Error contacting the admin Chat: " + res.description); }
+                                return true;
+                            }
+                        }
+                        return true;
+                    }
 
                 default: return false;
             }
         }
 
-        internal static bool isBlacklisted(User from)
+        internal static bool isBlacklisted(User user)
         {
-            throw new NotImplementedException();
+            if (Configs.RunningConfig.Blacklist.Contains(user.id)) { return true; }
+            return false;
         }
 
         public static string Variables(string text, string title, string name, long id, string username)

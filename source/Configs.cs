@@ -105,6 +105,7 @@ namespace DreadBot
         {
             Owner = 0;
             Admins = new List<long>(16);
+            Blacklist = new List<long>();
             AdminChat = 0;
             GULimit = 100;
             FirstLaunch = Utilities.EpochTime();
@@ -117,6 +118,7 @@ namespace DreadBot
         public string token { get; set; } //Telegram bot access token.
         public long Owner { get; set; } // Id of the primary owner/operator of DreadBot. This account is the only one allowed to add admins, plugins.
         public List<long> Admins { get; set; } //List of User IDs to allow Administrative control over the bot.
+        public List<long> Blacklist { get; set; } //List of User IDs to reject users from use of the bot.
         public long AdminChat { get; set; } //The id of a user, Group or Supergroup. This is used for debug information. Optionally also used for administrative commands.
         public bool AdminChatCommands { get; set; } //If AdminChat is a Group or Supergroup, this can be enabled to allow anyone in the chat to perform administrative commands.
         public int GULimit { get; set; } //Abreveated "Get Updates Limit" - This is a value is used for how many updates at a time the bot should request in Get Updates mode. Use this setting CAREFULLY.
