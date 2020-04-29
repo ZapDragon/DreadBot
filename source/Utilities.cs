@@ -265,6 +265,12 @@ namespace DreadBot
                             }
                         }
                     }
+                case "setwebhook":
+                    {
+                        Methods.setWebhook(new SetWebHook() { url = cmd[1] });
+                        Methods.sendMessage(msg.chat.id, "Webhook set!");
+                        return true;
+                    }
 
 
                 default: return false;
@@ -334,12 +340,6 @@ namespace DreadBot
                             }
                             Methods.sendReply(msg.chat.id, msg.message_id, sb.ToString());
                         }
-                        return true;
-                    }
-                    case "setwebhook":
-                    {
-                        Methods.setWebhook(new SetWebHook() { url = Args[1] });
-                        Methods.sendMessage(msg.chat.id, "Webhook set!");
                         return true;
                     }
 
