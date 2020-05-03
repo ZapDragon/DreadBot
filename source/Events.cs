@@ -194,6 +194,7 @@ namespace DreadBot
         public static event DreadBotEventHandler PreCheckoutEvent;
         public static event DreadBotEventHandler PassportDataEvent;
         public static event DreadBotEventHandler TextEvent;
+        public static event DreadBotEventHandler ChannelPostEvent;
 
         //Internal Event Providers
         public static event DreadBotEventHandler DatabaseExport;
@@ -227,8 +228,8 @@ namespace DreadBot
         public static void OnInlineQuery(InlineQuery inlineQuery) { InlineQueryEvent?.Invoke(new InlineQueryEventArgs() { inlineQuery = inlineQuery }); }
         public static void OnPreCheckout(PreCheckoutQuery checkoutQuery) { PreCheckoutEvent?.Invoke(new PreCheckoutEventArgs() { preCheckoutQuery = checkoutQuery }); }
         public static void OnPassportData(Message msg) { PassportDataEvent?.Invoke(new MessageEventArgs() { msg = msg }); }
-        public static void OnText(Message Msg, bool isEdited) { TextEvent?.Invoke(new MessageEventArgs() { msg = Msg }); }
-        public static void OnChannelPost(Message Msg, bool isEdited) { TextEvent?.Invoke(new MessageEventArgs() { msg = Msg }); }
+        public static void OnText(Message Msg, bool isEdited) { TextEvent?.Invoke(new MessageEventArgs() { msg = Msg, isEdited = isEdited }); }
+        public static void OnChannelPost(Message Msg, bool isEdited) { ChannelPostEvent?.Invoke(new MessageEventArgs() { msg = Msg, isEdited = isEdited }); }
 
         #endregion
 
