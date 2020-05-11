@@ -101,7 +101,7 @@
     <Compile Include="Contracts\SpecialContracts.cs" />
     <Compile Include="Contracts\Stickers.cs" />
     <Compile Include="Contracts\Updates.cs" />
-    <Compile Include="KeyboardExtentions.cs" />
+    <Compile Include="Contracts\Keyboards.cs" />
     <Compile Include="Menus.cs" />
     <Compile Include="Events.cs" />
     <Compile Include="LiteDB\Database\Collections\Aggregate.cs" />
