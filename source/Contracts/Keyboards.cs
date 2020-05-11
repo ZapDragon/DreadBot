@@ -10,74 +10,80 @@ namespace DreadBot
     public static class KeyboardExtentions
     {
         [Obsolete("setRowCount is unused. Please update your plugins to not use this method.")]
-        public static void SetRowCount(this InlineKeyboardMarkup source, int x)
+        public static void SetRowCount(this KeyboardMarkup source, int x)
         {
             source.initRows(x);
         }
         [Obsolete("addButton is deprecated, use one of the available add___Button's instead.")]
-        public static void addButton(this InlineKeyboardMarkup source, InlineKeyboardButton button, int row)
+        public static void addButton(this KeyboardMarkup source, InlineKeyboardButton button, int row)
         {
             source.initRows(row);
-            source.inline_keyboard[row].Add(button);
+            source.Keyboard[row].Add(button);
         }
-        public static void addUrlButton(this InlineKeyboardMarkup source, string Text, string Url, int row)
+        public static void addUrlButton(this KeyboardMarkup source, string Text, string Url, int row)
         {
             source.initRows(row);
             InlineKeyboardButton button = new InlineKeyboardButton() { text = Text, url = Url };
-            source.inline_keyboard[row].Add(button);
+            source.Keyboard[row].Add(button);
         }
-        public static void addLoginButton(this InlineKeyboardMarkup source, string Text, LoginUrl Url, int row)
+        public static void addLoginButton(this KeyboardMarkup source, string Text, LoginUrl Url, int row)
         {
             source.initRows(row);
             InlineKeyboardButton button = new InlineKeyboardButton() { text = Text, login_url = Url };
-            source.inline_keyboard[row].Add(button);
+            source.Keyboard[row].Add(button);
         }
-        public static void addCallbackButton(this InlineKeyboardMarkup source, string Text, string Callback, int row)
+        public static void addCallbackButton(this KeyboardMarkup source, string Text, string Callback, int row)
         {
             source.initRows(row);
             InlineKeyboardButton button = new InlineKeyboardButton() { text = Text, callback_data = Callback };
-            source.inline_keyboard[row].Add(button);
+            source.Keyboard[row].Add(button);
         }
-        public static void addSIQButton(this InlineKeyboardMarkup source, string Text, string siq, int row)
+        public static void addSIQButton(this KeyboardMarkup source, string Text, string siq, int row)
         {
             source.initRows(row);
             InlineKeyboardButton button = new InlineKeyboardButton() { text = Text, switch_inline_query = siq };
-            source.inline_keyboard[row].Add(button);
+            source.Keyboard[row].Add(button);
         }
-        public static void addSIQCCButton(this InlineKeyboardMarkup source, string Text, string siq, int row)
+        public static void addSIQCCButton(this KeyboardMarkup source, string Text, string siq, int row)
         {
             source.initRows(row);
             InlineKeyboardButton button = new InlineKeyboardButton() { text = Text, switch_inline_query_current_chat = siq };
-            source.inline_keyboard[row].Add(button);
+            source.Keyboard[row].Add(button);
         }
-        public static void addGameButton(this InlineKeyboardMarkup source, string Text, CallbackGame game, int row)
+        public static void addGameButton(this KeyboardMarkup source, string Text, CallbackGame game, int row)
         {
             source.initRows(row);
             InlineKeyboardButton button = new InlineKeyboardButton() { text = Text, callback_game = game };
-            source.inline_keyboard[row].Add(button);
+            source.Keyboard[row].Add(button);
         }
-        public static void addPayButton(this InlineKeyboardMarkup source, string Text)
+        public static void addPayButton(this KeyboardMarkup source, string Text)
         {
             source.initRows(0);
             InlineKeyboardButton button = new InlineKeyboardButton() { text = Text, pay = true };
-            source.inline_keyboard[0].Insert(0, button);
+            source.Keyboard[0].Insert(0, button);
 
         }
-        private static void initRows(this InlineKeyboardMarkup source, int row)
+        private static void initRows(this KeyboardMarkup source, int row)
         {
-            for (int i = ((row - source.inline_keyboard.Count) + 1); i > 0; i--)
+            for (int i = ((row - source.Keyboard.Count) + 1); i > 0; i--)
             {
-                source.inline_keyboard.Add(new List<InlineKeyboardButton>(8));
+                source.Keyboard.Add(new List<InlineKeyboardButton>(8));
             }
         }
     }
-
+    [KnownType(typeof(ReplyKeyboardMarkup))]
+    [KnownType(typeof(InlineKeyboardMarkup))]
+    [DataContract]
+    public class KeyboardMarkup
+    {
+        public List<List<InlineKeyboardButton>> Keyboard { get; set; }
+    }
 
     [DataContract]
-    public class ReplyKeyboardMarkup
+    public class ReplyKeyboardMarkup : KeyboardMarkup
     {
         [DataMember(Name = "keyboard")]
-        public KeyboardButton[][] keyboard { get; set; }
+        public List<List<InlineKeyboardButton>> keyboard { get { return Keyboard; } set { Keyboard = value; } }
 
         [DataMember(Name = "resize_keyboard", IsRequired = false)]
         public bool resize_keyboard { get; set; }
@@ -113,10 +119,10 @@ namespace DreadBot
     }
 
     [DataContract]
-    public class InlineKeyboardMarkup
+    public class InlineKeyboardMarkup : KeyboardMarkup
     {
         [DataMember(Name = "inline_keyboard")]
-        public List<List<InlineKeyboardButton>> inline_keyboard { get; set; } = new List<List<InlineKeyboardButton>>(100);
+        public List<List<InlineKeyboardButton>> inline_keyboard { get { return Keyboard; } set { Keyboard = value; } }
     }
 
     [DataContract]
