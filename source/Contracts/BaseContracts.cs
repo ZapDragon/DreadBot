@@ -582,69 +582,6 @@ namespace DreadBot
     {
         [DataMember(Name = "inline_keyboard")]
         public List<List<InlineKeyboardButton>> inline_keyboard { get; set; } = new List<List<InlineKeyboardButton>>(100);
-
-        [Obsolete("setRowCount is unused. Please update your plugins to not use this method.")]
-        public void SetRowCount(int x) { }
-
-        [Obsolete("addButton is deprecated, use one of the available add___Button's instead.")]
-        public void addButton(InlineKeyboardButton button, int row)
-        {
-            initRows(row);
-            this.inline_keyboard[row].Add(button);
-        }
-        public void addUrlButton(string Text, string Url, int row)
-        {
-            initRows(row);
-            InlineKeyboardButton button = new InlineKeyboardButton() { text = Text, url = Url };
-            this.inline_keyboard[row].Add(button);
-        }
-        public void addLoginButton(string Text, LoginUrl Url, int row)
-        {
-            initRows(row);
-            InlineKeyboardButton button = new InlineKeyboardButton() { text = Text, login_url = Url };
-            this.inline_keyboard[row].Add(button);
-        }
-        public void addCallbackButton(string Text, string Callback, int row)
-        {
-            initRows(row);
-            InlineKeyboardButton button = new InlineKeyboardButton() { text = Text, callback_data = Callback };
-            this.inline_keyboard[row].Add(button);
-        }
-        public void addSIQButton(string Text, string siq, int row)
-        {
-            initRows(row);
-            InlineKeyboardButton button = new InlineKeyboardButton() { text = Text, switch_inline_query = siq };
-            this.inline_keyboard[row].Add(button);
-        }
-        public void addSIQCCButton(string Text, string siq, int row)
-        {
-            initRows(row);
-            InlineKeyboardButton button = new InlineKeyboardButton() { text = Text, switch_inline_query_current_chat = siq };
-            this.inline_keyboard[row].Add(button);
-        }
-        public void addGameButton(string Text, CallbackGame game, int row)
-        {
-            initRows(row);
-            InlineKeyboardButton button = new InlineKeyboardButton() { text = Text, callback_game = game };
-            this.inline_keyboard[row].Add(button);
-        }
-        public void addPayButton(string Text)
-        {
-            initRows(0);
-            InlineKeyboardButton button = new InlineKeyboardButton() { text = Text, pay = true };
-            this.inline_keyboard[0].Insert(0, button);
-            
-        }
-
-        private void initRows(int row)
-        {
-            for (int i = ((row - inline_keyboard.Count) + 1); i > 0; i--)
-            {
-                inline_keyboard.Add(new List<InlineKeyboardButton>(8));
-            
-            }
-        }
-
     }
 
     [DataContract]
