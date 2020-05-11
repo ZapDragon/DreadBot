@@ -307,60 +307,60 @@ namespace DreadBot
         internal static InlineKeyboardMarkup AdminMenu()
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
-            keyboard.SetRowCount(3);
-            keyboard.addButton(new InlineKeyboardButton() { text = "🎛 DreadBot Managment", callback_data = "dreadbot botadm" }, 0);
-            keyboard.addButton(new InlineKeyboardButton() { text = "🗄 DataBase Managment", callback_data = "dreadbot dbadm" }, 1);
-            keyboard.addButton(new InlineKeyboardButton() { text = "⚡️ Plugin Manager", callback_data = "dreadbot plugadm" }, 2);
+            
+            keyboard.addCallbackButton("🎛 DreadBot Managment", "dreadbot botadm", 0);
+            keyboard.addCallbackButton("🗄 DataBase Managment", "dreadbot dbadm", 1);
+            keyboard.addCallbackButton("⚡️ Plugin Manager", "dreadbot plugadm", 2);
             return keyboard;
         }
 
         internal static InlineKeyboardMarkup ManagmentMenu()
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
-            keyboard.SetRowCount(5);
-            keyboard.addButton(new InlineKeyboardButton() { text = "🔥 Sensitive Options", callback_data = "dreadbot tuneables" }, 0);
-            keyboard.addButton(new InlineKeyboardButton() { text = "👮‍♂️ Add/Remove Bot Admins", callback_data = "dreadbot botadmins" }, 1);
-            keyboard.addButton(new InlineKeyboardButton() { text = "🗒 Debug Chat Settings", callback_data = "dreadbot debugchatcfg" }, 2);
-            keyboard.addButton(new InlineKeyboardButton() { text = "🔉 System Sounds", callback_data = "dreadbot sounds" }, 3);
-            keyboard.addButton(new InlineKeyboardButton() { text = "🔙", callback_data = "dreadbot adm" }, 4);
+            
+            keyboard.addCallbackButton("🔥 Sensitive Options", "dreadbot tuneables", 0);
+            keyboard.addCallbackButton("👮‍♂️ Add/Remove Bot Admins", "dreadbot botadmins", 1);
+            keyboard.addCallbackButton("🗒 Debug Chat Settings", "dreadbot debugchatcfg", 2);
+            keyboard.addCallbackButton("🔉 System Sounds", "dreadbot sounds", 3);
+            keyboard.addCallbackButton("🔙", "dreadbot adm", 4);
             return keyboard;
         }
 
         internal static InlineKeyboardMarkup ChangeDebugChat()
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
-            keyboard.SetRowCount(2);
-            keyboard.addButton(new InlineKeyboardButton() { text = "Reset Debug Chat to Private", callback_data = "dreadbot resetdebug" }, 0);
-            keyboard.addButton(new InlineKeyboardButton() { text = "🔙", callback_data = "dreadbot debugchatcfg" }, 1);
+            
+            keyboard.addCallbackButton("Reset Debug Chat to Private", "dreadbot resetdebug", 0);
+            keyboard.addCallbackButton("🔙", "dreadbot debugchatcfg", 1);
             return keyboard;
         }
 
         internal static InlineKeyboardMarkup LogLevelMenu()
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
-            keyboard.SetRowCount(8);
-            keyboard.addButton(new InlineKeyboardButton() { text = "File LogLevel - Debug " + GetLogLevel(LogLevel.Debug, false), callback_data = "dreadbot fll 6" }, 0);
-            keyboard.addButton(new InlineKeyboardButton() { text = "Console LogLevel - Debug " + GetLogLevel(LogLevel.Debug), callback_data = "dreadbot cll 6" }, 0);
+            
+            keyboard.addCallbackButton("File LogLevel - Debug " + GetLogLevel(LogLevel.Debug, false), "dreadbot fll 6", 0);
+            keyboard.addCallbackButton("Console LogLevel - Debug " + GetLogLevel(LogLevel.Debug), "dreadbot cll 6", 0);
 
-            keyboard.addButton(new InlineKeyboardButton() { text = "File LogLevel - Admin " + GetLogLevel(LogLevel.Admin, false), callback_data = "dreadbot fll 5" }, 1);
-            keyboard.addButton(new InlineKeyboardButton() { text = "Console LogLevel - Admin " + GetLogLevel(LogLevel.Admin), callback_data = "dreadbot cll 5" }, 1);
+            keyboard.addCallbackButton("File LogLevel - Admin " + GetLogLevel(LogLevel.Admin, false), "dreadbot fll 5", 1);
+            keyboard.addCallbackButton("Console LogLevel - Admin " + GetLogLevel(LogLevel.Admin), "dreadbot cll 5", 1);
 
-            keyboard.addButton(new InlineKeyboardButton() { text = "File LogLevel - Info " + GetLogLevel(LogLevel.Info, false), callback_data = "dreadbot fll 4" }, 2);
-            keyboard.addButton(new InlineKeyboardButton() { text = "Console LogLevel - Info " + GetLogLevel(LogLevel.Info), callback_data = "dreadbot cll 4" }, 2);
+            keyboard.addCallbackButton("File LogLevel - Info " + GetLogLevel(LogLevel.Info, false), "dreadbot fll 4", 2);
+            keyboard.addCallbackButton("Console LogLevel - Info " + GetLogLevel(LogLevel.Info), "dreadbot cll 4", 2);
 
-            keyboard.addButton(new InlineKeyboardButton() { text = "File LogLevel - Warn " + GetLogLevel(LogLevel.Warn, false), callback_data = "dreadbot fll 3" }, 3);
-            keyboard.addButton(new InlineKeyboardButton() { text = "Console LogLevel - Warn " + GetLogLevel(LogLevel.Warn), callback_data = "dreadbot cll 3" }, 3);
+            keyboard.addCallbackButton("File LogLevel - Warn " + GetLogLevel(LogLevel.Warn, false), "dreadbot fll 3", 3);
+            keyboard.addCallbackButton("Console LogLevel - Warn " + GetLogLevel(LogLevel.Warn), "dreadbot cll 3", 3);
 
-            keyboard.addButton(new InlineKeyboardButton() { text = "File LogLevel - Error " + GetLogLevel(LogLevel.Error, false), callback_data = "dreadbot fll 2" }, 4);
-            keyboard.addButton(new InlineKeyboardButton() { text = "Console LogLevel - Error " + GetLogLevel(LogLevel.Error), callback_data = "dreadbot cll 2" }, 4);
+            keyboard.addCallbackButton("File LogLevel - Error " + GetLogLevel(LogLevel.Error, false), "dreadbot fll 2", 4);
+            keyboard.addCallbackButton("Console LogLevel - Error " + GetLogLevel(LogLevel.Error), "dreadbot cll 2", 4);
 
-            keyboard.addButton(new InlineKeyboardButton() { text = "File LogLevel - Fatal " + GetLogLevel(LogLevel.Fatal, false), callback_data = "dreadbot fll 1" }, 5);
-            keyboard.addButton(new InlineKeyboardButton() { text = "Console LogLevel - Fatal " + GetLogLevel(LogLevel.Fatal), callback_data = "dreadbot cll 1" }, 5);
+            keyboard.addCallbackButton("File LogLevel - Fatal " + GetLogLevel(LogLevel.Fatal, false), "dreadbot fll 1", 5);
+            keyboard.addCallbackButton("Console LogLevel - Fatal " + GetLogLevel(LogLevel.Fatal), "dreadbot cll 1", 5);
 
-            keyboard.addButton(new InlineKeyboardButton() { text = "File LogLevel - Off " + GetLogLevel(LogLevel.Off, false), callback_data = "dreadbot fll 0" }, 6);
-            keyboard.addButton(new InlineKeyboardButton() { text = "Console LogLevel - Off " + GetLogLevel(LogLevel.Off), callback_data = "dreadbot cll 0" }, 6);
+            keyboard.addCallbackButton("File LogLevel - Off " + GetLogLevel(LogLevel.Off, false), "dreadbot fll 0", 6);
+            keyboard.addCallbackButton("Console LogLevel - Off " + GetLogLevel(LogLevel.Off), "dreadbot cll 0", 6);
 
-            keyboard.addButton(new InlineKeyboardButton() { text = "🔙", callback_data = "dreadbot debugchatcfg" }, 7);
+            keyboard.addCallbackButton("🔙", "dreadbot debugchatcfg", 7);
 
             return keyboard;
         }
@@ -368,10 +368,10 @@ namespace DreadBot
         internal static InlineKeyboardMarkup DebugChatCfg()
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
-            keyboard.SetRowCount(3);
-            keyboard.addButton(new InlineKeyboardButton() { text = "🧾 Change Debug Chat", callback_data = "dreadbot changedebugchat" }, 0);
-            keyboard.addButton(new InlineKeyboardButton() { text = "🔕 Set Debug Chat Log Level", callback_data = "dreadbot debugchatlevel" }, 1);
-            keyboard.addButton(new InlineKeyboardButton() { text = "🔙", callback_data = "dreadbot botadm" }, 2);
+            
+            keyboard.addCallbackButton("🧾 Change Debug Chat", "dreadbot changedebugchat", 0);
+            keyboard.addCallbackButton("🔕 Set Debug Chat Log Level", "dreadbot debugchatlevel", 1);
+            keyboard.addCallbackButton("🔙", "dreadbot botadm", 2);
             return keyboard;
         }
         internal static InlineKeyboardMarkup PluginMgr()
@@ -385,32 +385,32 @@ namespace DreadBot
         private static InlineKeyboardMarkup OperationMenu()
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
-            keyboard.SetRowCount(3);
+            
             string gumode = "";
             string whmode = "";
             if (Configs.RunningConfig.GetupdatesMode) { gumode = " ⬅️"; }
             else { whmode = " ⬅️"; }
 
-            keyboard.addButton(new InlineKeyboardButton() { text = "GetUpdates" + gumode, callback_data = "dreadbot disablewebhook" }, 0);
-            keyboard.addButton(new InlineKeyboardButton() { text = "WebHook" + whmode, callback_data = "dreadbot webhookcfg" }, 1);
-            keyboard.addButton(new InlineKeyboardButton() { text = "🔙", callback_data = "dreadbot tuneables" }, 2);
+            keyboard.addCallbackButton("GetUpdates" + gumode, "dreadbot disablewebhook", 0);
+            keyboard.addCallbackButton("WebHook" + whmode, "dreadbot webhookcfg", 1);
+            keyboard.addCallbackButton("🔙", "dreadbot tuneables", 2);
             return keyboard;
         }
 
         private static InlineKeyboardMarkup WebhookMenu()
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
-            keyboard.SetRowCount(5);
+            
 
-            keyboard.addButton(new InlineKeyboardButton() { text = "Test & Go Live!", callback_data = "dreadbot disablewebhook" }, 0);
-            keyboard.addButton(new InlineKeyboardButton() { text = "Set URL", callback_data = "dreadbot webhookcfg" }, 1);
-            keyboard.addButton(new InlineKeyboardButton() { text = "Set Certificate", callback_data = "dreadbot webhookcfg" }, 2);
+            keyboard.addCallbackButton("Test & Go Live!", "dreadbot disablewebhook", 0);
+            keyboard.addCallbackButton("Set URL", "dreadbot webhookcfg", 1);
+            keyboard.addCallbackButton("Set Certificate", "dreadbot webhookcfg", 2);
 
-            keyboard.addButton(new InlineKeyboardButton() { text = "Port Cfg", callback_data = "dreadbot webhookcfg" }, 3);
-            keyboard.addButton(new InlineKeyboardButton() { text = "443", callback_data = "dreadbot webhookcfg" }, 3);
-            keyboard.addButton(new InlineKeyboardButton() { text = "+", callback_data = "dreadbot webhookcfg" }, 3);
+            keyboard.addCallbackButton("Port Cfg", "dreadbot webhookcfg", 3);
+            keyboard.addCallbackButton("443", "dreadbot webhookcfg", 3);
+            keyboard.addCallbackButton("+", "dreadbot webhookcfg", 3);
 
-            keyboard.addButton(new InlineKeyboardButton() { text = "🔙", callback_data = "dreadbot operationmode" }, 4);
+            keyboard.addCallbackButton("🔙", "dreadbot operationmode", 4);
             return keyboard;
         }
 
@@ -419,19 +419,19 @@ namespace DreadBot
         internal static InlineKeyboardMarkup TuneablesMenu()
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
-            keyboard.SetRowCount(6);
-            keyboard.addButton(new InlineKeyboardButton() { text = "🔑 Show Access Token", callback_data = "dreadbot showtoken" }, 0);
-            keyboard.addButton(new InlineKeyboardButton() { text = "🔑 Change Access Token", callback_data = "dreadbot changetoken" }, 1);
-            keyboard.addButton(new InlineKeyboardButton() { text = "👮‍♂️ Change Owner", callback_data = "dreadbot changeowner" }, 2);
+            
+            keyboard.addCallbackButton("🔑 Show Access Token", "dreadbot showtoken", 0);
+            keyboard.addCallbackButton("🔑 Change Access Token", "dreadbot changetoken", 1);
+            keyboard.addCallbackButton("👮‍♂️ Change Owner", "dreadbot changeowner", 2);
 
-            keyboard.addButton(new InlineKeyboardButton() { text = "+1", callback_data = "dreadbot gula1" }, 3);
-            keyboard.addButton(new InlineKeyboardButton() { text = "+10", callback_data = "dreadbot gula10" }, 3);
-            keyboard.addButton(new InlineKeyboardButton() { text = Configs.RunningConfig.GULimit.ToString(), callback_data = "dreadbot gulhelp" }, 3);
-            keyboard.addButton(new InlineKeyboardButton() { text = "-10", callback_data = "dreadbot gulm10" }, 3);
-            keyboard.addButton(new InlineKeyboardButton() { text = "-1", callback_data = "dreadbot gulm1" }, 3);
+            keyboard.addCallbackButton("+1", "dreadbot gula1", 3);
+            keyboard.addCallbackButton("+10", "dreadbot gula10", 3);
+            keyboard.addCallbackButton(Configs.RunningConfig.GULimit.ToString(), "dreadbot gulhelp", 3);
+            keyboard.addCallbackButton("-10", "dreadbot gulm10", 3);
+            keyboard.addCallbackButton("-1", "dreadbot gulm1", 3);
 
-            keyboard.addButton(new InlineKeyboardButton() { text = "⚙️ Bot Operation Mode", callback_data = "dreadbot operationmode" }, 4);
-            keyboard.addButton(new InlineKeyboardButton() { text = "🔙", callback_data = "dreadbot botadm" }, 5);
+            keyboard.addCallbackButton("⚙️ Bot Operation Mode", "dreadbot operationmode", 4);
+            keyboard.addCallbackButton("🔙", "dreadbot botadm", 5);
             return keyboard;
 
         }
@@ -439,8 +439,8 @@ namespace DreadBot
         internal static InlineKeyboardMarkup BackOnly(string CallBack)
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
-            keyboard.SetRowCount(1);
-            keyboard.addButton(new InlineKeyboardButton() { text = "🔙", callback_data = "dreadbot " + CallBack }, 0);
+            
+            keyboard.addCallbackButton("🔙", "dreadbot " + CallBack, 0);
             return keyboard;
         }
 
@@ -450,11 +450,11 @@ namespace DreadBot
         {
             if (console)
             {
-                if (Logger.CurrentConsoleLevel == level) { return "⬅️"; }
+                if (Logger.ConsoleLevel == level) { return "⬅️"; }
             }
             else
             {
-                if (Logger.CurrentLogLevel == level) { return "⬅️"; }
+                if (Logger.LogLevel == level) { return "⬅️"; }
             }
             return "";
         }
