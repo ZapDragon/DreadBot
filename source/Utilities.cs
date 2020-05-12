@@ -137,14 +137,27 @@ namespace DreadBot
             string[] cmd = msg.text.Split(' ');
             switch (Utilities.isAdminCommand(cmd[0]))
             {
-                case "run":
+                case "makemenu":
                     {
-                       //if (cmd.Length == 1) { return false; }
-                       //Type thisType = typeof(Methods);
-                       //MethodInfo theMethod = thisType.GetMethod(cmd[1]);
-                       //theMethod.Invoke(this, userParameters);
-
-                        return false;
+                        // /makemenu Yes,noop,0|No,noop,1|Back,noop,2|forward,noop,2
+                        InlineKeyboardMarkup kb = new InlineKeyboardMarkup();
+                        msg.text = msg.text.Replace("$makemenu ", "");
+                        string[] buttons = msg.text.Split('|');
+                        foreach (string button in buttons)
+                        {
+                            string[] bargs = button.Split(',');
+                            try
+                            {
+                                kb.addCallbackButton(bargs[0], bargs[1], Convert.ToInt32(bargs[2]));
+                            }
+                            catch
+                            {
+                                Methods.sendReply(msg.chat.id, msg.message_id, "Missing button argument.");
+                                return true;
+                            }
+                        }
+                        Methods.sendMessage(msg.chat.id, "Demo Keyboard", "markdown", kb);
+                        return true;
                     }
 
                 case "save":
