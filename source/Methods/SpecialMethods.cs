@@ -17,9 +17,9 @@ namespace DreadBot
             SortedDictionary<long, Update> updates = new SortedDictionary<long, Update>();
             Result<Update[]> result = null;
 
-            if (Configs.webhookinfo.pendingUpdateCount == 0) { Configs.webhookinfo.pendingUpdateCount = 1; } //make it wait for first post anyways
+            if (Configs.webhookinfo.pending_update_count == 0) { Configs.webhookinfo.pending_update_count = 1; } //make it wait for first post anyways
 
-            while (updates.Count() < Configs.webhookinfo.pendingUpdateCount)
+            while (updates.Count() < Configs.webhookinfo.pending_update_count)
             {
                 GetUpdates u = new GetUpdates() { limit = 100, timeout = to };
                 if (MainClass.UpdateId > 0) { u.offset = MainClass.UpdateId + 1; }

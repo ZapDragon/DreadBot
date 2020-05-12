@@ -84,7 +84,7 @@ namespace DreadBot
             Console.WriteLine("Bot Last Name: " + Me.last_name + "\r\n\r\n");
             Console.Title = "DreadBot: @" + Me.username;
 
-            if (string.IsNullOrEmpty(webhookinfo.Url))
+            if (string.IsNullOrEmpty(webhookinfo.url))
             {
                 Console.WriteLine("WebHook Status: Disabled");
                 RunningConfig.GetupdatesMode = true;
@@ -111,7 +111,7 @@ namespace DreadBot
             FirstLaunch = Utilities.EpochTime();
             LastLaunch = Utilities.EpochTime();
             GetupdatesMode = true;
-            ChatCacheTimer = 600;
+            ChatCacheTimer = 1800;
         }
 
         public int id { get; set; } //Database placeholder.

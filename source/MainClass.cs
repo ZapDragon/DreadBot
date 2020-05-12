@@ -89,7 +89,7 @@ namespace DreadBot
             Console.WriteLine(PluginManager.getPluginList() + "\n");
             Console.WriteLine("DreadBot Loaded, and Started!\n");
 
-            if (!String.IsNullOrEmpty(Configs.webhookinfo.Url)) { Configs.RunningConfig.GetupdatesMode = false; } //WebHook is enabled. Launch in Webhook mode.
+            if (!String.IsNullOrEmpty(Configs.webhookinfo.url)) { Configs.RunningConfig.GetupdatesMode = false; } //WebHook is enabled. Launch in Webhook mode.
 
             #endregion
 
@@ -101,7 +101,7 @@ namespace DreadBot
                 {
                     Update[] updates = null;
                     if (UpdateId == 0) {
-                        if (Configs.webhookinfo.pendingUpdateCount > 3) { Logger.LogInfo("Playing catchup; " + Configs.webhookinfo.pendingUpdateCount + " updates behind."); }
+                        if (Configs.webhookinfo.pending_update_count > 3) { Logger.LogInfo("Playing catchup; " + Configs.webhookinfo.pending_update_count + " updates behind."); }
                         updates = Methods.getFirstUpdates(60);
                         if (updates == null || updates.Length < 1) { continue; }
                     }
