@@ -74,6 +74,6 @@ namespace DreadBot
 		/// Optional. File size
 		/// </summary>
 		[DataMember(Name = "file_size", EmitDefaultValue = false)]
-		public int file_size { get; set; }
+		public long file_size { get; set; }
 	}
 }

@@ -44,7 +44,7 @@ namespace DreadBot
 		/// Optional. File size, if known
 		/// </summary>
 		[DataMember(Name = "file_size", EmitDefaultValue = false)]
-		public int file_size { get; set; }
+		public long file_size { get; set; }
 		/// <summary>
 		/// Optional. File path. Use https://api.telegram.org/file/bot<token>/<file_path> to get the file.
 		/// </summary>

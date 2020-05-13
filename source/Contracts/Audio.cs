@@ -64,7 +64,7 @@ namespace DreadBot
 		/// Optional. File size
 		/// </summary>
 		[DataMember(Name = "file_size", EmitDefaultValue = false)]
-		public int file_size { get; set; }
+		public long file_size { get; set; }
 		/// <summary>
 		/// Optional. Thumbnail of the album cover to which the music file belongs
 		/// </summary>

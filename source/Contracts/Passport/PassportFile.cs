@@ -44,11 +44,11 @@ namespace DreadBot
 		/// File size
 		/// </summary>
 		[DataMember(Name = "file_size", IsRequired = true)]
-		public int file_size { get; set; }
+		public long file_size { get; set; }
 		/// <summary>
 		/// Unix time when the file was uploaded
 		/// </summary>
 		[DataMember(Name = "file_date", IsRequired = true)]
-		public int file_date { get; set; }
+		public long file_date { get; set; }
 	}
 }

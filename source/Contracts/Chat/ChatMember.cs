@@ -49,7 +49,7 @@ namespace DreadBot
 		/// Optional. Restricted and kicked only. Date when restrictions will be lifted for this user; unix time
 		/// </summary>
 		[DataMember(Name = "until_date", EmitDefaultValue = false)]
-		public int until_date { get; set; }
+		public long until_date { get; set; }
 		/// <summary>
 		/// Optional. Administrators only. True, if the bot is allowed to edit administrator privileges of that user
 		/// </summary>

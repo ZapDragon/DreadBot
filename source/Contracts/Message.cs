@@ -44,7 +44,7 @@ namespace DreadBot
 		/// Date the message was sent in Unix time
 		/// </summary>
 		[DataMember(Name = "date", IsRequired = true)]
-		public int date { get; set; }
+		public long date { get; set; }
 		/// <summary>
 		/// Conversation the message belongs to
 		/// </summary>
@@ -79,7 +79,7 @@ namespace DreadBot
 		/// Optional. For forwarded messages, date the original message was sent in Unix time
 		/// </summary>
 		[DataMember(Name = "forward_date", EmitDefaultValue = false)]
-		public int forward_date { get; set; }
+		public long forward_date { get; set; }
 		/// <summary>
 		/// Optional. For replies, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
 		/// </summary>
@@ -89,7 +89,7 @@ namespace DreadBot
 		/// Optional. Date the message was last edited in Unix time
 		/// </summary>
 		[DataMember(Name = "edit_date", EmitDefaultValue = false)]
-		public int edit_date { get; set; } = 0;
+		public long edit_date { get; set; } = 0;
 		/// <summary>
 		/// Optional. The unique identifier of a media message group this message belongs to
 		/// </summary>

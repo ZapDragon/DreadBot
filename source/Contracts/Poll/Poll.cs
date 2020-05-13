@@ -94,6 +94,6 @@ namespace DreadBot
 		/// Optional. Point in time (Unix timestamp) when the poll will be automatically closed
 		/// </summary>
 		[DataMember(Name = "close_date", EmitDefaultValue = false)]
-		public int close_date { get; set; }
+		public long close_date { get; set; }
 	}
 }

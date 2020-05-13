@@ -49,7 +49,7 @@ namespace DreadBot
 		/// Optional. Unix time for the most recent error that happened when trying to deliver an update via webhook
 		/// </summary>
 		[DataMember(Name = "last_error_date", EmitDefaultValue = false)]
-		public int last_error_date { get; set; }
+		public long last_error_date { get; set; }
 		/// <summary>
 		/// Optional. Error message in human-readable format for the most recent error that happened when trying to deliver an update via webhook
 		/// </summary>
