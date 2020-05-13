@@ -155,43 +155,43 @@ namespace DreadBot
             };
             MultipartFormDataContent form = new MultipartFormDataContent();
 
-                form.Add(new StringContent(chatId.ToString(), Encoding.UTF8), "chat_id");
-                form.Add(fileData, "audio", filename);
-                if (caption != null)
-                {
-                    form.Add(new StringContent(caption.ToString(), Encoding.UTF8), "caption");
-                }
-                if (parse_mode != null)
-                {
-                    form.Add(new StringContent(parse_mode.ToString(), Encoding.UTF8), "parse_mode");
-                }
-                if (duration != 0)
-                {
-                    form.Add(new StringContent(duration.ToString(), Encoding.UTF8), "duration");
-                }
-                if (performer != "")
-                {
-                    form.Add(new StringContent(performer.ToString(), Encoding.UTF8), "performer");
-                }
-                if (title != "")
-                {
-                    form.Add(new StringContent(title.ToString(), Encoding.UTF8), "title");
-                }
-                if (disable_notification)
-                {
-                    form.Add(new StringContent(disable_notification.ToString(), Encoding.UTF8), "disable_notification");
-                }
-                if (reply_to_message_id != 0)
-                {
-                    form.Add(new StringContent(reply_to_message_id.ToString(), Encoding.UTF8), "reply_to_message_id");
-                }
-                if (keyboard != null)
-                {
-                    string payload1 = buildRequest<SendPhotoDataRequest>(spr);
-                    form.Add(new StringContent(payload1, Encoding.UTF8), "reply_markup");
-                }
-                Result<Message> result = sendRequest<Message>(Method.sendAudio, "", "", form);
-                return result;
+            form.Add(new StringContent(chatId.ToString(), Encoding.UTF8), "chat_id");
+            form.Add(fileData, "audio", filename);
+            if (caption != null)
+            {
+                form.Add(new StringContent(caption.ToString(), Encoding.UTF8), "caption");
+            }
+            if (parse_mode != null)
+            {
+                form.Add(new StringContent(parse_mode.ToString(), Encoding.UTF8), "parse_mode");
+            }
+            if (duration != 0)
+            {
+                form.Add(new StringContent(duration.ToString(), Encoding.UTF8), "duration");
+            }
+            if (performer != "")
+            {
+                form.Add(new StringContent(performer.ToString(), Encoding.UTF8), "performer");
+            }
+            if (title != "")
+            {
+                form.Add(new StringContent(title.ToString(), Encoding.UTF8), "title");
+            }
+            if (disable_notification)
+            {
+                form.Add(new StringContent(disable_notification.ToString(), Encoding.UTF8), "disable_notification");
+            }
+            if (reply_to_message_id != 0)
+            {
+                form.Add(new StringContent(reply_to_message_id.ToString(), Encoding.UTF8), "reply_to_message_id");
+            }
+            if (keyboard != null)
+            {
+                string payload1 = buildRequest<SendPhotoDataRequest>(spr);
+                form.Add(new StringContent(payload1, Encoding.UTF8), "reply_markup");
+            }
+            Result<Message> result = sendRequest<Message>(Method.sendAudio, "", "", form);
+            return result;
             
         }
 
@@ -217,39 +217,39 @@ namespace DreadBot
             };
             MultipartFormDataContent form = new MultipartFormDataContent();
 
-                form.Add(new StringContent(chatId.ToString(), Encoding.UTF8), "chat_id");
+            form.Add(new StringContent(chatId.ToString(), Encoding.UTF8), "chat_id");
 
-                form.Add(fileData, "document");
+            form.Add(fileData, "document");
 
-                if (thumb != null)
-                {
-                    form.Add(thumb, "thumb");
-                }
-                if (caption != null)
-                {
-                    form.Add(new StringContent(caption.ToString(), Encoding.UTF8), "caption");
-                }
-                if (parse_mode != null)
-                {
-                    form.Add(new StringContent(parse_mode.ToString(), Encoding.UTF8), "parse_mode");
-                }
-                if (disable_notification)
-                {
-                    form.Add(new StringContent(disable_notification.ToString(), Encoding.UTF8), "disable_notification");
-                }
-                if (reply_to_message_id != 0)
-                {
-                    form.Add(new StringContent(reply_to_message_id.ToString(), Encoding.UTF8), "reply_to_message_id");
-                }
-                if (keyboard != null)
-                {
-                    string payload1 = buildRequest<SendDocumentDataRequest>(sddr);
-                    form.Add(new StringContent(payload1, Encoding.UTF8), "reply_markup");
-                }
-                string a = Task.Run(() => form.ReadAsStringAsync()).Result;
-                Console.WriteLine(a);
-                Result<Message> result = sendRequest<Message>(Method.sendDocument, "", "", form);
-                return result;
+            if (thumb != null)
+            {
+                form.Add(thumb, "thumb");
+            }
+            if (caption != null)
+            {
+                form.Add(new StringContent(caption.ToString(), Encoding.UTF8), "caption");
+            }
+            if (parse_mode != null)
+            {
+                form.Add(new StringContent(parse_mode.ToString(), Encoding.UTF8), "parse_mode");
+            }
+            if (disable_notification)
+            {
+                form.Add(new StringContent(disable_notification.ToString(), Encoding.UTF8), "disable_notification");
+            }
+            if (reply_to_message_id != 0)
+            {
+                form.Add(new StringContent(reply_to_message_id.ToString(), Encoding.UTF8), "reply_to_message_id");
+            }
+            if (keyboard != null)
+            {
+                string payload1 = buildRequest<SendDocumentDataRequest>(sddr);
+                form.Add(new StringContent(payload1, Encoding.UTF8), "reply_markup");
+            }
+            string a = Task.Run(() => form.ReadAsStringAsync()).Result;
+            Console.WriteLine(a);
+            Result<Message> result = sendRequest<Message>(Method.sendDocument, "", "", form);
+            return result;
             
         }
 
