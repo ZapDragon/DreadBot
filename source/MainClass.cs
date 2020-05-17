@@ -25,6 +25,7 @@
 using System;
 using System.Threading;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace DreadBot
 {
@@ -44,7 +45,7 @@ namespace DreadBot
 
             Result<User> res = null;
             while (res == null) {
-                res = Methods.getMe();
+                res = Task.Run(() => Methods.getMe()).Result;
                 if (res == null)
                 {
                     Logger.LogError("Error getting bot info. Reattempting..");
@@ -59,7 +60,7 @@ namespace DreadBot
             }
 
             Configs.Me = res.result;
-            Result<WebhookInfo> webres = Methods.getWebhookInfo();
+            Result<WebhookInfo> webres = Methods.getWebhookInfo().Result;
             if (!webres.ok)
             {
                 Logger.LogFatal("Error getting bot info: " + webres.description);
@@ -82,17 +83,18 @@ namespace DreadBot
             if (Configs.RunningConfig.AdminChat < 0 || Configs.RunningConfig.AdminChat > 0)
             {
                 string text = "**DreadBot Started**\n" + Utilities.NormalTime(Utilities.EpochTime()) + "\n\n" + PluginManager.getPluginList();
-                Methods.sendMessage(Configs.RunningConfig.AdminChat, text);
+                Task.Run(() => Methods.sendMessage(Configs.RunningConfig.AdminChat, text));
             }
 
-            Console.Title = "DreadBot v" + Configs.Version + " @" + Configs.Me.username;
+            Console.Title = "DreadBot Async v" + Configs.Version + " @" + Configs.Me.username;
             Console.WriteLine(PluginManager.getPluginList() + "\n");
             Console.WriteLine("DreadBot Loaded, and Started!\n");
 
             if (!String.IsNullOrEmpty(Configs.webhookinfo.url)) { Configs.RunningConfig.GetupdatesMode = false; } //WebHook is enabled. Launch in Webhook mode.
 
             #endregion
-
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             while (true)
             {
                 #region Main GetUpdates Loop
@@ -102,13 +104,13 @@ namespace DreadBot
                     Update[] updates = null;
                     if (UpdateId == 0) {
                         if (Configs.webhookinfo.pending_update_count > 3) { Logger.LogInfo("Playing catchup; " + Configs.webhookinfo.pending_update_count + " updates behind."); }
-                        updates = Methods.getFirstUpdates(60);
+                        updates = Task.Run(() => Methods.getFirstUpdates(60)).Result;
                         if (updates == null || updates.Length < 1) { continue; }
                     }
                     else
                     {
                         GetUpdates request = new GetUpdates() { timeout = 20, offset = ++UpdateId, limit = Configs.RunningConfig.GULimit };
-                        Result<Update[]> updatesres = Methods.getUpdates(request);
+                        Result<Update[]> updatesres = Task.Run(() => Methods.getUpdates(request)).Result;
                         if (!updatesres.ok)
                         {
                             Logger.LogError("Error fetching updates: (" + updatesres.errorCode + ") " + updatesres.description);
@@ -122,7 +124,11 @@ namespace DreadBot
                     {
                         UpdateId = update.update_id;
                         //Console.WriteLine("Parsing Update: " + UpdateId);
-                        Events.ParseUpdate(update);
+                        Task.Run(() => Events.ParseUpdate(update));
+                    }
+                    if (sw.IsRunning) {
+                        sw.Stop();
+                        Console.WriteLine(sw.ElapsedMilliseconds);
                     }
                 }
 

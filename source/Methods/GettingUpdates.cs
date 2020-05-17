@@ -37,7 +37,7 @@ namespace DreadBot
         #region Global Method Execution Object
 
         //This method is called by EVERY Telegram method. This is used to handle Most error checking, and the variable 'result' object is returned to the method that called this.
-        private static Result<T> sendRequest<T>(Method method, string payload = "", string payloadType = "application/json", MultipartFormDataContent dataPayload = null)
+        private static async Task<Result<T>> sendRequest<T>(Method method, string payload = "", string payloadType = "application/json", MultipartFormDataContent dataPayload = null)
         {
             //Console.WriteLine(method + " | " + payload);
             string uriMethod = "https://api.telegram.org/bot" + Configs.RunningConfig.token + "/" + method;
@@ -55,11 +55,11 @@ namespace DreadBot
                 {
                     if (dataPayload == null) {
                         StringContent content = new StringContent(payload, Encoding.UTF8, payloadType);
-                        response = Task.Run(() => client.PostAsync(uriMethod, content)).Result;
+                        response = await client.PostAsync(uriMethod, content);
                     }
                     else {
                         //string a = Task.Run(() => dataPayload.ReadAsStringAsync()).Result;
-                        response = Task.Run(() => client.PostAsync(uriMethod, dataPayload)).Result; 
+                        response = await client.PostAsync(uriMethod, dataPayload);
                     }
                 }
                 catch (ObjectDisposedException e)
@@ -76,7 +76,7 @@ namespace DreadBot
                 tryCount--;
             }
             client.Dispose();
-            Stream stream = Task.Run(() => response.Content.ReadAsStreamAsync()).Result;
+            Stream stream = await response.Content.ReadAsStreamAsync();
             DataContractJsonSerializer dcjs = new DataContractJsonSerializer(typeof(Result<T>));
             Result<T> result = (dcjs.ReadObject(stream)) as Result<T>;
             if (!response.IsSuccessStatusCode) //HTTP Error handling
@@ -97,37 +97,36 @@ namespace DreadBot
             MemoryStream ms = new MemoryStream();
             new DataContractJsonSerializer(typeof(T)).WriteObject(ms, (T)o);
             ms.Position = 0;
-            StreamReader sr = new StreamReader(ms);
-            return sr.ReadToEnd();
+            return new StreamReader(ms).ReadToEnd();
         }
 
         #endregion
 
         #region Internal Methods
-        internal static Result<Update[]> getUpdates(GetUpdates args = null)
+        internal static async Task<Result<Update[]>> getUpdates(GetUpdates args = null)
         {
             Result<Update[]> result = null;
-            if (args == null) { result = sendRequest<Update[]>(Method.getUpdates); }
-            else { result = sendRequest<Update[]>(Method.getUpdates, buildRequest<GetUpdates>(args)); }
+            if (args == null) { result = await sendRequest<Update[]>(Method.getUpdates); }
+            else { result = await sendRequest<Update[]>(Method.getUpdates, buildRequest<GetUpdates>(args)); }
             return result;
         }
-        internal static Result<bool> setWebhook(SetWebHook args)
+        internal static async Task<Result<bool>> setWebhook(SetWebHook args)
         {
-            Result<bool> result = sendRequest<bool>(Method.setWebhook, buildRequest<SetWebHook>(args));
+            Result<bool> result = await sendRequest<bool>(Method.setWebhook, buildRequest<SetWebHook>(args));
             return result;
         }
-        internal static Result<bool> deleteWebhook()
+        internal static async Task<Result<bool>> deleteWebhook()
         {
-            Result<bool> result = sendRequest<bool>(Method.deleteWebhook);
+            Result<bool> result = await sendRequest<bool>(Method.deleteWebhook);
             return result;
         }
         /// <summary>
         /// Returns a WebHookInfo object which contains data about the bot, number of availible updates, and weather or not the bot is in Webhook mode. In Most cases, you wont need this.
         /// </summary>
         /// <returns></returns>
-        public static Result<WebhookInfo> getWebhookInfo()
+        public static async Task<Result<WebhookInfo>> getWebhookInfo()
         {
-            return sendRequest<WebhookInfo>(Method.getWebhookInfo);
+            return await sendRequest<WebhookInfo>(Method.getWebhookInfo);
         }
 
         #endregion

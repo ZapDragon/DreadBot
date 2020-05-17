@@ -26,6 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace DreadBot
 {
@@ -34,7 +35,7 @@ namespace DreadBot
         #region Update Parsing & Event Firing
 
         #region Update Type
-        public static void ParseUpdate(Update update) //Evaluating which Update this is, and asigning local variables for further evaluation.
+        public static async Task ParseUpdate(Update update) //Evaluating which Update this is, and asigning local variables for further evaluation.
         {
             if (update.message != null) {
                 if (update.message.text != null) { 
@@ -65,7 +66,7 @@ namespace DreadBot
 
         #region Message Events 
 
-        private static void ParseMessage(Message msg, bool isEdited = false, bool isChannel = false)
+        private static async Task ParseMessage(Message msg, bool isEdited = false, bool isChannel = false)
         {
             if (msg.text != null)
             {
@@ -202,34 +203,34 @@ namespace DreadBot
         #endregion
 
         #region Telegram Event Triggers
-        public static void OnForward(Message msg) { ForwardEvent?.Invoke(new MessageEventArgs() { msg = msg }); }
-        public static void OnSticker(Message msg) { StickerEvent?.Invoke(new MessageEventArgs() { msg = msg }); }
-        public static void OnImage(Message msg, bool isEdited) { ImageEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
-        public static void OnVideoNote(Message msg, bool isEdited) { VideoNoteEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
-        public static void OnJoin(Message msg) { JoinEvent?.Invoke(new SystemMsgEventArgs() { msg = msg }); }
-        public static void OnPart(Message msg) { PartEvent?.Invoke(new SystemMsgEventArgs() { msg = msg }); }
-        public static void OnAnimation(Message msg, bool isEdited) { AnimationEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
-        public static void OnAudio(Message msg, bool isEdited) { AudioEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
-        public static void OnVideo(Message msg, bool isEdited) { VideoEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
-        public static void OnGame(Message msg, bool isEdited) { GameEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
-        public static void OnPoll(Poll poll, Message msg = null, bool isUpdate = false, bool isAnswer = false) { PollEvent?.Invoke(new PollEventArgs() { poll = poll, msg = msg, isUpdate = isUpdate, isAnswer = isAnswer }); }
-        public static void OnDice(Message msg) { DiceEvent?.Invoke(new MessageEventArgs() { msg = msg }); }
-        public static void OnVoiceClip(Message msg, bool isEdited) { VoiceClipEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
-        public static void OnVenueClip(Message msg, bool isEdited) { VenueClipEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
-        public static void OnPinnedMessage(Message msg, bool isEdited) { PinnedMessageEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
-        public static void OnTitleChange(Message msg) { TitleChangeEvent?.Invoke(new SystemMsgEventArgs() { msg = msg }); }
-        public static void OnChatPhoto(Message msg) { ChatPhotoEvent?.Invoke(new SystemMsgEventArgs() { msg = msg }); }
-        public static void OnLocation(Message msg) { LocationEvent?.Invoke(new SystemMsgEventArgs() { msg = msg }); }
-        public static void OnNewGroup(Message msg) { NewGroupEvent?.Invoke(new SystemMsgEventArgs() { msg = msg }); }
-        public static void OnGroupUpgrade(Message msg) { GroupUpgradeEvent?.Invoke(new SystemMsgEventArgs() { msg = msg }); }
-        public static void OnCallback(CallbackQuery callback) { CallbackEvent?.Invoke(new CallbackEventArgs() { callbackQuery = callback }); }
-        public static void OnShippingQuery(ShippingQuery shippingQuery) { ShippingQueryEvent?.Invoke(new ShippingQueryEventArgs() { shippingQuery = shippingQuery }); }
-        public static void OnChosenInline(ChosenInlineResult inlineResult) { ChosenInlineEvent?.Invoke(new ChosenInlineEventArgs() { chosenResult = inlineResult }); }
-        public static void OnInlineQuery(InlineQuery inlineQuery) { InlineQueryEvent?.Invoke(new InlineQueryEventArgs() { inlineQuery = inlineQuery }); }
-        public static void OnPreCheckout(PreCheckoutQuery checkoutQuery) { PreCheckoutEvent?.Invoke(new PreCheckoutEventArgs() { preCheckoutQuery = checkoutQuery }); }
-        public static void OnPassportData(Message msg) { PassportDataEvent?.Invoke(new MessageEventArgs() { msg = msg }); }
-        public static void OnText(Message Msg, bool isEdited) { TextEvent?.Invoke(new MessageEventArgs() { msg = Msg, isEdited = isEdited }); }
-        public static void OnChannelPost(Message Msg, bool isEdited) { ChannelPostEvent?.Invoke(new MessageEventArgs() { msg = Msg, isEdited = isEdited }); }
+        public static async void OnForward(Message msg) { ForwardEvent?.Invoke(new MessageEventArgs() { msg = msg }); }
+        public static async void OnSticker(Message msg) { StickerEvent?.Invoke(new MessageEventArgs() { msg = msg }); }
+        public static async void OnImage(Message msg, bool isEdited) { ImageEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
+        public static async void OnVideoNote(Message msg, bool isEdited) { VideoNoteEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
+        public static async void OnJoin(Message msg) { JoinEvent?.Invoke(new SystemMsgEventArgs() { msg = msg }); }
+        public static async void OnPart(Message msg) { PartEvent?.Invoke(new SystemMsgEventArgs() { msg = msg }); }
+        public static async void OnAnimation(Message msg, bool isEdited) { AnimationEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
+        public static async void OnAudio(Message msg, bool isEdited) { AudioEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
+        public static async void OnVideo(Message msg, bool isEdited) { VideoEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
+        public static async void OnGame(Message msg, bool isEdited) { GameEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
+        public static async void OnPoll(Poll poll, Message msg = null, bool isUpdate = false, bool isAnswer = false) { PollEvent?.Invoke(new PollEventArgs() { poll = poll, msg = msg, isUpdate = isUpdate, isAnswer = isAnswer }); }
+        public static async void OnDice(Message msg) { DiceEvent?.Invoke(new MessageEventArgs() { msg = msg }); }
+        public static async void OnVoiceClip(Message msg, bool isEdited) { VoiceClipEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
+        public static async void OnVenueClip(Message msg, bool isEdited) { VenueClipEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
+        public static async void OnPinnedMessage(Message msg, bool isEdited) { PinnedMessageEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
+        public static async void OnTitleChange(Message msg) { TitleChangeEvent?.Invoke(new SystemMsgEventArgs() { msg = msg }); }
+        public static async void OnChatPhoto(Message msg) { ChatPhotoEvent?.Invoke(new SystemMsgEventArgs() { msg = msg }); }
+        public static async void OnLocation(Message msg) { LocationEvent?.Invoke(new SystemMsgEventArgs() { msg = msg }); }
+        public static async void OnNewGroup(Message msg) { NewGroupEvent?.Invoke(new SystemMsgEventArgs() { msg = msg }); }
+        public static async void OnGroupUpgrade(Message msg) { GroupUpgradeEvent?.Invoke(new SystemMsgEventArgs() { msg = msg }); }
+        public static async void OnCallback(CallbackQuery callback) { CallbackEvent?.Invoke(new CallbackEventArgs() { callbackQuery = callback }); }
+        public static async void OnShippingQuery(ShippingQuery shippingQuery) { ShippingQueryEvent?.Invoke(new ShippingQueryEventArgs() { shippingQuery = shippingQuery }); }
+        public static async void OnChosenInline(ChosenInlineResult inlineResult) { ChosenInlineEvent?.Invoke(new ChosenInlineEventArgs() { chosenResult = inlineResult }); }
+        public static async void OnInlineQuery(InlineQuery inlineQuery) { InlineQueryEvent?.Invoke(new InlineQueryEventArgs() { inlineQuery = inlineQuery }); }
+        public static async void OnPreCheckout(PreCheckoutQuery checkoutQuery) { PreCheckoutEvent?.Invoke(new PreCheckoutEventArgs() { preCheckoutQuery = checkoutQuery }); }
+        public static async void OnPassportData(Message msg) { PassportDataEvent?.Invoke(new MessageEventArgs() { msg = msg }); }
+        public static async void OnText(Message Msg, bool isEdited) { TextEvent?.Invoke(new MessageEventArgs() { msg = Msg, isEdited = isEdited }); }
+        public static async void OnChannelPost(Message Msg, bool isEdited) { ChannelPostEvent?.Invoke(new MessageEventArgs() { msg = Msg, isEdited = isEdited }); }
 
         #endregion
 

@@ -43,7 +43,7 @@ namespace DreadBot
         /// <param name="disable_web_page_preview">Disables link previews for links in this message.</param>
         /// <param name="keyboard">InlineKeyboardMarkup Object. Pass a built Keyboard object in here to include it in your messages.</param>
         /// <returns></returns>
-        public static Result<object> editMessageText(long chat_id, long message_id, string text, string parse_mode = "markdown", InlineKeyboardMarkup keyboard = null) //Can apprently return a bool as well. 
+        public static async Task<Result<object>> editMessageText(long chat_id, long message_id, string text, string parse_mode = "markdown", InlineKeyboardMarkup keyboard = null) //Can apprently return a bool as well. 
         {
             EditMessageTextRequest emr = new EditMessageTextRequest()
             {
@@ -54,12 +54,7 @@ namespace DreadBot
             };
 
             if (keyboard != null) { emr.reply_markup = keyboard; }
-            Result<object> result = null;
-            try
-            {
-                result = sendRequest<object>(Method.editMessageText, buildRequest<EditMessageTextRequest>(emr));
-                return result;
-            }
+            try { return await sendRequest<object>(Method.editMessageText, buildRequest<EditMessageTextRequest>(emr)); }
             catch { Logger.LogWarn("Failed to Parse wrong datatype 1 EditMessageText()"); }
             return null;
         }
@@ -73,7 +68,7 @@ namespace DreadBot
         /// <param name="parse_mode">Makrkdown, HTML, or Empty. Tells telegram how to parse special markdown flags in the text. Makrdown by default.</param>
         /// <param name="keyboard">InlineKeyboardMarkup Object. Pass a built Keyboard object in here to include it in your messages.</param>
         /// <returns></returns>
-        public static Result<object> editMessageCaption(long chat_id, long message_id, string caption, string parse_mode = "markdown", InlineKeyboardMarkup keyboard = null) //Can apprently return a bool as well. 
+        public static async Task<Result<object>> editMessageCaption(long chat_id, long message_id, string caption, string parse_mode = "markdown", InlineKeyboardMarkup keyboard = null) //Can apprently return a bool as well. 
         {
             EditMessageCaptionRequest emr = new EditMessageCaptionRequest()
             {
@@ -84,12 +79,7 @@ namespace DreadBot
             };
 
             if (keyboard != null) { emr.reply_markup = keyboard; }
-            Result<object> result = null;
-            try
-            {
-                result = sendRequest<object>(Method.editMessageCaption, buildRequest<EditMessageCaptionRequest>(emr));
-                return result;
-            }
+            try { return await sendRequest<object>(Method.editMessageCaption, buildRequest<EditMessageCaptionRequest>(emr)); }
             catch { Logger.LogWarn("Failed to Parse wrong datatype 1 EditMessageText()"); }
             return null;
         }
@@ -108,7 +98,7 @@ namespace DreadBot
             return null;
         }
 
-        public static Result<object> editMessageReplyMarkup(long chat_id, long message_id, string inline_message_id = "", InlineKeyboardMarkup keyboard = null) //Can apprently return a bool as well. 
+        public static async Task<Result<object>> editMessageReplyMarkup(long chat_id, long message_id, string inline_message_id = "", InlineKeyboardMarkup keyboard = null) //Can apprently return a bool as well. 
         {
             EditReplyMarkupRequest ermr = new EditReplyMarkupRequest()
             {
@@ -118,12 +108,7 @@ namespace DreadBot
                 reply_markup = keyboard
             };
 
-            Result<object> result = null;
-            try
-            {
-                result = sendRequest<object>(Method.editMessageReplyMarkup, buildRequest<EditReplyMarkupRequest>(ermr));
-                return result;
-            }
+            try { return await sendRequest<object>(Method.editMessageReplyMarkup, buildRequest<EditReplyMarkupRequest>(ermr)); }
             catch { Logger.LogWarn("Edit Keyboard Failed " + chat_id); }
             return null;
         }
@@ -133,18 +118,10 @@ namespace DreadBot
             return null;
         }
 
-        public static Result<bool> deleteMessage(long chat_id, long msg_id)
+        public static async Task<Result<bool>> deleteMessage(long chat_id, long msg_id)
         {
-            DeleteMessageRequest dmr = new DeleteMessageRequest()
-            {
-                chat_id = chat_id,
-                msg_id = msg_id
-            };
-
-            Result<bool> result = null;
-
-            result = sendRequest<bool>(Method.deleteMessage, buildRequest<DeleteMessageRequest>(dmr));
-            return result;
+            DeleteMessageRequest dmr = new DeleteMessageRequest(){ chat_id = chat_id, msg_id = msg_id };
+            return await sendRequest<bool>(Method.deleteMessage, buildRequest<DeleteMessageRequest>(dmr));
         }
     }
 }

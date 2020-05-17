@@ -25,6 +25,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace DreadBot
 {
@@ -49,7 +50,7 @@ namespace DreadBot
             Console.Write("Verifying token...");
 
             Result<WebhookInfo> res = null;
-            res = Methods.getWebhookInfo();
+            res = Task.Run(() => Methods.getWebhookInfo()).Result;
             if (!res.ok)
             {
                 Logger.LogFatal(res.description);
@@ -58,7 +59,7 @@ namespace DreadBot
 
 
             Result<User> meres = null;
-            meres = Methods.getMe();
+            meres = Task.Run(() => Methods.getMe()).Result;
             if (!meres.ok)
             {
                 Logger.LogFatal(meres.description);

@@ -12,7 +12,7 @@ namespace DreadBot
     public partial class Methods
     {
 
-        public static Update[] getFirstUpdates(int to = 1800)
+        public static async Task<Update[]> getFirstUpdates(int to = 1800)
         {
             SortedDictionary<long, Update> updates = new SortedDictionary<long, Update>();
             Result<Update[]> result = null;
@@ -24,7 +24,7 @@ namespace DreadBot
                 GetUpdates u = new GetUpdates() { limit = 100, timeout = to };
                 if (MainClass.UpdateId > 0) { u.offset = MainClass.UpdateId + 1; }
 
-                result = sendRequest<Update[]>(Method.getUpdates, buildRequest<GetUpdates>(u));
+                result = await sendRequest<Update[]>(Method.getUpdates, buildRequest<GetUpdates>(u));
 
                 if (result == null || !result.ok || result.result.Length < 1) {
                     if (MainClass.UpdateId > 0) { return null; }
@@ -65,7 +65,7 @@ namespace DreadBot
         /// <param name="userId">The Numeric long that represents a user or bot to ban.</param>
         /// <param name="untilEpoch">The Epoch date in which Telegram will automatically unban the users. Less then 30 seconds, or more than 365 days, the ban is permanant.</param>
         /// <returns></returns>
-        public static Result<bool> banChatMember(long chatId, long userId, int untilEpoch = 0)
+        public static async Task<Result<bool>> banChatMember(long chatId, long userId, int untilEpoch = 0)
         {
             KickChatMemberRequest kcmr = new KickChatMemberRequest()
             {
@@ -73,9 +73,7 @@ namespace DreadBot
                 user_id = userId,
             };
             if (untilEpoch < 30) { kcmr.until_date = Utilities.EpochTime() + 10; }
-            Result<bool> result = null;
-            result = sendRequest<bool>(Method.kickChatMember, buildRequest<KickChatMemberRequest>(kcmr));
-            return result;
+            return await sendRequest<bool>(Method.kickChatMember, buildRequest<KickChatMemberRequest>(kcmr));
         }
 
 
@@ -88,7 +86,7 @@ namespace DreadBot
         /// <param name="parse_mode">Makrkdown, HTML, or Empty. Tells telegram how to parse special markdown flags in the text. Makrdown by default.</param>
         /// <param name="keyboard">InlineKeyboardMarkup Object. Pass a built Keyboard object in here to include it in your messages.</param>
         /// <returns></returns>
-        public static Result<Message> sendReply(long chatId, long messageId, string text, string parse_mode = "markdown", InlineKeyboardMarkup keyboard = null)
+        public static async Task<Result<Message>> sendReply(long chatId, long messageId, string text, string parse_mode = "markdown", InlineKeyboardMarkup keyboard = null)
         {
             SendMessageRequest smr = new SendMessageRequest()
             {
@@ -98,8 +96,7 @@ namespace DreadBot
                 reply_to_message_id = messageId
             };
             if (keyboard != null) { smr.reply_markup = keyboard; }
-            Result<Message> result = sendRequest<Message>(Method.sendMessage, buildRequest<SendMessageRequest>(smr));
-            return result;
+            return await sendRequest<Message>(Method.sendMessage, buildRequest<SendMessageRequest>(smr));
         }
 
         /// <summary>

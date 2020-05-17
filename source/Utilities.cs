@@ -31,6 +31,7 @@ using System.Net.Http;
 using System.IO;
 using System.IO.Compression;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace DreadBot
 {
@@ -108,7 +109,7 @@ namespace DreadBot
             }
             else
             {
-                Result<ChatMember> memberResult = Methods.getChatMember(chatID, userID);
+                Result<ChatMember> memberResult = Task.Run(() => Methods.getChatMember(chatID, userID)).Result;
                 if (!memberResult.ok)
                 {
                     Logger.LogWarn("There was an error while getting the permission for " + userID + " in chat " + chatID + "\nError: (" + memberResult.errorCode + ") Description: " + memberResult.description);
@@ -174,7 +175,7 @@ namespace DreadBot
                             return true;
                         }
                         Logger.LogAdmin("Admin Menu Called: " + msg.from.id);
-                        Result<Message> res = Methods.sendMessage(msg.from.id, "*DreadBot Administration Menu*\n\n`DreadBot Managment`\nUsed to fine tune the bot, plus other senstive, and powerful options.\n\n`DataBase Management`\nConfigure Specific Database options, and backup as needed.\n\n`Plugin Manager`\nAdd, Remove and Configure plugins to give DreadBot its purpose.", "Markdown", Menus.AdminMenu());
+                        Result<Message> res = Task.Run(() => Methods.sendMessage(msg.from.id, "*DreadBot Administration Menu*\n\n`DreadBot Managment`\nUsed to fine tune the bot, plus other senstive, and powerful options.\n\n`DataBase Management`\nConfigure Specific Database options, and backup as needed.\n\n`Plugin Manager`\nAdd, Remove and Configure plugins to give DreadBot its purpose.", "Markdown", Menus.AdminMenu())).Result;
                         if (!res.ok) { Logger.LogError("Error contacting the admin Chat: " + res.description); }
                         return true;
                     }
@@ -193,7 +194,7 @@ namespace DreadBot
                         }
                         if (msg.chat.type == "private" || msg.chat.type == "channel")
                         {
-                            Result<Message> res = Methods.sendReply(msg.chat.id, msg.message_id, "You can only assign a Group or Supergroup to be the Debug Chat.\nIf you want to reset it back to PM, please use the admin menu.");
+                            Result<Message> res = Task.Run(() => Methods.sendReply(msg.chat.id, msg.message_id, "You can only assign a Group or Supergroup to be the Debug Chat.\nIf you want to reset it back to PM, please use the admin menu.")).Result;
                             if (!res.ok) { Logger.LogError("Error contacting the admin Chat: " + res.description); }
                             return true;
                         }
@@ -201,7 +202,7 @@ namespace DreadBot
                         {
                             if (msg.chat.id == Configs.RunningConfig.AdminChat)
                             {
-                                Result<Message> res = Methods.sendReply(msg.chat.id, msg.message_id, "Debug Chat is already set to this group.");
+                                Result<Message> res = Task.Run(() => Methods.sendReply(msg.chat.id, msg.message_id, "Debug Chat is already set to this group.")).Result;
                                 if (!res.ok) { Logger.LogError("Error contacting the admin Chat: " + res.description); }
                                 return true;
                             }
@@ -209,7 +210,7 @@ namespace DreadBot
                             {
                                 Configs.RunningConfig.AdminChat = msg.chat.id;
                                 Database.SaveConfig();
-                                Result<Message> res = Methods.sendReply(msg.chat.id, msg.message_id, "Debug Chat is now set to this group.");
+                                Result<Message> res = Task.Run(() => Methods.sendReply(msg.chat.id, msg.message_id, "Debug Chat is now set to this group.")).Result;
                                 if (!res.ok) { Logger.LogError("Error contacting the admin Chat: " + res.description); }
                                 Logger.LogAdmin("Debug Chat has been set to: " + msg.chat.id);
                                 return true;
@@ -340,8 +341,8 @@ namespace DreadBot
 
                             else
                             {
-                                Methods.sendReply(msg.from.id, (int)msg.message_id, "The token you have specified does not exist. This error has been logged.");
-                                Result<Message> res = Methods.sendMessage(Configs.RunningConfig.AdminChat, "The token command was attempted by ([" + msg.from.id + "](tg://user?id=" + msg.from.id + ")) using the token " + cmd[1]);
+                                Task.Run(() => Methods.sendReply(msg.from.id, (int)msg.message_id, "The token you have specified does not exist. This error has been logged."));
+                                Result<Message> res = Task.Run(() => Methods.sendMessage(Configs.RunningConfig.AdminChat, "The token command was attempted by ([" + msg.from.id + "](tg://user?id=" + msg.from.id + ")) using the token " + cmd[1])).Result;
                                 if (res == null || !res.ok) { Logger.LogError("Error contacting the admin Chat: " + res.description); }
                                 return true;
                             }

@@ -64,7 +64,7 @@ namespace DreadBot
             }
             else
             {
-                Result<Chat> gChatResult = Methods.getChat(ChatID);
+                Result<Chat> gChatResult = Task.Run(() => Methods.getChat(ChatID)).Result;
                 if (!gChatResult.ok)
                 {
                     Logger.LogError("Could not getChat during Caching update. Chat Returned a null value.");
@@ -111,7 +111,7 @@ namespace DreadBot
             {
                 chat.LastUpdate = DateTime.Now;
                 Result<Chat> Chat = null;
-                Chat = Methods.getChat(chat.id);
+                Chat = Task.Run(() => Methods.getChat(chat.id)).Result;
                 if (Chat != null)
                 {
                     if (!Chat.ok) { Logger.LogError("There was an error fetching the Chat info for " + chat.id + "\r\nReason: " + Chat.description); }
@@ -126,7 +126,7 @@ namespace DreadBot
                 }
 
                 Result<ChatMember[]> Admins = null;
-                Admins = Methods.getChatAdministrators(chat.id);
+                Admins = Task.Run(() => Methods.getChatAdministrators(chat.id)).Result;
                 if (Admins != null)
                 {
                     if (!Admins.ok) { Logger.LogError("There was an error fetching the Admin list for " + chat.id + "\r\nReason: " + Admins.description); }

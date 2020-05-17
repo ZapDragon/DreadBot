@@ -450,11 +450,11 @@ namespace DreadBot
         {
             if (console)
             {
-                if (Logger.ConsoleLevel == level) { return "⬅️"; }
+                //if (Logger.ConsoleLevel == level) { return "⬅️"; }
             }
             else
             {
-                if (Logger.LogLevel == level) { return "⬅️"; }
+                //if (Logger.LogLevel == level) { return "⬅️"; }
             }
             return "";
         }
