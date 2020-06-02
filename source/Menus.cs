@@ -448,14 +448,6 @@ namespace DreadBot
 
         internal static string GetLogLevel(LogLevel level, bool console = true)
         {
-            if (console)
-            {
-                if (Logger.ConsoleLevel == level) { return "⬅️"; }
-            }
-            else
-            {
-                if (Logger.LogLevel == level) { return "⬅️"; }
-            }
             return "";
         }
     }
