@@ -39,11 +39,11 @@ namespace DreadBot
         /// <param name="message_id">Identifier of the message to edit. Can be a User, Channel, Or group. Cannot be a bot.</param>
         /// <param name="inline_message_id">Required if chat_id and message_id are not specified. Identifier of the inline message.</param>
         /// <param name="text">The new text to of the Message. Character Limit of 4096.</param>
-        /// <param name="parse_mode">Makrkdown, HTML, or Empty. Tells telegram how to parse special markdown flags in the text. Makrdown by default.</param>
+        /// <param name="parse_mode">Markdown, HTML, or Empty. Tells telegram how to parse special markdown flags in the text. Markdown by default.</param>
         /// <param name="disable_web_page_preview">Disables link previews for links in this message.</param>
         /// <param name="keyboard">InlineKeyboardMarkup Object. Pass a built Keyboard object in here to include it in your messages.</param>
         /// <returns></returns>
-        public static Result<object> editMessageText(long chat_id, long message_id, string text, string parse_mode = "markdown", InlineKeyboardMarkup keyboard = null) //Can apprently return a bool as well. 
+        public static Result<object> editMessageText(long chat_id, long message_id, string text, string parse_mode = "markdown", InlineKeyboardMarkup keyboard = null) //Can apparently return a bool as well. 
         {
             EditMessageTextRequest emr = new EditMessageTextRequest()
             {
@@ -70,10 +70,10 @@ namespace DreadBot
         /// <param name="message_id">Identifier of the caption to edit. Can be a User, Channel, Or group. Cannot be a bot.</param>
         /// <param name="inline_message_id">Required if chat_id and message_id are not specified. Identifier of the inline message.</param>
         /// <param name="caption">The new caption for the Image. Character Limit of 1024.</param>
-        /// <param name="parse_mode">Makrkdown, HTML, or Empty. Tells telegram how to parse special markdown flags in the text. Makrdown by default.</param>
+        /// <param name="parse_mode">Markdown, HTML, or Empty. Tells telegram how to parse special markdown flags in the text. Markdown by default.</param>
         /// <param name="keyboard">InlineKeyboardMarkup Object. Pass a built Keyboard object in here to include it in your messages.</param>
         /// <returns></returns>
-        public static Result<object> editMessageCaption(long chat_id, long message_id, string caption, string parse_mode = "markdown", InlineKeyboardMarkup keyboard = null) //Can apprently return a bool as well. 
+        public static Result<object> editMessageCaption(long chat_id, long message_id, string caption, string parse_mode = "markdown", InlineKeyboardMarkup keyboard = null) //Can apparently return a bool as well. 
         {
             EditMessageCaptionRequest emr = new EditMessageCaptionRequest()
             {
@@ -100,15 +100,15 @@ namespace DreadBot
         /// <param name="message_id">The id number of the Message containing the Photo to edit. Can be a User, Channel, Or group. Cannot be a bot.</param>
         /// <param name="inline_message_id">Required if chat_id and message_id are not specified. Identifier of the inline message.</param>
         /// <param name="caption">The new caption for the Image. Character Limit of 1024.</param>
-        /// <param name="parse_mode">Makrkdown, HTML, or Empty. Tells telegram how to parse special markdown flags in the text. Makrdown by default.</param>
+        /// <param name="parse_mode">Markdown, HTML, or Empty. Tells telegram how to parse special markdown flags in the text. Markdown by default.</param>
         /// <param name="keyboard">InlineKeyboardMarkup Object. Pass a built Keyboard object in here to include it in your messages.</param>
         /// <returns></returns>
-        public static Result<Message> editMessageMedia() //Can apprently return a bool as well. 
+        public static Result<Message> editMessageMedia() //Can apparently return a bool as well. 
         {
             return null;
         }
 
-        public static Result<object> editMessageReplyMarkup(long chat_id, long message_id, string inline_message_id = "", InlineKeyboardMarkup keyboard = null) //Can apprently return a bool as well. 
+        public static Result<object> editMessageReplyMarkup(long chat_id, long message_id, string inline_message_id = "", InlineKeyboardMarkup keyboard = null) //Can apparently return a bool as well. 
         {
             EditReplyMarkupRequest ermr = new EditReplyMarkupRequest()
             {
@@ -128,7 +128,7 @@ namespace DreadBot
             return null;
         }
 
-        public static Result<Poll> stopPoll() //Can apprently return a bool as well. 
+        public static Result<Poll> stopPoll() //Can apparently return a bool as well. 
         {
             return null;
         }

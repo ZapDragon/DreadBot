@@ -86,7 +86,7 @@ namespace DreadBot
 		[DataMember(Name = "permissions", EmitDefaultValue = false)]
 		public ChatPermissions permissions { get; set; }
 		/// <summary>
-		/// Optional. For supergroups, the minimum allowed delay between consecutive messages sent by each unpriviledged user. Returned only in getChat.
+		/// Optional. For supergroups, the minimum allowed delay between consecutive messages sent by each unprivileged user. Returned only in getChat.
 		/// </summary>
 		[DataMember(Name = "slow_mode_delay", EmitDefaultValue = false)]
 		public int slow_mode_delay { get; set; }
