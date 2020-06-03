@@ -149,7 +149,7 @@ namespace DreadBot
             return result;
         }
         /// <summary>
-        /// Returns a WebHookInfo object which contains data about the bot, number of availible updates, and weather or not the bot is in Webhook mode. In Most cases, you wont need this.
+        /// Returns a WebHookInfo object which contains data about the bot, number of available updates, and weather or not the bot is in Webhook mode. In Most cases, you wont need this.
         /// </summary>
         /// <returns></returns>
         public static Result<WebhookInfo> getWebhookInfo()

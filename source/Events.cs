@@ -34,7 +34,7 @@ namespace DreadBot
         #region Update Parsing & Event Firing
 
         #region Update Type
-        public static void ParseUpdate(Update update) //Evaluating which Update this is, and asigning local variables for further evaluation.
+        public static void ParseUpdate(Update update) //Evaluating which Update this is, and assigning local variables for further evaluation.
         {
             if (update.message != null) {
                 if (update.message.text != null) { 

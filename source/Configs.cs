@@ -121,7 +121,7 @@ namespace DreadBot
         public List<long> Blacklist { get; set; } //List of User IDs to reject users from use of the bot.
         public long AdminChat { get; set; } //The id of a user, Group or Supergroup. This is used for debug information. Optionally also used for administrative commands.
         public bool AdminChatCommands { get; set; } //If AdminChat is a Group or Supergroup, this can be enabled to allow anyone in the chat to perform administrative commands.
-        public int GULimit { get; set; } //Abreveated "Get Updates Limit" - This is a value is used for how many updates at a time the bot should request in Get Updates mode. Use this setting CAREFULLY.
+        public int GULimit { get; set; } //Abbreviated "Get Updates Limit" - This is a value is used for how many updates at a time the bot should request in Get Updates mode. Use this setting CAREFULLY.
         public int FirstLaunch { get; set; } //The epoch time when the bot was first launched.
         public int LastLaunch { get; set; } //The epoch time when the bot was last launched.
         public bool GetupdatesMode { get; set; } //Toggle between GetUpdates and Webhook mode. This is controlled by The bot API.
