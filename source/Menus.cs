@@ -43,8 +43,8 @@ namespace DreadBot
             {
                 case "botadm": {
                         Methods.answerCallbackQuery(callback.id);
-                        string text = "*DreadBot Managment Options*\n\nThese options are for the bot owner only (you) and are critical settings for the operation of your bot. Use these settings with care. All of these settings take immediate effect.\n\n`Sensitive Options`\nThese settings control very low level settings. Such as how often the bot will request new messages, and even setting up webhook, and more!\n\n`Add/Remove Bot Admins`\nIn the event you want to grant others control voer the bot, manage who can use it, and what control they have over it, you can use this menu.\n\n`Debug Chat Settings`\nBy Default, the \"Debug Chat\" is PM between you and the bot. These settings let you use a group instead, as well as control what options can be set from this group. This can really help if you are tired of getting Debug messages in PM.\n\n`System Sounds`\nThis allows DreadBot to play custom sounds per events.You send DreadBot WAV/ MP3 Files to play to correlate to specific events.";
-                        Methods.editMessageText(callback.from.id, callback.message.message_id, text, "markdown", ManagmentMenu());
+                        string text = "*DreadBot Management Options*\n\nThese options are for the bot owner only (you) and are critical settings for the operation of your bot. Use these settings with care. All of these settings take immediate effect.\n\n`Sensitive Options`\nThese settings control very low level settings. Such as how often the bot will request new messages, setting up webhook, and more!\n\n`Add/Remove Bot Admins`\nIn the event you want to grant others control over the bot, manage who can use it, and what control they have over it, you can use this menu.\n\n`Debug Chat Settings`\nBy Default, the \"Debug Chat\" is PM between you and the bot. These settings let you use a group instead, as well as control what options can be set from this group. This can really help if you are tired of getting Debug messages in PM.\n\n`System Sounds`\nThis allows DreadBot to play custom sounds per events. You send DreadBot WAV/ MP3 Files to play to correlate to specific events.";
+                        Methods.editMessageText(callback.from.id, callback.message.message_id, text, "markdown", ManagementMenu());
                         return;
                     }
                 case "tuneables": {
@@ -58,12 +58,12 @@ namespace DreadBot
                         else
                         {
                             Methods.answerCallbackQuery(callback.id);
-                            string text = "*Senitive Tunables*\n\nThese Settings are VERY sensitive and alter how the Bot will communicate with Telegram.\nDo Not Change these settings unless you are familiar with them!\n\n" +
-                                "`Show Access Token`\nThis will Display the access token the bot has been assigned to.\n\n" +
-                                "`Change Access Token`\nThis will allow you to change the access toke and use a different bot account.\n*WARNING!* This can cause harmful sideeffects to any database entires plugins you have added use.\nUSE WITH CAUTION!\n\n" +
-                                "`Change Owner`\nThis allows you to pass Ownership of the bot to another Telegram user. Only the Owner can use this button.\n\n" +
-                                "`Get Updates Limit`\nUsing the + - Buttons, you can change the number of updates the bot will ask for when it gets Mssages from Telegram.\n(Min 1 - Max 100 - Default 20)\n\n" +
-                                "`Bot Operation Mode`\nThis allows you set change the bot's method of getting updates between getUpdates and WebHook. This can heavily impact the funcationality of the bot and you shouldn't use it unless you know what you're doing.\n\n";
+                            string text = "*Sensitive Tunables*\n\nThese settings are VERY sensitive and alter how the bot will communicate with Telegram.\nDo not change these settings unless you are familiar with them!\n\n" +
+                                "`Show Access Token`\nThis will display the access token that the bot is using.\n\n" +
+                                "`Change Access Token`\nThis will allow you to change the access token and use a different bot account.\n*WARNING!* This can cause harmful side-effects to any database entries which plugins you have added are using.\nUSE WITH CAUTION!\n\n" +
+                                "`Change Owner`\nThis allows you to pass ownership of the bot to another Telegram user. Only the owner can use this button.\n\n" +
+                                "`Get Updates Limit`\nUsing the + - buttons, you can change the number of updates the bot will ask for when it gets messages from Telegram.\n(Min 1 - Max 100 - Default 20)\n\n" +
+                                "`Bot Operation Mode`\nThis allows you set change the bot's method of getting updates between getUpdates and WebHook. This can heavily impact the functionality of the bot and you shouldn't use it unless you know what you're doing.\n\n";
 
                             Methods.editMessageText(callback.from.id, callback.message.message_id, text, "markdown", TuneablesMenu());
                         }
@@ -72,14 +72,14 @@ namespace DreadBot
                 case "botadmins": { return; }
                 case "debugchatcfg": {
                         Methods.answerCallbackQuery(callback.id);
-                        string text = "*Debug Chat Settings*\n\nHere you can configure the Debug Chat. This is used by the bot as a good testing grounds, somewhere to dump errors for all Bot Admins to see, admin commands and more.\n\n`Toggle Debug Chat Commands`\nEnable Bot Admin commands for use within the Debug Chat. Its very useful for troubleshooting, and testing.\n\n`Change Debug Chat`\nThis is what you use to change the Debug to a Group, Supergroup, or back to Private (Bot Owner only).\n\n`Set the Debug Chat Log Level`\nHere you can set how verbose the bot is with its error reporting in the Debug Chat. We recommend atleast [Warn] Level.";
+                        string text = "*Debug Chat Settings*\n\nHere you can configure the Debug Chat. This is used by the bot as a good testing grounds, somewhere to dump errors for all Bot Admins to see, admin commands and more.\n\n`Toggle Debug Chat Commands`\nEnable Bot Admin commands for use within the Debug Chat. Its very useful for troubleshooting, and testing.\n\n`Change Debug Chat`\nThis is what you use to change the Debug Chat to a Group, Supergroup, or back to Private (Bot Owner only).\n\n`Set the Debug Chat Log Level`\nHere you can set how verbose the bot is with its error reporting in the Debug Chat. We recommend at least [Warn] Level.";
                         Methods.editMessageText(callback.from.id, callback.message.message_id, text, "markdown", DebugChatCfg());
                         return;
                     }
                 case "debugchatlevel":
                     {
                         Methods.answerCallbackQuery(callback.id);
-                        string text = "*Log Level Configuration*\n\nHere you can set the desired log level of the Console and the Log File.\n\nThe right column is for the Console.\nThe left side is for the log File. (it is log.txt and is off by default.)\n\nWe strongly recommend the console log level be no lower than *WARN* as some of this information can be important to resolve problems.";
+                        string text = "*Log Level Configuration*\n\nHere you can set the desired log level of the Console and the Log File.\n\nThe right column is for the Console.\nThe left side is for the Log File. (it is log.txt and is off by default.)\n\nWe strongly recommend the console log level be no lower than *WARN* as some of this information can be important when resolving problems.";
                         Methods.editMessageText(callback.from.id, callback.message.message_id, text, "markdown", LogLevelMenu());
                         return;
                     }
@@ -99,21 +99,21 @@ namespace DreadBot
                 case "changedebugchat":
                     {
                         Methods.answerCallbackQuery(callback.id);
-                        string text = "*Debug Chat Location Setting*\n\nHere you can resttore the settings for where the bot sends Debug messages. To set a Debug Group, add me to a group, and perform /setdebug and I will use that group for debug output.\n\n`Reset Debug Chat to Private`\nAs the buttons states, this will reset the location of debug messages to PM with you.";
+                        string text = "*Debug Chat Location Setting*\n\nHere you can restore the settings for where the bot sends Debug messages. To set a Debug Group, add the bot to a group, and perform /setdebug and the bot will use that group for debug output.\n\n`Reset Debug Chat to Private`\nAs the buttons states, this will reset the location of debug messages to PM with you.";
                         Methods.editMessageText(callback.from.id, callback.message.message_id, text, "markdown", ChangeDebugChat());
                         return;
                     }
                 case "operationmode":
                     {
                         Methods.answerCallbackQuery(callback.id);
-                        string text = "*Operation Mode Settings*\n\n*WebHook*\nClicking this will bring you to the menu to enable, configure and test your webhook.\nPlease Read [this](http://dreadbot.net/wiki/index.php/WebHook_Explained) page to fully understand what the differences are between Webhook and getUpdates.\n\n`getUpdates`\nThis is a Toggle button specifically for Disabling webhook easily. Clicking it while getUpdates is enable will do nothing.";
+                        string text = "*Operation Mode Settings*\n\n*WebHook*\nClicking this will bring you to the menu to enable, configure and test your webhook.\nPlease Read [this](http://dreadbot.net/wiki/index.php/WebHook_Explained) page to fully understand what the differences are between Webhook and getUpdates.\n\n`getUpdates`\nThis is a Toggle button specifically for Disabling webhook easily. Clicking it while getUpdates is enabled will do nothing.";
                         Methods.editMessageText(callback.from.id, callback.message.message_id, text, "markdown", OperationMenu());
                         return;
                     }
                 case "webhookcfg":
                     {
                         Methods.answerCallbackQuery(callback.id);
-                        string text = "*WebHook Config*\n\n`Test & Go Live!`\nClicking this will reach out to the Dreadbot site to help you test the accessibility fo your bot to make sure webhook was setup correctly.\nOnce verified, the bot will then offer you the chance to make the switch.\n\n`Set URL`\nUse this to set the Full URL you want telegram to use; Example http://dreadbot.net/bot/ \n\n`Set Certificate`\nHere you can configure the SSL/TLS Certificate the bot will use to encrypt communication between your bot and Telegram.\n\n`Port Cfg`\nYou must select a port that the bot will use to listen on for the HTTPS Traffic that will be sent by Telegram.";
+                        string text = "*WebHook Config*\n\n`Test & Go Live!`\nClicking this will reach out to the DreadBot site to help you test the accessibility of your bot to make sure webhook was setup correctly.\nOnce verified, the bot will then offer you the chance to make the switch.\n\n`Set URL`\nUse this to set the Full URL you want telegram to use; Example http://dreadbot.net/bot/ \n\n`Set Certificate`\nHere you can configure the SSL/TLS Certificate the bot will use to encrypt communication between your bot and Telegram.\n\n`Port Cfg`\nYou must select a port that the bot will use to listen on for the HTTPS traffic that will be sent by Telegram.";
                         Methods.editMessageText(callback.from.id, callback.message.message_id, text, "markdown", WebhookMenu());
                         return;
                     }
@@ -129,7 +129,7 @@ namespace DreadBot
                         else {
                             Methods.answerCallbackQuery(callback.id, "You are no longer allowed to view these options.", true);
                             Methods.deleteMessage(callback.from.id, callback.message.message_id);
-                            Logger.LogAdmin("User Attempted to use a senitive menu Option. (" + callback.from.id + ") " + callback.from.first_name);
+                            Logger.LogAdmin("User attempted to use a sensitive menu option. (" + callback.from.id + ") " + callback.from.first_name);
                         }
                         return;
                     }
@@ -145,7 +145,7 @@ namespace DreadBot
                         {
                             Methods.answerCallbackQuery(callback.id, "You are no longer allowed to view these options.", true);
                             Methods.deleteMessage(callback.from.id, callback.message.message_id);
-                            Logger.LogAdmin("User Attempted to use a senitive menu Option. (" + callback.from.id + ") " + callback.from.first_name);
+                            Logger.LogAdmin("User attempted to use a sensitive menu Option. (" + callback.from.id + ") " + callback.from.first_name);
                         }
                         return;
                     }
@@ -161,13 +161,13 @@ namespace DreadBot
                         {
                             Methods.answerCallbackQuery(callback.id, "You are no longer allowed to view these options.", true);
                             Methods.deleteMessage(callback.from.id, callback.message.message_id);
-                            Logger.LogAdmin("User Attempted to use a senitive menu Option. (" + callback.from.id + ") " + callback.from.first_name);
+                            Logger.LogAdmin("User attempted to use a sensitive menu Option. (" + callback.from.id + ") " + callback.from.first_name);
                         }
                         return;
                     }
                 case "gulhelp":
                     {
-                        Methods.answerCallbackQuery(callback.id, "Changes the Get Updates Limit", true);
+                        Methods.answerCallbackQuery(callback.id, "Changes the Get Updates limit", true);
                         return;
                     }
                 case "gula1": {
@@ -194,7 +194,7 @@ namespace DreadBot
                         {
                             Methods.answerCallbackQuery(callback.id, "You are no longer allowed to view these options.", true);
                             Methods.deleteMessage(callback.from.id, callback.message.message_id);
-                            Logger.LogAdmin("User Attempted to use a senitive menu Option. (" + callback.from.id + ") " + callback.from.first_name);
+                            Logger.LogAdmin("User Attempted to use a sensitive menu option. (" + callback.from.id + ") " + callback.from.first_name);
                         }
                         return;
                     }
@@ -228,7 +228,7 @@ namespace DreadBot
                         {
                             Methods.answerCallbackQuery(callback.id, "You are no longer allowed to view these options.", true);
                             Methods.deleteMessage(callback.from.id, callback.message.message_id);
-                            Logger.LogAdmin("User Attempted to use a senitive menu Option. (" + callback.from.id + ") " + callback.from.first_name);
+                            Logger.LogAdmin("User attempted to use a sensitive menu option. (" + callback.from.id + ") " + callback.from.first_name);
                         }
                         return;
                     }
@@ -262,7 +262,7 @@ namespace DreadBot
                         {
                             Methods.answerCallbackQuery(callback.id, "You are no longer allowed to view these options.", true);
                             Methods.deleteMessage(callback.from.id, callback.message.message_id);
-                            Logger.LogAdmin("User Attempted to use a senitive menu Option. (" + callback.from.id + ") " + callback.from.first_name);
+                            Logger.LogAdmin("User attempted to use a sensitive menu option. (" + callback.from.id + ") " + callback.from.first_name);
                         }
                         return;
                     }
@@ -291,7 +291,7 @@ namespace DreadBot
                         {
                             Methods.answerCallbackQuery(callback.id, "You are no longer allowed to view these options.", true);
                             Methods.deleteMessage(callback.from.id, callback.message.message_id);
-                            Logger.LogAdmin("User Attempted to use a senitive menu Option. (" + callback.from.id + ") " + callback.from.first_name);
+                            Logger.LogAdmin("User attempted to use a sensitive menu option. (" + callback.from.id + ") " + callback.from.first_name);
                         }
                         return;
                     }
@@ -307,17 +307,17 @@ namespace DreadBot
         internal static InlineKeyboardMarkup AdminMenu()
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
-            
-            keyboard.addCallbackButton("🎛 DreadBot Managment", "dreadbot botadm", 0);
-            keyboard.addCallbackButton("🗄 DataBase Managment", "dreadbot dbadm", 1);
+
+            keyboard.addCallbackButton("🎛 DreadBot Management", "dreadbot botadm", 0);
+            keyboard.addCallbackButton("🗄 DataBase Management", "dreadbot dbadm", 1);
             keyboard.addCallbackButton("⚡️ Plugin Manager", "dreadbot plugadm", 2);
             return keyboard;
         }
 
-        internal static InlineKeyboardMarkup ManagmentMenu()
+        internal static InlineKeyboardMarkup ManagementMenu()
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
-            
+
             keyboard.addCallbackButton("🔥 Sensitive Options", "dreadbot tuneables", 0);
             keyboard.addCallbackButton("👮‍♂️ Add/Remove Bot Admins", "dreadbot botadmins", 1);
             keyboard.addCallbackButton("🗒 Debug Chat Settings", "dreadbot debugchatcfg", 2);
@@ -329,7 +329,7 @@ namespace DreadBot
         internal static InlineKeyboardMarkup ChangeDebugChat()
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
-            
+
             keyboard.addCallbackButton("Reset Debug Chat to Private", "dreadbot resetdebug", 0);
             keyboard.addCallbackButton("🔙", "dreadbot debugchatcfg", 1);
             return keyboard;
@@ -338,7 +338,7 @@ namespace DreadBot
         internal static InlineKeyboardMarkup LogLevelMenu()
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
-            
+
             keyboard.addCallbackButton("File LogLevel - Debug " + GetLogLevel(LogLevel.Debug, false), "dreadbot fll 6", 0);
             keyboard.addCallbackButton("Console LogLevel - Debug " + GetLogLevel(LogLevel.Debug), "dreadbot cll 6", 0);
 
@@ -368,7 +368,7 @@ namespace DreadBot
         internal static InlineKeyboardMarkup DebugChatCfg()
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
-            
+
             keyboard.addCallbackButton("🧾 Change Debug Chat", "dreadbot changedebugchat", 0);
             keyboard.addCallbackButton("🔕 Set Debug Chat Log Level", "dreadbot debugchatlevel", 1);
             keyboard.addCallbackButton("🔙", "dreadbot botadm", 2);
@@ -385,7 +385,7 @@ namespace DreadBot
         private static InlineKeyboardMarkup OperationMenu()
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
-            
+
             string gumode = "";
             string whmode = "";
             if (Configs.RunningConfig.GetupdatesMode) { gumode = " ⬅️"; }
@@ -400,7 +400,7 @@ namespace DreadBot
         private static InlineKeyboardMarkup WebhookMenu()
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
-            
+
 
             keyboard.addCallbackButton("Test & Go Live!", "dreadbot disablewebhook", 0);
             keyboard.addCallbackButton("Set URL", "dreadbot webhookcfg", 1);
@@ -419,10 +419,10 @@ namespace DreadBot
         internal static InlineKeyboardMarkup TuneablesMenu()
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
-            
+
             keyboard.addCallbackButton("🔑 Show Access Token", "dreadbot showtoken", 0);
             keyboard.addCallbackButton("🔑 Change Access Token", "dreadbot changetoken", 1);
-            keyboard.addCallbackButton("👮‍♂️ Change Owner", "dreadbot changeowner", 2);
+            keyboard.addCallbackButton("👮‍️ Change Owner", "dreadbot changeowner", 2);
 
             keyboard.addCallbackButton("+1", "dreadbot gula1", 3);
             keyboard.addCallbackButton("+10", "dreadbot gula10", 3);
@@ -439,7 +439,7 @@ namespace DreadBot
         internal static InlineKeyboardMarkup BackOnly(string CallBack)
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
-            
+
             keyboard.addCallbackButton("🔙", "dreadbot " + CallBack, 0);
             return keyboard;
         }

@@ -67,6 +67,8 @@ namespace DreadBot
                 }
 
             }
+            Configs.RunningConfig.LastLaunch = Utilities.EpochTime();
+            SaveConfig();
         }
 
         internal static void SaveConfig()

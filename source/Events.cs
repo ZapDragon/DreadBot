@@ -35,10 +35,10 @@ namespace DreadBot
         #region Update Parsing & Event Firing
 
         #region Update Type
-        public static async Task ParseUpdate(Update update) //Evaluating which Update this is, and asigning local variables for further evaluation.
+        public static async Task ParseUpdate(Update update) //Evaluating which Update this is, and assigning local variables for further evaluation.
         {
             if (update.message != null) {
-                if (update.message.text != null) { 
+                if (update.message.text != null) {
                     if (CommandParser(update)) { return; }
                 }
                 ParseMessage(update.message);
@@ -64,7 +64,7 @@ namespace DreadBot
         }
         #endregion
 
-        #region Message Events 
+        #region Message Events
 
         private static async Task ParseMessage(Message msg, bool isEdited = false, bool isChannel = false)
         {
@@ -276,7 +276,7 @@ namespace DreadBot
 
     #endregion
 
-    #region Specific Event Args 
+    #region Specific Event Args
     public class CallbackEventArgs : EventArgs
     {
         public CallbackQuery callbackQuery { get; set; }

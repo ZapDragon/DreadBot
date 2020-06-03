@@ -24,7 +24,7 @@ namespace DreadBot
         /// </summary>
         /// <param name="chat_id">The Id number od the chat to send a message. Can be a User, Channel, Or group. Cannot be a bot.</param>
         /// <param name="text">The text to send to the Chat. Character Limit of 4096.</param>
-        /// <param name="parse_mode">Makrkdown, HTML, or Empty. Tells telegram how to parse special markdown flags in the text. Makrdown by default.</param>
+        /// <param name="parse_mode">Markdown, HTML, or Empty. Tells telegram how to parse special markdown flags in the text. Markdown by default.</param>
         /// <param name="keyboard">InlineKeyboardMarkup Object. Pass a built Keyboard object in here to include it in your messages.</param>
         /// <returns></returns>
         public static async Task<Result<Message>> sendMessage(long chatId, string text, string parse_mode = "markdown", InlineKeyboardMarkup keyboard = null)
@@ -43,7 +43,7 @@ namespace DreadBot
         /// <summary>
         /// Sends a message to a Chat in response to another message, Channel, Group, or User. Returns the Result<Message> object on success.
         /// </summary>
-        /// <param name="args">Pass a filled int FowardMessageRequest object to forward a message to a Channel, Group or User.</param>
+        /// <param name="args">Pass a filled int ForwardMessageRequest object to forward a message to a Channel, Group or User.</param>
         /// <returns></returns>
         public static async Task<Result<Message>> forwardMessage(ForwardMessageRequest args)
         {
@@ -57,12 +57,12 @@ namespace DreadBot
         /// Sends a message to a Chat in response to another message, Channel, Group, or User. Returns the Result<Message> object on success.
         /// </summary>
         /// <param name="chat_id">The Id number od the chat to send a Photo. Can be a User, Channel, Or group. Cannot be a bot.</param>
-        /// <param name="fileData">The StreamContet object for the raw image file to upload. Cannot be larger than 20MB.</param>
+        /// <param name="fileData">The StreamContent object for the raw image file to upload. Cannot be larger than 20MB.</param>
         /// <param name="filename">Telegram requires a file name for images. It can be anything, must end in jpg, png, or jpeg</param>
         /// <param name="caption">The text to send to the Chat, as part of the image. Character Limit of 4096.
-        /// <param name="parse_mode">Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption. Makrdown by default.</param>
+        /// <param name="parse_mode">Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption. Markdown by default.</param>
         /// <param name="disable_notification">If True, Sends the message silently. Users will receive a notification with no sound.</param>
-        /// <param name="reply_to_message_id" >The ID of the message you want this Photo messgae to be in response of. Setting this to 0 will not send it as a reply.</param>
+        /// <param name="reply_to_message_id" >The ID of the message you want this Photo message to be in response of. Setting this to 0 will not send it as a reply.</param>
         /// <param name="keyboard">InlineKeyboardMarkup Object. Pass a built Keyboard object in here to include it in your messages.</param>
         /// <returns></returns>
         public static async Task<Result<Message>> sendPhoto(long chatId, StreamContent fileData, string filename, string caption, string parse_mode = "markdown", bool disable_notification = false, int reply_to_message_id = 0, InlineKeyboardMarkup keyboard = null)
@@ -105,9 +105,9 @@ namespace DreadBot
         /// <param name="chat_id">The Id number od the chat to send a Photo. Can be a User, Channel, Or group. Cannot be a bot.</param>
         /// <param name="url">The Direct URL link to the image for Telegram to send to the chat. Cannot be larger than 5MB.</param>
         /// <param name="caption">The text to send to the Chat, as part of the image. Character Limit of 4096.
-        /// <param name="parse_mode">Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption. Makrdown by default.</param>
+        /// <param name="parse_mode">Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption. Markdown by default.</param>
         /// <param name="disable_notification">If True, Sends the message silently. Users will receive a notification with no sound.</param>
-        /// <param name="reply_to_message_id" >The ID of the message you want this Photo messgae to be in response of. Setting this to 0 will not send it as a reply.</param>
+        /// <param name="reply_to_message_id" >The ID of the message you want this Photo message to be in response of. Setting this to 0 will not send it as a reply.</param>
         /// <param name="keyboard">InlineKeyboardMarkup Object. Pass a built Keyboard object in here to include it in your messages.</param>
         /// <returns></returns>
         public static async Task<Result<Message>> sendPhoto(long chatId, string url, string caption, string parse_mode = "markdown", bool disable_notification = false, int reply_to_message_id = 0, InlineKeyboardMarkup keyboard = null)
@@ -129,15 +129,15 @@ namespace DreadBot
         /// Sends a message to a Chat in response to another message, Channel, Group, or User. Returns the Result<Message> object on success.
         /// </summary>
         /// <param name="chat_id">The Id number od the chat to send a Audio file. Can be a User, Channel, Or group. Cannot be a bot.</param>
-        /// <param name="fileData">The StreamContet object for the raw audio file to upload. Cannot be larger than 20MB.</param>
+        /// <param name="fileData">The StreamContent object for the raw audio file to upload. Cannot be larger than 20MB.</param>
         /// <param name="filename">Telegram requires a file name for files. It can be anything, must end in the file ext that matches the type of audio file you're sending.</param>
         /// <param name="caption">The text to send to the Chat, as part of the audio file. Character Limit of 4096.
-        /// <param name="parse_mode">Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption. Makrdown by default.</param>
+        /// <param name="parse_mode">Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption. Markdown by default.</param>
         /// <param name="duration">The length of the audio file in seconds.</param>
         /// <param name="performer">The artist of of audio clip (If its music) Optional.</param>
         /// <param name="title">The title of of audio clip (If its music) Optional.</param>
         /// <param name="disable_notification">If True, Sends the message silently. Users will receive a notification with no sound.</param>
-        /// <param name="reply_to_message_id" >The ID of the message you want this Photo messgae to be in response of. Setting this to 0 will not send it as a reply.</param>
+        /// <param name="reply_to_message_id" >The ID of the message you want this Photo message to be in response of. Setting this to 0 will not send it as a reply.</param>
         /// <param name="keyboard">InlineKeyboardMarkup Object. Pass a built Keyboard object in here to include it in your messages.</param>
         /// <returns></returns>
         public static async Task<Result<Message>> sendAudio(long chatId, StreamContent fileData, string filename, string caption, string parse_mode = "markdown", int duration = 0, string performer = "", string title = "", bool disable_notification = false, int reply_to_message_id = 0, InlineKeyboardMarkup keyboard = null)
@@ -193,12 +193,12 @@ namespace DreadBot
         /// Use this method to send general files. On success, the sent Result<Message> is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
         /// </summary>
         /// <param name="chat_id">The Id number od the chat to send a Photo. Can be a User, Channel, Or group. Cannot be a bot.</param>
-        /// <param name="fileData">The StreamContet object for the raw image file to upload. Cannot be larger than 20MB.</param>
+        /// <param name="fileData">The StreamContent object for the raw image file to upload. Cannot be larger than 20MB.</param>
         /// <param name="thumb">Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 320.</param>
         /// <param name="caption">Document caption (may also be used when resending documents by file_id), 0-1024 characters.
-        /// <param name="parse_mode">Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption. Makrdown by default.</param>
+        /// <param name="parse_mode">Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption. Markdown by default.</param>
         /// <param name="disable_notification">If True, Sends the message silently. Users will receive a notification with no sound.</param>
-        /// <param name="reply_to_message_id" >The ID of the message you want this Photo messgae to be in response of. Setting this to 0 will not send it as a reply.</param>
+        /// <param name="reply_to_message_id" >The ID of the message you want this Photo message to be in response of. Setting this to 0 will not send it as a reply.</param>
         /// <param name="keyboard">InlineKeyboardMarkup Object. Pass a built Keyboard object in here to include it in your messages.</param>
         /// <returns></returns>
         public static async Task<Result<Message>> sendDocument(long chatId, StreamContent fileData, string caption, StreamContent thumb = null, string parse_mode = "markdown", bool disable_notification = false, int reply_to_message_id = 0, InlineKeyboardMarkup keyboard = null)
@@ -350,11 +350,11 @@ namespace DreadBot
         {
             return null;
         }
-        public static Result<Message> editMessageLiveLocation() //Can apprently return a bool as well. (FUCK THIS)
+        public static Result<Message> editMessageLiveLocation() //Can apparently return a bool as well. (FUCK THIS)
         {
             return null;
         }
-        public static Result<Message> stopMessageLiveLocation() //Can apprently return a bool as well.
+        public static Result<Message> stopMessageLiveLocation() //Can apparently return a bool as well.
         {
             return null;
         }
@@ -384,7 +384,7 @@ namespace DreadBot
         }
 
         /// <summary>
-        /// Returns a UserProfilePhotos object which contains an array of PhotoSize objects. These can be used to request the images from Telegram as Files to downlaod.
+        /// Returns a UserProfilePhotos object which contains an array of PhotoSize objects. These can be used to request the images from Telegram as Files to download.
         /// </summary>
         /// <param name="user_id">The Numeric long that represents a user or bot</param>
         /// <param name="offset">The int offset from which to begin returning an image array.</param>
@@ -401,7 +401,7 @@ namespace DreadBot
         /// <summary>
         /// Use this method to get basic info about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a File object is returned. The file can then be downloaded via the downloadFile() Method. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile again.
         /// </summary>
-        /// <param name="file_id">Use this to provide the file id of the File on Telegram you want infor for or to download.</param>
+        /// <param name="file_id">Use this to provide the file id of the File on Telegram you want info about or to download.</param>
         /// <returns></returns>
         public static async Task<Result<File>> getFile(string file_id)
         {

@@ -36,7 +36,6 @@ namespace DreadBot
 		/// <summary>
 		/// The keyboard object that the child keyboard classes will reference, makes extention classes easier
 		/// </summary>
-		//[DataMember(Name = "Keyboard", IsRequired = true)]
 		public List<List<InlineKeyboardButton>> Keyboard { get; set; } = new List<List<InlineKeyboardButton>>(100);
 	}
 }

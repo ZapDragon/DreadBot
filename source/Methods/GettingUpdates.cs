@@ -25,6 +25,7 @@
 using System;
 using System.IO;
 using System.Net.Http;
+using System.Net.NetworkInformation;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading;
@@ -39,6 +40,32 @@ namespace DreadBot
         //This method is called by EVERY Telegram method. This is used to handle Most error checking, and the variable 'result' object is returned to the method that called this.
         private static async Task<Result<T>> sendRequest<T>(Method method, string payload = "", string payloadType = "application/json", MultipartFormDataContent dataPayload = null)
         {
+            bool connected = false;
+            while (!connected)
+            {
+                try
+                {
+                    Ping myPing = new Ping();
+                    String host = "api.telegram.org";
+                    byte[] buffer = new byte[32];
+                    int timeout = 1000;
+                    PingOptions pingOptions = new PingOptions();
+                    PingReply reply = myPing.Send(host, timeout, buffer, pingOptions);
+                    connected = (reply.Status == IPStatus.Success);
+                    if (!connected)
+                    {
+                        Logger.LogError("Connection Error. Cannot Connect to Telegram.");
+                        continue;
+                    }
+                }
+                catch (Exception)
+                {
+                    Logger.LogError("Connection Error. Cannot Connect to Telegram.");
+                    Thread.Sleep(10000);
+                    continue;
+                }
+            }
+
             //Console.WriteLine(method + " | " + payload);
             string uriMethod = "https://api.telegram.org/bot" + Configs.RunningConfig.token + "/" + method;
             HttpClient client = new HttpClient();
@@ -121,7 +148,7 @@ namespace DreadBot
             return result;
         }
         /// <summary>
-        /// Returns a WebHookInfo object which contains data about the bot, number of availible updates, and weather or not the bot is in Webhook mode. In Most cases, you wont need this.
+        /// Returns a WebHookInfo object which contains data about the bot, number of available updates, and weather or not the bot is in Webhook mode. In Most cases, you wont need this.
         /// </summary>
         /// <returns></returns>
         public static async Task<Result<WebhookInfo>> getWebhookInfo()

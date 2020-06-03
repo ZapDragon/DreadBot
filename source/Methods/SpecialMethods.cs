@@ -63,7 +63,7 @@ namespace DreadBot
         /// </summary>
         /// <param name="chatId">The Numeric long that represents a group or channel ID. You cannot use a bot or user ID here.</param>
         /// <param name="userId">The Numeric long that represents a user or bot to ban.</param>
-        /// <param name="untilEpoch">The Epoch date in which Telegram will automatically unban the users. Less then 30 seconds, or more than 365 days, the ban is permanant.</param>
+        /// <param name="untilEpoch">The Epoch date in which Telegram will automatically unban the users. Less then 30 seconds, or more than 365 days, the ban is permanent.</param>
         /// <returns></returns>
         public static async Task<Result<bool>> banChatMember(long chatId, long userId, int untilEpoch = 0)
         {
@@ -83,7 +83,7 @@ namespace DreadBot
         /// <param name="chat_id">The Id number od the chat to send a message. Can be a User, Channel, Or group. Cannot be a bot.</param>
         /// <param name="text">The text to send to the Chat. Character Limit of 4096.</param>
         /// <param name="messageId">The Message ID of the message you want the bot to reply to.</param>
-        /// <param name="parse_mode">Makrkdown, HTML, or Empty. Tells telegram how to parse special markdown flags in the text. Makrdown by default.</param>
+        /// <param name="parse_mode">Markdown, HTML, or Empty. Tells telegram how to parse special markdown flags in the text. Markdown by default.</param>
         /// <param name="keyboard">InlineKeyboardMarkup Object. Pass a built Keyboard object in here to include it in your messages.</param>
         /// <returns></returns>
         public static async Task<Result<Message>> sendReply(long chatId, long messageId, string text, string parse_mode = "markdown", InlineKeyboardMarkup keyboard = null)

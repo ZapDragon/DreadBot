@@ -31,7 +31,7 @@ using System.Media;
 
 namespace DreadBot
 {
-    //Every Logable event is set here. Depending on the set log level, it is Printed to the console and Writen to local logs.
+    //Every Loggable event is set here. Depending on the set log level, it is printed to the console and written to local logs.
     public class Logger
     {
         public static LogLevel CurrentLogLevel = LogLevel.Off;
