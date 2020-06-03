@@ -27,13 +27,17 @@ namespace DreadBot
 {
     class Menus
     {
+        private const string CallbackRoot = "adm";
         private const string CallbackBotManagement = "botadm";
         private const string CallbackDatabaseManagement = "dbadm";
         private const string CallbackPluginManagement = "plugadm";
         private const string CallbackSensitiveOptions = "tunables";
         private const string CallbackBotAdmins = "botadmins";
         private const string CallbackDebugChat = "debugchatcfg";
+        private const string CallbackSounds = "sounds";
         private const string CallbackLogLevel = "debugchatlevel";
+        private const string CallbackLogLevelSetChat = "cll";
+        private const string CallbackLogLevelSetFile = "fll";
         private const string CallbackResetDebugChat = "resetdebug";
         private const string CallbackChangeDebugChat = "changedebugchat";
         private const string CallbackOperationMode = "operationmode";
@@ -416,15 +420,19 @@ namespace DreadBot
                     }
                 
                 // Not yet implemented
+                case CallbackRoot:
                 case CallbackDatabaseManagement:
                 case CallbackPluginManagement:
                 case CallbackBotAdmins:
+                case CallbackSounds: 
+                case CallbackLogLevelSetChat: 
+                case CallbackLogLevelSetFile:
                 case CallbackWebhookDisable:
                 default:
                     {
                         Methods.answerCallbackQuery(callback.id);
                         const string text = "This menu option has not yet been implemented.";
-                        Methods.editMessageText(callback.from.id, callback.message.message_id, text, "markdown", BackOnly(CallbackBotManagement));
+                        Methods.editMessageText(callback.from.id, callback.message.message_id, text, "markdown", BackOnly(CallbackRoot));
                         return;
                     }
                     
@@ -454,8 +462,8 @@ namespace DreadBot
             keyboard.addCallbackButton("🔥 Sensitive Options", $"dreadbot {CallbackSensitiveOptions}", 0);
             keyboard.addCallbackButton("👮‍♂️ Add/Remove Bot Admins", $"dreadbot {CallbackBotAdmins}", 1);
             keyboard.addCallbackButton("🗒 Debug Chat Settings", $"dreadbot {CallbackDebugChat}", 2);
-            keyboard.addCallbackButton("🔉 System Sounds", "dreadbot sounds", 3);
-            keyboard.addCallbackButton("🔙", "dreadbot adm", 4);
+            keyboard.addCallbackButton("🔉 System Sounds", $"dreadbot {CallbackSounds}", 3);
+            keyboard.addCallbackButton("🔙", $"dreadbot {CallbackRoot}", 4);
             return keyboard;
         }
 
@@ -472,26 +480,26 @@ namespace DreadBot
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
             
-            keyboard.addCallbackButton("File LogLevel - Debug " + GetLogLevel(LogLevel.Debug, false), "dreadbot fll 6", 0);
-            keyboard.addCallbackButton("Console LogLevel - Debug " + GetLogLevel(LogLevel.Debug), "dreadbot cll 6", 0);
+            keyboard.addCallbackButton("File LogLevel - Debug " + GetLogLevel(LogLevel.Debug, false), $"dreadbot {CallbackLogLevelSetFile} 6", 0);
+            keyboard.addCallbackButton("Console LogLevel - Debug " + GetLogLevel(LogLevel.Debug), $"dreadbot {CallbackLogLevelSetChat} 6", 0);
 
-            keyboard.addCallbackButton("File LogLevel - Admin " + GetLogLevel(LogLevel.Admin, false), "dreadbot fll 5", 1);
-            keyboard.addCallbackButton("Console LogLevel - Admin " + GetLogLevel(LogLevel.Admin), "dreadbot cll 5", 1);
+            keyboard.addCallbackButton("File LogLevel - Admin " + GetLogLevel(LogLevel.Admin, false), $"dreadbot {CallbackLogLevelSetFile} 5", 1);
+            keyboard.addCallbackButton("Console LogLevel - Admin " + GetLogLevel(LogLevel.Admin), $"dreadbot {CallbackLogLevelSetChat} 5", 1);
 
-            keyboard.addCallbackButton("File LogLevel - Info " + GetLogLevel(LogLevel.Info, false), "dreadbot fll 4", 2);
-            keyboard.addCallbackButton("Console LogLevel - Info " + GetLogLevel(LogLevel.Info), "dreadbot cll 4", 2);
+            keyboard.addCallbackButton("File LogLevel - Info " + GetLogLevel(LogLevel.Info, false), $"dreadbot {CallbackLogLevelSetFile} 4", 2);
+            keyboard.addCallbackButton("Console LogLevel - Info " + GetLogLevel(LogLevel.Info), $"dreadbot {CallbackLogLevelSetChat} 4", 2);
 
-            keyboard.addCallbackButton("File LogLevel - Warn " + GetLogLevel(LogLevel.Warn, false), "dreadbot fll 3", 3);
-            keyboard.addCallbackButton("Console LogLevel - Warn " + GetLogLevel(LogLevel.Warn), "dreadbot cll 3", 3);
+            keyboard.addCallbackButton("File LogLevel - Warn " + GetLogLevel(LogLevel.Warn, false), $"dreadbot {CallbackLogLevelSetFile} 3", 3);
+            keyboard.addCallbackButton("Console LogLevel - Warn " + GetLogLevel(LogLevel.Warn), $"dreadbot {CallbackLogLevelSetChat} 3", 3);
 
-            keyboard.addCallbackButton("File LogLevel - Error " + GetLogLevel(LogLevel.Error, false), "dreadbot fll 2", 4);
-            keyboard.addCallbackButton("Console LogLevel - Error " + GetLogLevel(LogLevel.Error), "dreadbot cll 2", 4);
+            keyboard.addCallbackButton("File LogLevel - Error " + GetLogLevel(LogLevel.Error, false), $"dreadbot {CallbackLogLevelSetFile} 2", 4);
+            keyboard.addCallbackButton("Console LogLevel - Error " + GetLogLevel(LogLevel.Error), $"dreadbot {CallbackLogLevelSetChat} 2", 4);
 
-            keyboard.addCallbackButton("File LogLevel - Fatal " + GetLogLevel(LogLevel.Fatal, false), "dreadbot fll 1", 5);
-            keyboard.addCallbackButton("Console LogLevel - Fatal " + GetLogLevel(LogLevel.Fatal), "dreadbot cll 1", 5);
+            keyboard.addCallbackButton("File LogLevel - Fatal " + GetLogLevel(LogLevel.Fatal, false), $"dreadbot {CallbackLogLevelSetFile} 1", 5);
+            keyboard.addCallbackButton("Console LogLevel - Fatal " + GetLogLevel(LogLevel.Fatal), $"dreadbot {CallbackLogLevelSetChat} 1", 5);
 
-            keyboard.addCallbackButton("File LogLevel - Off " + GetLogLevel(LogLevel.Off, false), "dreadbot fll 0", 6);
-            keyboard.addCallbackButton("Console LogLevel - Off " + GetLogLevel(LogLevel.Off), "dreadbot cll 0", 6);
+            keyboard.addCallbackButton("File LogLevel - Off " + GetLogLevel(LogLevel.Off, false), $"dreadbot {CallbackLogLevelSetFile} 0", 6);
+            keyboard.addCallbackButton("Console LogLevel - Off " + GetLogLevel(LogLevel.Off), $"dreadbot {CallbackLogLevelSetChat} 0", 6);
 
             keyboard.addCallbackButton("🔙", $"dreadbot {CallbackDebugChat}", 7);
 
@@ -569,7 +577,7 @@ namespace DreadBot
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
             
-            keyboard.addCallbackButton("🔙", "dreadbot " + callBack, 0);
+            keyboard.addCallbackButton("🔙", $"dreadbot {callBack}", 0);
             return keyboard;
         }
 
