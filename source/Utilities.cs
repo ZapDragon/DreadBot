@@ -174,8 +174,7 @@ namespace DreadBot
                             return true;
                         }
                         Logger.LogAdmin("Admin Menu Called: " + msg.from.id);
-                        Result<Message> res = Methods.sendMessage(msg.from.id, "*DreadBot Administration Menu*\n\n`DreadBot Managment`\nUsed to fine tune the bot, plus other senstive, and powerful options.\n\n`DataBase Management`\nConfigure Specific Database options, and backup as needed.\n\n`Plugin Manager`\nAdd, Remove and Configure plugins to give DreadBot its purpose.", "Markdown", Menus.AdminMenu());
-                        if (!res.ok) { Logger.LogError("Error contacting the admin Chat: " + res.description); }
+                        Menus.PostAdminMenu(msg.from.id);
                         return true;
                     }
                 case "admin":

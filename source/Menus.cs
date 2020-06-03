@@ -52,7 +52,19 @@ namespace DreadBot
         private const string CallbackGetUpdatesMinusSmall = "gulm1";
         private const string CallbackGetUpdatesMinusLarge = "gulm10";
 
+        private const string AdminMenuText =
+            "*DreadBot Administration Menu*\n\n" +
+            "`DreadBot Management`\nUsed to fine tune the bot, plus other senstive, and powerful options.\n\n" +
+            "`DataBase Management`\nConfigure Specific Database options, and backup as needed.\n\n" +
+            "`Plugin Manager`\nAdd, Remove and Configure plugins to give DreadBot its purpose.";
+
         #region Button Event Logic
+
+        internal static void PostAdminMenu(long chatId)
+        {
+            Result<Message> res = Methods.sendMessage(chatId, AdminMenuText, "Markdown", Menus.AdminMenu());
+            if (!res.ok) { Logger.LogError("Error contacting the admin Chat: " + res.description); }
+        }
 
         internal static void ButtonPush(CallbackQuery callback)
         {
@@ -60,7 +72,13 @@ namespace DreadBot
 
             switch (arg)
             {
-                case CallbackBotManagement: {
+                case CallbackRoot:
+                {
+                    Methods.editMessageText(callback.from.id, callback.message.message_id, AdminMenuText, "Markdown", AdminMenu());
+                    return;
+                }
+                case CallbackBotManagement: 
+                {
                         Methods.answerCallbackQuery(callback.id);
                         string text = 
                             "*DreadBot Management Options*\n\n" +
@@ -420,7 +438,6 @@ namespace DreadBot
                     }
                 
                 // Not yet implemented
-                case CallbackRoot:
                 case CallbackDatabaseManagement:
                 case CallbackPluginManagement:
                 case CallbackBotAdmins:
