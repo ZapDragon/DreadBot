@@ -27,30 +27,33 @@ namespace DreadBot
 {
     class Menus
     {
-        private const string CallbackRoot = "adm";
-        private const string CallbackBotManagement = "botadm";
-        private const string CallbackDatabaseManagement = "dbadm";
-        private const string CallbackPluginManagement = "plugadm";
-        private const string CallbackSensitiveOptions = "tunables";
-        private const string CallbackBotAdmins = "botadmins";
-        private const string CallbackDebugChat = "debugchatcfg";
-        private const string CallbackSounds = "sounds";
-        private const string CallbackLogLevel = "debugchatlevel";
-        private const string CallbackLogLevelSetChat = "cll";
-        private const string CallbackLogLevelSetFile = "fll";
-        private const string CallbackResetDebugChat = "resetdebug";
-        private const string CallbackChangeDebugChat = "changedebugchat";
-        private const string CallbackOperationMode = "operationmode";
-        private const string CallbackWebhookDisable = "disablewebhook";
-        private const string CallbackWebhookConfig = "webhookcfg";
-        private const string CallbackShowToken = "showtoken";
-        private const string CallbackChangeToken = "changetoken";
-        private const string CallbackChangeOwner = "changeowner";
-        private const string CallbackGetUpdatesLimit = "gulhelp";
-        private const string CallbackGetUpdatesPlusSmall = "gula1";
-        private const string CallbackGetUpdatesPlusLarge = "gula10";
-        private const string CallbackGetUpdatesMinusSmall = "gulm1";
-        private const string CallbackGetUpdatesMinusLarge = "gulm10";
+        class Callback
+        {
+            internal const string Root = "adm";
+            internal const string BotManagement = "botadm";
+            internal const string DatabaseManagement = "dbadm";
+            internal const string PluginManagement = "plugadm";
+            internal const string SensitiveOptions = "tunables";
+            internal const string BotAdmins = "botadmins";
+            internal const string DebugChat = "debugchatcfg";
+            internal const string Sounds = "sounds";
+            internal const string LogLevel = "debugchatlevel";
+            internal const string LogLevelSetChat = "cll";
+            internal const string LogLevelSetFile = "fll";
+            internal const string ResetDebugChat = "resetdebug";
+            internal const string ChangeDebugChat = "changedebugchat";
+            internal const string OperationMode = "operationmode";
+            internal const string WebhookDisable = "disablewebhook";
+            internal const string WebhookConfig = "webhookcfg";
+            internal const string ShowToken = "showtoken";
+            internal const string ChangeToken = "changetoken";
+            internal const string ChangeOwner = "changeowner";
+            internal const string GetUpdatesLimit = "gulhelp";
+            internal const string GetUpdatesPlusSmall = "gula1";
+            internal const string GetUpdatesPlusLarge = "gula10";
+            internal const string GetUpdatesMinusSmall = "gulm1";
+            internal const string GetUpdatesMinusLarge = "gulm10";
+        }
 
         private const string AdminMenuText =
             "*DreadBot Administration Menu*\n\n" +
@@ -72,12 +75,12 @@ namespace DreadBot
 
             switch (arg)
             {
-                case CallbackRoot:
+                case Callback.Root:
                 {
                     Methods.editMessageText(callback.from.id, callback.message.message_id, AdminMenuText, "Markdown", AdminMenu());
                     return;
                 }
-                case CallbackBotManagement: 
+                case Callback.BotManagement: 
                 {
                         Methods.answerCallbackQuery(callback.id);
                         string text = 
@@ -106,7 +109,7 @@ namespace DreadBot
                         Methods.editMessageText(callback.from.id, callback.message.message_id, text, "markdown", ManagementMenu());
                         return;
                     }
-                case CallbackSensitiveOptions: {
+                case Callback.SensitiveOptions: {
 
                         if (callback.from.id != Configs.RunningConfig.Owner)
                         {
@@ -151,7 +154,7 @@ namespace DreadBot
                         }
                         return;
                     }
-                case CallbackDebugChat: {
+                case Callback.DebugChat: {
                         Methods.answerCallbackQuery(callback.id);
                         string text = 
                             "*Debug Chat Settings*\n\n" +
@@ -169,7 +172,7 @@ namespace DreadBot
                         Methods.editMessageText(callback.from.id, callback.message.message_id, text, "markdown", DebugChatCfg());
                         return;
                     }
-                case CallbackLogLevel:
+                case Callback.LogLevel:
                     {
                         Methods.answerCallbackQuery(callback.id);
                         string text = 
@@ -182,7 +185,7 @@ namespace DreadBot
                         Methods.editMessageText(callback.from.id, callback.message.message_id, text, "markdown", LogLevelMenu());
                         return;
                     }
-                case CallbackResetDebugChat:
+                case Callback.ResetDebugChat:
                     {
                         string text = "Debug chat is already set to PM.";
                         if (Configs.RunningConfig.Owner != Configs.RunningConfig.AdminChat)
@@ -193,7 +196,7 @@ namespace DreadBot
                         Methods.answerCallbackQuery(callback.id, text, true);
                         return;
                     }
-                case CallbackChangeDebugChat:
+                case Callback.ChangeDebugChat:
                     {
                         Methods.answerCallbackQuery(callback.id);
                         string text = 
@@ -207,7 +210,7 @@ namespace DreadBot
                         Methods.editMessageText(callback.from.id, callback.message.message_id, text, "markdown", ChangeDebugChat());
                         return;
                     }
-                case CallbackOperationMode:
+                case Callback.OperationMode:
                     {
                         Methods.answerCallbackQuery(callback.id);
                         string text = 
@@ -223,7 +226,7 @@ namespace DreadBot
                         Methods.editMessageText(callback.from.id, callback.message.message_id, text, "markdown", OperationMenu());
                         return;
                     }
-                case CallbackWebhookConfig:
+                case Callback.WebhookConfig:
                     {
                         Methods.answerCallbackQuery(callback.id);
                         string text = 
@@ -245,12 +248,12 @@ namespace DreadBot
                         return;
                     }
 
-                case CallbackShowToken:
+                case Callback.ShowToken:
                     {
                         if (callback.from.id == Configs.RunningConfig.Owner)
                         {
                             Methods.answerCallbackQuery(callback.id);
-                            Methods.editMessageText(callback.from.id, callback.message.message_id, "`" + Configs.RunningConfig.token + "`", "markdown", BackOnly(CallbackSensitiveOptions));
+                            Methods.editMessageText(callback.from.id, callback.message.message_id, "`" + Configs.RunningConfig.token + "`", "markdown", BackOnly(Callback.SensitiveOptions));
                             return;
                         }
                         else {
@@ -260,7 +263,7 @@ namespace DreadBot
                         }
                         return;
                     }
-                case CallbackChangeToken:
+                case Callback.ChangeToken:
                     {
                         if (callback.from.id == Configs.RunningConfig.Owner)
                         {
@@ -271,7 +274,7 @@ namespace DreadBot
                                 "This is a major change to make. Please read " +
                                 "[this](http://dreadbot.net/wiki/index.php/Change_Token) page before proceeding.", 
                                 "markdown", 
-                                BackOnly(CallbackSensitiveOptions));
+                                BackOnly(Callback.SensitiveOptions));
                             return;
                         }
                         else
@@ -282,7 +285,7 @@ namespace DreadBot
                         }
                         return;
                     }
-                case CallbackChangeOwner:
+                case Callback.ChangeOwner:
                     {
                         if (callback.from.id == Configs.RunningConfig.Owner)
                         {
@@ -295,7 +298,7 @@ namespace DreadBot
                                 "been made.\nPlease read [this](http://dreadbot.net/wiki/index.php/Change_Owner) " +
                                 "page before proceeding.", 
                                 "markdown", 
-                                BackOnly(CallbackSensitiveOptions));
+                                BackOnly(Callback.SensitiveOptions));
                             return;
                         }
                         else
@@ -306,12 +309,12 @@ namespace DreadBot
                         }
                         return;
                     }
-                case CallbackGetUpdatesLimit:
+                case Callback.GetUpdatesLimit:
                     {
                         Methods.answerCallbackQuery(callback.id, "Changes the Get Updates limit", true);
                         return;
                     }
-                case CallbackGetUpdatesPlusSmall: {
+                case Callback.GetUpdatesPlusSmall: {
                         if (callback.from.id == Configs.RunningConfig.Owner)
                         {
                             if (Configs.RunningConfig.GULimit > 100)
@@ -339,7 +342,7 @@ namespace DreadBot
                         }
                         return;
                     }
-                case CallbackGetUpdatesPlusLarge:
+                case Callback.GetUpdatesPlusLarge:
                     {
                         if (callback.from.id == Configs.RunningConfig.Owner)
                         {
@@ -373,7 +376,7 @@ namespace DreadBot
                         }
                         return;
                     }
-                case CallbackGetUpdatesMinusLarge:
+                case Callback.GetUpdatesMinusLarge:
                     {
                         if (callback.from.id == Configs.RunningConfig.Owner)
                         {
@@ -407,7 +410,7 @@ namespace DreadBot
                         }
                         return;
                     }
-                case CallbackGetUpdatesMinusSmall:
+                case Callback.GetUpdatesMinusSmall:
                     {
                         if (callback.from.id == Configs.RunningConfig.Owner)
                         {
@@ -438,18 +441,18 @@ namespace DreadBot
                     }
                 
                 // Not yet implemented
-                case CallbackDatabaseManagement:
-                case CallbackPluginManagement:
-                case CallbackBotAdmins:
-                case CallbackSounds: 
-                case CallbackLogLevelSetChat: 
-                case CallbackLogLevelSetFile:
-                case CallbackWebhookDisable:
+                case Callback.DatabaseManagement:
+                case Callback.PluginManagement:
+                case Callback.BotAdmins:
+                case Callback.Sounds: 
+                case Callback.LogLevelSetChat: 
+                case Callback.LogLevelSetFile:
+                case Callback.WebhookDisable:
                 default:
                     {
                         Methods.answerCallbackQuery(callback.id);
                         const string text = "This menu option has not yet been implemented.";
-                        Methods.editMessageText(callback.from.id, callback.message.message_id, text, "markdown", BackOnly(CallbackRoot));
+                        Methods.editMessageText(callback.from.id, callback.message.message_id, text, "markdown", BackOnly(Callback.Root));
                         return;
                     }
                     
@@ -466,9 +469,9 @@ namespace DreadBot
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
             
-            keyboard.addCallbackButton("🎛 DreadBot Management", $"dreadbot {CallbackBotManagement}", 0);
-            keyboard.addCallbackButton("🗄 DataBase Management", $"dreadbot {CallbackDatabaseManagement}", 1);
-            keyboard.addCallbackButton("⚡️ Plugin Manager", $"dreadbot {CallbackPluginManagement}", 2);
+            keyboard.addCallbackButton("🎛 DreadBot Management", $"dreadbot {Callback.BotManagement}", 0);
+            keyboard.addCallbackButton("🗄 DataBase Management", $"dreadbot {Callback.DatabaseManagement}", 1);
+            keyboard.addCallbackButton("⚡️ Plugin Manager", $"dreadbot {Callback.PluginManagement}", 2);
             return keyboard;
         }
 
@@ -476,11 +479,11 @@ namespace DreadBot
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
             
-            keyboard.addCallbackButton("🔥 Sensitive Options", $"dreadbot {CallbackSensitiveOptions}", 0);
-            keyboard.addCallbackButton("👮‍♂️ Add/Remove Bot Admins", $"dreadbot {CallbackBotAdmins}", 1);
-            keyboard.addCallbackButton("🗒 Debug Chat Settings", $"dreadbot {CallbackDebugChat}", 2);
-            keyboard.addCallbackButton("🔉 System Sounds", $"dreadbot {CallbackSounds}", 3);
-            keyboard.addCallbackButton("🔙", $"dreadbot {CallbackRoot}", 4);
+            keyboard.addCallbackButton("🔥 Sensitive Options", $"dreadbot {Callback.SensitiveOptions}", 0);
+            keyboard.addCallbackButton("👮‍♂️ Add/Remove Bot Admins", $"dreadbot {Callback.BotAdmins}", 1);
+            keyboard.addCallbackButton("🗒 Debug Chat Settings", $"dreadbot {Callback.DebugChat}", 2);
+            keyboard.addCallbackButton("🔉 System Sounds", $"dreadbot {Callback.Sounds}", 3);
+            keyboard.addCallbackButton("🔙", $"dreadbot {Callback.Root}", 4);
             return keyboard;
         }
 
@@ -488,8 +491,8 @@ namespace DreadBot
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
             
-            keyboard.addCallbackButton("Reset Debug Chat to Private", $"dreadbot {CallbackResetDebugChat}", 0);
-            keyboard.addCallbackButton("🔙", $"dreadbot {CallbackDebugChat}", 1);
+            keyboard.addCallbackButton("Reset Debug Chat to Private", $"dreadbot {Callback.ResetDebugChat}", 0);
+            keyboard.addCallbackButton("🔙", $"dreadbot {Callback.DebugChat}", 1);
             return keyboard;
         }
 
@@ -497,28 +500,28 @@ namespace DreadBot
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
             
-            keyboard.addCallbackButton("File LogLevel - Debug " + GetLogLevel(LogLevel.Debug, false), $"dreadbot {CallbackLogLevelSetFile} 6", 0);
-            keyboard.addCallbackButton("Console LogLevel - Debug " + GetLogLevel(LogLevel.Debug), $"dreadbot {CallbackLogLevelSetChat} 6", 0);
+            keyboard.addCallbackButton("File LogLevel - Debug " + GetLogLevel(LogLevel.Debug, false), $"dreadbot {Callback.LogLevelSetFile} 6", 0);
+            keyboard.addCallbackButton("Console LogLevel - Debug " + GetLogLevel(LogLevel.Debug), $"dreadbot {Callback.LogLevelSetChat} 6", 0);
 
-            keyboard.addCallbackButton("File LogLevel - Admin " + GetLogLevel(LogLevel.Admin, false), $"dreadbot {CallbackLogLevelSetFile} 5", 1);
-            keyboard.addCallbackButton("Console LogLevel - Admin " + GetLogLevel(LogLevel.Admin), $"dreadbot {CallbackLogLevelSetChat} 5", 1);
+            keyboard.addCallbackButton("File LogLevel - Admin " + GetLogLevel(LogLevel.Admin, false), $"dreadbot {Callback.LogLevelSetFile} 5", 1);
+            keyboard.addCallbackButton("Console LogLevel - Admin " + GetLogLevel(LogLevel.Admin), $"dreadbot {Callback.LogLevelSetChat} 5", 1);
 
-            keyboard.addCallbackButton("File LogLevel - Info " + GetLogLevel(LogLevel.Info, false), $"dreadbot {CallbackLogLevelSetFile} 4", 2);
-            keyboard.addCallbackButton("Console LogLevel - Info " + GetLogLevel(LogLevel.Info), $"dreadbot {CallbackLogLevelSetChat} 4", 2);
+            keyboard.addCallbackButton("File LogLevel - Info " + GetLogLevel(LogLevel.Info, false), $"dreadbot {Callback.LogLevelSetFile} 4", 2);
+            keyboard.addCallbackButton("Console LogLevel - Info " + GetLogLevel(LogLevel.Info), $"dreadbot {Callback.LogLevelSetChat} 4", 2);
 
-            keyboard.addCallbackButton("File LogLevel - Warn " + GetLogLevel(LogLevel.Warn, false), $"dreadbot {CallbackLogLevelSetFile} 3", 3);
-            keyboard.addCallbackButton("Console LogLevel - Warn " + GetLogLevel(LogLevel.Warn), $"dreadbot {CallbackLogLevelSetChat} 3", 3);
+            keyboard.addCallbackButton("File LogLevel - Warn " + GetLogLevel(LogLevel.Warn, false), $"dreadbot {Callback.LogLevelSetFile} 3", 3);
+            keyboard.addCallbackButton("Console LogLevel - Warn " + GetLogLevel(LogLevel.Warn), $"dreadbot {Callback.LogLevelSetChat} 3", 3);
 
-            keyboard.addCallbackButton("File LogLevel - Error " + GetLogLevel(LogLevel.Error, false), $"dreadbot {CallbackLogLevelSetFile} 2", 4);
-            keyboard.addCallbackButton("Console LogLevel - Error " + GetLogLevel(LogLevel.Error), $"dreadbot {CallbackLogLevelSetChat} 2", 4);
+            keyboard.addCallbackButton("File LogLevel - Error " + GetLogLevel(LogLevel.Error, false), $"dreadbot {Callback.LogLevelSetFile} 2", 4);
+            keyboard.addCallbackButton("Console LogLevel - Error " + GetLogLevel(LogLevel.Error), $"dreadbot {Callback.LogLevelSetChat} 2", 4);
 
-            keyboard.addCallbackButton("File LogLevel - Fatal " + GetLogLevel(LogLevel.Fatal, false), $"dreadbot {CallbackLogLevelSetFile} 1", 5);
-            keyboard.addCallbackButton("Console LogLevel - Fatal " + GetLogLevel(LogLevel.Fatal), $"dreadbot {CallbackLogLevelSetChat} 1", 5);
+            keyboard.addCallbackButton("File LogLevel - Fatal " + GetLogLevel(LogLevel.Fatal, false), $"dreadbot {Callback.LogLevelSetFile} 1", 5);
+            keyboard.addCallbackButton("Console LogLevel - Fatal " + GetLogLevel(LogLevel.Fatal), $"dreadbot {Callback.LogLevelSetChat} 1", 5);
 
-            keyboard.addCallbackButton("File LogLevel - Off " + GetLogLevel(LogLevel.Off, false), $"dreadbot {CallbackLogLevelSetFile} 0", 6);
-            keyboard.addCallbackButton("Console LogLevel - Off " + GetLogLevel(LogLevel.Off), $"dreadbot {CallbackLogLevelSetChat} 0", 6);
+            keyboard.addCallbackButton("File LogLevel - Off " + GetLogLevel(LogLevel.Off, false), $"dreadbot {Callback.LogLevelSetFile} 0", 6);
+            keyboard.addCallbackButton("Console LogLevel - Off " + GetLogLevel(LogLevel.Off), $"dreadbot {Callback.LogLevelSetChat} 0", 6);
 
-            keyboard.addCallbackButton("🔙", $"dreadbot {CallbackDebugChat}", 7);
+            keyboard.addCallbackButton("🔙", $"dreadbot {Callback.DebugChat}", 7);
 
             return keyboard;
         }
@@ -527,9 +530,9 @@ namespace DreadBot
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
             
-            keyboard.addCallbackButton("🧾 Change Debug Chat", $"dreadbot {CallbackChangeDebugChat}", 0);
-            keyboard.addCallbackButton("🔕 Set Debug Chat Log Level", $"dreadbot {CallbackLogLevel}", 1);
-            keyboard.addCallbackButton("🔙", $"dreadbot {CallbackBotManagement}", 2);
+            keyboard.addCallbackButton("🧾 Change Debug Chat", $"dreadbot {Callback.ChangeDebugChat}", 0);
+            keyboard.addCallbackButton("🔕 Set Debug Chat Log Level", $"dreadbot {Callback.LogLevel}", 1);
+            keyboard.addCallbackButton("🔙", $"dreadbot {Callback.BotManagement}", 2);
             return keyboard;
         }
         internal static InlineKeyboardMarkup PluginMgr()
@@ -547,9 +550,9 @@ namespace DreadBot
             string getUpdatesSuffix = Configs.RunningConfig.GetupdatesMode ? " ⬅️" : "";
             string webHooksSuffix = Configs.RunningConfig.GetupdatesMode ? "" : " ⬅️";
 
-            keyboard.addCallbackButton("GetUpdates" + getUpdatesSuffix, $"dreadbot {CallbackWebhookDisable}", 0);
-            keyboard.addCallbackButton("WebHook" + webHooksSuffix, $"dreadbot {CallbackWebhookConfig}", 1);
-            keyboard.addCallbackButton("🔙", $"dreadbot {CallbackSensitiveOptions}", 2);
+            keyboard.addCallbackButton("GetUpdates" + getUpdatesSuffix, $"dreadbot {Callback.WebhookDisable}", 0);
+            keyboard.addCallbackButton("WebHook" + webHooksSuffix, $"dreadbot {Callback.WebhookConfig}", 1);
+            keyboard.addCallbackButton("🔙", $"dreadbot {Callback.SensitiveOptions}", 2);
             return keyboard;
         }
 
@@ -558,15 +561,15 @@ namespace DreadBot
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
             
 
-            keyboard.addCallbackButton("Test & Go Live!", $"dreadbot {CallbackWebhookDisable}", 0);
-            keyboard.addCallbackButton("Set URL", $"dreadbot {CallbackWebhookConfig}", 1);
-            keyboard.addCallbackButton("Set Certificate", $"dreadbot {CallbackWebhookConfig}", 2);
+            keyboard.addCallbackButton("Test & Go Live!", $"dreadbot {Callback.WebhookDisable}", 0);
+            keyboard.addCallbackButton("Set URL", $"dreadbot {Callback.WebhookConfig}", 1);
+            keyboard.addCallbackButton("Set Certificate", $"dreadbot {Callback.WebhookConfig}", 2);
 
-            keyboard.addCallbackButton("Port Cfg", $"dreadbot {CallbackWebhookConfig}", 3);
-            keyboard.addCallbackButton("443", $"dreadbot {CallbackWebhookConfig}", 3);
-            keyboard.addCallbackButton("+", $"dreadbot {CallbackWebhookConfig}", 3);
+            keyboard.addCallbackButton("Port Cfg", $"dreadbot {Callback.WebhookConfig}", 3);
+            keyboard.addCallbackButton("443", $"dreadbot {Callback.WebhookConfig}", 3);
+            keyboard.addCallbackButton("+", $"dreadbot {Callback.WebhookConfig}", 3);
 
-            keyboard.addCallbackButton("🔙", $"dreadbot {CallbackOperationMode}", 4);
+            keyboard.addCallbackButton("🔙", $"dreadbot {Callback.OperationMode}", 4);
             return keyboard;
         }
         
@@ -574,18 +577,18 @@ namespace DreadBot
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
             
-            keyboard.addCallbackButton("🔑 Show Access Token", $"dreadbot {CallbackShowToken}", 0);
-            keyboard.addCallbackButton("🔑 Change Access Token", $"dreadbot {CallbackChangeToken}", 1);
-            keyboard.addCallbackButton("👮‍️ Change Owner", $"dreadbot {CallbackChangeOwner}", 2);
+            keyboard.addCallbackButton("🔑 Show Access Token", $"dreadbot {Callback.ShowToken}", 0);
+            keyboard.addCallbackButton("🔑 Change Access Token", $"dreadbot {Callback.ChangeToken}", 1);
+            keyboard.addCallbackButton("👮‍️ Change Owner", $"dreadbot {Callback.ChangeOwner}", 2);
 
-            keyboard.addCallbackButton("+1", $"dreadbot {CallbackGetUpdatesPlusSmall}", 3);
-            keyboard.addCallbackButton("+10", $"dreadbot {CallbackGetUpdatesPlusLarge}", 3);
-            keyboard.addCallbackButton(Configs.RunningConfig.GULimit.ToString(), $"dreadbot {CallbackGetUpdatesLimit}", 3);
-            keyboard.addCallbackButton("-10", $"dreadbot {CallbackGetUpdatesMinusLarge}", 3);
-            keyboard.addCallbackButton("-1", $"dreadbot {CallbackGetUpdatesMinusSmall}", 3);
+            keyboard.addCallbackButton("+1", $"dreadbot {Callback.GetUpdatesPlusSmall}", 3);
+            keyboard.addCallbackButton("+10", $"dreadbot {Callback.GetUpdatesPlusLarge}", 3);
+            keyboard.addCallbackButton(Configs.RunningConfig.GULimit.ToString(), $"dreadbot {Callback.GetUpdatesLimit}", 3);
+            keyboard.addCallbackButton("-10", $"dreadbot {Callback.GetUpdatesMinusLarge}", 3);
+            keyboard.addCallbackButton("-1", $"dreadbot {Callback.GetUpdatesMinusSmall}", 3);
 
-            keyboard.addCallbackButton("⚙️ Bot Operation Mode", $"dreadbot {CallbackOperationMode}", 4);
-            keyboard.addCallbackButton("🔙", $"dreadbot {CallbackBotManagement}", 5);
+            keyboard.addCallbackButton("⚙️ Bot Operation Mode", $"dreadbot {Callback.OperationMode}", 4);
+            keyboard.addCallbackButton("🔙", $"dreadbot {Callback.BotManagement}", 5);
             return keyboard;
 
         }
