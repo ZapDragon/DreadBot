@@ -129,7 +129,6 @@ namespace DreadBot
                         }
                         return;
                     }
-                case CallbackBotAdmins: { return; }
                 case CallbackDebugChat: {
                         Methods.answerCallbackQuery(callback.id);
                         string text = 
@@ -415,6 +414,20 @@ namespace DreadBot
                         }
                         return;
                     }
+                
+                // Not yet implemented
+                case CallbackDatabaseManagement:
+                case CallbackPluginManagement:
+                case CallbackBotAdmins:
+                case CallbackWebhookDisable:
+                default:
+                    {
+                        Methods.answerCallbackQuery(callback.id);
+                        const string text = "This menu option has not yet been implemented.";
+                        Methods.editMessageText(callback.from.id, callback.message.message_id, text, "markdown", BackOnly(CallbackBotManagement));
+                        return;
+                    }
+                    
             }
         }
 
