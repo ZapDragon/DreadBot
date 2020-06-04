@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 //MIT License
 //Copyright(c) [2019]
 //[Xylex Sirrush Rayne]
@@ -23,9 +23,6 @@
 
 #endregion
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
 
 namespace DreadBot
 {
@@ -161,43 +158,40 @@ namespace DreadBot
 
         #endregion
 
-        #region Events and Delegetes
-
-        // Delegates
-        public delegate void DreadBotEventHandler(EventArgs eventArgs);
+        #region Events
 
         //Telegram Event Providers
-        public static event DreadBotEventHandler ForwardEvent;
-        public static event DreadBotEventHandler StickerEvent;
-        public static event DreadBotEventHandler ImageEvent;
-        public static event DreadBotEventHandler VideoNoteEvent;
-        public static event DreadBotEventHandler JoinEvent;
-        public static event DreadBotEventHandler PartEvent;
-        public static event DreadBotEventHandler AnimationEvent;
-        public static event DreadBotEventHandler AudioEvent;
-        public static event DreadBotEventHandler VideoEvent;
-        public static event DreadBotEventHandler GameEvent;
-        public static event DreadBotEventHandler PollEvent;
-        public static event DreadBotEventHandler DiceEvent;
-        public static event DreadBotEventHandler VoiceClipEvent;
-        public static event DreadBotEventHandler VenueClipEvent;
-        public static event DreadBotEventHandler PinnedMessageEvent;
-        public static event DreadBotEventHandler TitleChangeEvent;
-        public static event DreadBotEventHandler ChatPhotoEvent;
-        public static event DreadBotEventHandler LocationEvent;
-        public static event DreadBotEventHandler NewGroupEvent;
-        public static event DreadBotEventHandler GroupUpgradeEvent;
-        public static event DreadBotEventHandler CallbackEvent;
-        public static event DreadBotEventHandler ShippingQueryEvent;
-        public static event DreadBotEventHandler ChosenInlineEvent;
-        public static event DreadBotEventHandler InlineQueryEvent;
-        public static event DreadBotEventHandler PreCheckoutEvent;
-        public static event DreadBotEventHandler PassportDataEvent;
-        public static event DreadBotEventHandler TextEvent;
-        public static event DreadBotEventHandler ChannelPostEvent;
+        public static event Action<MessageEventArgs> ForwardEvent;
+        public static event Action<MessageEventArgs> StickerEvent;
+        public static event Action<MessageEventArgs> ImageEvent;
+        public static event Action<MessageEventArgs> VideoNoteEvent;
+        public static event Action<SystemMsgEventArgs> JoinEvent;
+        public static event Action<SystemMsgEventArgs> PartEvent;
+        public static event Action<MessageEventArgs> AnimationEvent;
+        public static event Action<MessageEventArgs> AudioEvent;
+        public static event Action<MessageEventArgs> VideoEvent;
+        public static event Action<MessageEventArgs> GameEvent;
+        public static event Action<PollEventArgs> PollEvent;
+        public static event Action<MessageEventArgs> DiceEvent;
+        public static event Action<MessageEventArgs> VoiceClipEvent;
+        public static event Action<MessageEventArgs> VenueClipEvent;
+        public static event Action<MessageEventArgs> PinnedMessageEvent;
+        public static event Action<SystemMsgEventArgs> TitleChangeEvent;
+        public static event Action<SystemMsgEventArgs> ChatPhotoEvent;
+        public static event Action<SystemMsgEventArgs> LocationEvent;
+        public static event Action<SystemMsgEventArgs> NewGroupEvent;
+        public static event Action<SystemMsgEventArgs> GroupUpgradeEvent;
+        public static event Action<CallbackEventArgs> CallbackEvent;
+        public static event Action<ShippingQueryEventArgs> ShippingQueryEvent;
+        public static event Action<ChosenInlineEventArgs> ChosenInlineEvent;
+        public static event Action<InlineQueryEventArgs> InlineQueryEvent;
+        public static event Action<PreCheckoutEventArgs> PreCheckoutEvent;
+        public static event Action<MessageEventArgs> PassportDataEvent;
+        public static event Action<MessageEventArgs> TextEvent;
+        public static event Action<MessageEventArgs> ChannelPostEvent;
 
         //Internal Event Providers
-        public static event DreadBotEventHandler DatabaseExport;
+        public static event Action<DatabaseExportEventArgs> DatabaseExport;
 
         #endregion
 
