@@ -109,7 +109,7 @@ namespace DreadBot
                     {
                         GetUpdates request = new GetUpdates() { timeout = 20, offset = ++UpdateId, limit = Configs.RunningConfig.GULimit };
                         Result<Update[]> updatesres = Methods.getUpdates(request);
-                        if (!updatesres.ok)
+                        if (updatesres == null || !updatesres.ok)
                         {
                             Logger.LogError("Error fetching updates: (" + updatesres.errorCode + ") " + updatesres.description);
                             Thread.Sleep(10000);
