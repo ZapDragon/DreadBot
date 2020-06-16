@@ -23,9 +23,6 @@
 
 #endregion
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
 
 namespace DreadBot
 {
@@ -161,75 +158,72 @@ namespace DreadBot
 
         #endregion
 
-        #region Events and Delegetes
-
-        // Delegates
-        public delegate void DreadBotEventHandler(EventArgs eventArgs);
+        #region Events
 
         //Telegram Event Providers
-        public static event DreadBotEventHandler ForwardEvent;
-        public static event DreadBotEventHandler StickerEvent;
-        public static event DreadBotEventHandler ImageEvent;
-        public static event DreadBotEventHandler VideoNoteEvent;
-        public static event DreadBotEventHandler JoinEvent;
-        public static event DreadBotEventHandler PartEvent;
-        public static event DreadBotEventHandler AnimationEvent;
-        public static event DreadBotEventHandler AudioEvent;
-        public static event DreadBotEventHandler VideoEvent;
-        public static event DreadBotEventHandler GameEvent;
-        public static event DreadBotEventHandler PollEvent;
-        public static event DreadBotEventHandler DiceEvent;
-        public static event DreadBotEventHandler VoiceClipEvent;
-        public static event DreadBotEventHandler VenueClipEvent;
-        public static event DreadBotEventHandler PinnedMessageEvent;
-        public static event DreadBotEventHandler TitleChangeEvent;
-        public static event DreadBotEventHandler ChatPhotoEvent;
-        public static event DreadBotEventHandler LocationEvent;
-        public static event DreadBotEventHandler NewGroupEvent;
-        public static event DreadBotEventHandler GroupUpgradeEvent;
-        public static event DreadBotEventHandler CallbackEvent;
-        public static event DreadBotEventHandler ShippingQueryEvent;
-        public static event DreadBotEventHandler ChosenInlineEvent;
-        public static event DreadBotEventHandler InlineQueryEvent;
-        public static event DreadBotEventHandler PreCheckoutEvent;
-        public static event DreadBotEventHandler PassportDataEvent;
-        public static event DreadBotEventHandler TextEvent;
-        public static event DreadBotEventHandler ChannelPostEvent;
+        public static event Action<MessageEventArgs> ForwardEvent;
+        public static event Action<MessageEventArgs> StickerEvent;
+        public static event Action<MessageEventArgs> ImageEvent;
+        public static event Action<MessageEventArgs> VideoNoteEvent;
+        public static event Action<SystemMsgEventArgs> JoinEvent;
+        public static event Action<SystemMsgEventArgs> PartEvent;
+        public static event Action<MessageEventArgs> AnimationEvent;
+        public static event Action<MessageEventArgs> AudioEvent;
+        public static event Action<MessageEventArgs> VideoEvent;
+        public static event Action<MessageEventArgs> GameEvent;
+        public static event Action<PollEventArgs> PollEvent;
+        public static event Action<MessageEventArgs> DiceEvent;
+        public static event Action<MessageEventArgs> VoiceClipEvent;
+        public static event Action<MessageEventArgs> VenueClipEvent;
+        public static event Action<MessageEventArgs> PinnedMessageEvent;
+        public static event Action<SystemMsgEventArgs> TitleChangeEvent;
+        public static event Action<SystemMsgEventArgs> ChatPhotoEvent;
+        public static event Action<SystemMsgEventArgs> LocationEvent;
+        public static event Action<SystemMsgEventArgs> NewGroupEvent;
+        public static event Action<SystemMsgEventArgs> GroupUpgradeEvent;
+        public static event Action<CallbackEventArgs> CallbackEvent;
+        public static event Action<ShippingQueryEventArgs> ShippingQueryEvent;
+        public static event Action<ChosenInlineEventArgs> ChosenInlineEvent;
+        public static event Action<InlineQueryEventArgs> InlineQueryEvent;
+        public static event Action<PreCheckoutEventArgs> PreCheckoutEvent;
+        public static event Action<MessageEventArgs> PassportDataEvent;
+        public static event Action<MessageEventArgs> TextEvent;
+        public static event Action<MessageEventArgs> ChannelPostEvent;
 
         //Internal Event Providers
-        public static event DreadBotEventHandler DatabaseExport;
+        public static event Action<DatabaseExportEventArgs> DatabaseExport;
 
         #endregion
 
         #region Telegram Event Triggers
-        public static void OnForward(Message msg) { ForwardEvent?.Invoke(new MessageEventArgs() { msg = msg }); }
-        public static void OnSticker(Message msg) { StickerEvent?.Invoke(new MessageEventArgs() { msg = msg }); }
-        public static void OnImage(Message msg, bool isEdited) { ImageEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
-        public static void OnVideoNote(Message msg, bool isEdited) { VideoNoteEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
-        public static void OnJoin(Message msg) { JoinEvent?.Invoke(new SystemMsgEventArgs() { msg = msg }); }
-        public static void OnPart(Message msg) { PartEvent?.Invoke(new SystemMsgEventArgs() { msg = msg }); }
-        public static void OnAnimation(Message msg, bool isEdited) { AnimationEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
-        public static void OnAudio(Message msg, bool isEdited) { AudioEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
-        public static void OnVideo(Message msg, bool isEdited) { VideoEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
-        public static void OnGame(Message msg, bool isEdited) { GameEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
-        public static void OnPoll(Poll poll, Message msg = null, bool isUpdate = false, bool isAnswer = false) { PollEvent?.Invoke(new PollEventArgs() { poll = poll, msg = msg, isUpdate = isUpdate, isAnswer = isAnswer }); }
-        public static void OnDice(Message msg) { DiceEvent?.Invoke(new MessageEventArgs() { msg = msg }); }
-        public static void OnVoiceClip(Message msg, bool isEdited) { VoiceClipEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
-        public static void OnVenueClip(Message msg, bool isEdited) { VenueClipEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
-        public static void OnPinnedMessage(Message msg, bool isEdited) { PinnedMessageEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
-        public static void OnTitleChange(Message msg) { TitleChangeEvent?.Invoke(new SystemMsgEventArgs() { msg = msg }); }
-        public static void OnChatPhoto(Message msg) { ChatPhotoEvent?.Invoke(new SystemMsgEventArgs() { msg = msg }); }
-        public static void OnLocation(Message msg) { LocationEvent?.Invoke(new SystemMsgEventArgs() { msg = msg }); }
-        public static void OnNewGroup(Message msg) { NewGroupEvent?.Invoke(new SystemMsgEventArgs() { msg = msg }); }
-        public static void OnGroupUpgrade(Message msg) { GroupUpgradeEvent?.Invoke(new SystemMsgEventArgs() { msg = msg }); }
-        public static void OnCallback(CallbackQuery callback) { CallbackEvent?.Invoke(new CallbackEventArgs() { callbackQuery = callback }); }
-        public static void OnShippingQuery(ShippingQuery shippingQuery) { ShippingQueryEvent?.Invoke(new ShippingQueryEventArgs() { shippingQuery = shippingQuery }); }
-        public static void OnChosenInline(ChosenInlineResult inlineResult) { ChosenInlineEvent?.Invoke(new ChosenInlineEventArgs() { chosenResult = inlineResult }); }
-        public static void OnInlineQuery(InlineQuery inlineQuery) { InlineQueryEvent?.Invoke(new InlineQueryEventArgs() { inlineQuery = inlineQuery }); }
-        public static void OnPreCheckout(PreCheckoutQuery checkoutQuery) { PreCheckoutEvent?.Invoke(new PreCheckoutEventArgs() { preCheckoutQuery = checkoutQuery }); }
-        public static void OnPassportData(Message msg) { PassportDataEvent?.Invoke(new MessageEventArgs() { msg = msg }); }
-        public static void OnText(Message Msg, bool isEdited) { TextEvent?.Invoke(new MessageEventArgs() { msg = Msg, isEdited = isEdited }); }
-        public static void OnChannelPost(Message Msg, bool isEdited) { ChannelPostEvent?.Invoke(new MessageEventArgs() { msg = Msg, isEdited = isEdited }); }
+        private static void OnForward(Message msg) { ForwardEvent?.Invoke(new MessageEventArgs() { msg = msg }); }
+        private static void OnSticker(Message msg) { StickerEvent?.Invoke(new MessageEventArgs() { msg = msg }); }
+        private static void OnImage(Message msg, bool isEdited) { ImageEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
+        private static void OnVideoNote(Message msg, bool isEdited) { VideoNoteEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
+        private static void OnJoin(Message msg) { JoinEvent?.Invoke(new SystemMsgEventArgs() { msg = msg }); }
+        private static void OnPart(Message msg) { PartEvent?.Invoke(new SystemMsgEventArgs() { msg = msg }); }
+        private static void OnAnimation(Message msg, bool isEdited) { AnimationEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
+        private static void OnAudio(Message msg, bool isEdited) { AudioEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
+        private static void OnVideo(Message msg, bool isEdited) { VideoEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
+        private static void OnGame(Message msg, bool isEdited) { GameEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
+        private static void OnPoll(Poll poll, Message msg = null, bool isUpdate = false, bool isAnswer = false) { PollEvent?.Invoke(new PollEventArgs() { poll = poll, msg = msg, isUpdate = isUpdate, isAnswer = isAnswer }); }
+        private static void OnDice(Message msg) { DiceEvent?.Invoke(new MessageEventArgs() { msg = msg }); }
+        private static void OnVoiceClip(Message msg, bool isEdited) { VoiceClipEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
+        private static void OnVenueClip(Message msg, bool isEdited) { VenueClipEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
+        private static void OnPinnedMessage(Message msg, bool isEdited) { PinnedMessageEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
+        private static void OnTitleChange(Message msg) { TitleChangeEvent?.Invoke(new SystemMsgEventArgs() { msg = msg }); }
+        private static void OnChatPhoto(Message msg) { ChatPhotoEvent?.Invoke(new SystemMsgEventArgs() { msg = msg }); }
+        private static void OnLocation(Message msg) { LocationEvent?.Invoke(new SystemMsgEventArgs() { msg = msg }); }
+        private static void OnNewGroup(Message msg) { NewGroupEvent?.Invoke(new SystemMsgEventArgs() { msg = msg }); }
+        private static void OnGroupUpgrade(Message msg) { GroupUpgradeEvent?.Invoke(new SystemMsgEventArgs() { msg = msg }); }
+        private static void OnCallback(CallbackQuery callback) { CallbackEvent?.Invoke(new CallbackEventArgs() { callbackQuery = callback }); }
+        private static void OnShippingQuery(ShippingQuery shippingQuery) { ShippingQueryEvent?.Invoke(new ShippingQueryEventArgs() { shippingQuery = shippingQuery }); }
+        private static void OnChosenInline(ChosenInlineResult inlineResult) { ChosenInlineEvent?.Invoke(new ChosenInlineEventArgs() { chosenResult = inlineResult }); }
+        private static void OnInlineQuery(InlineQuery inlineQuery) { InlineQueryEvent?.Invoke(new InlineQueryEventArgs() { inlineQuery = inlineQuery }); }
+        private static void OnPreCheckout(PreCheckoutQuery checkoutQuery) { PreCheckoutEvent?.Invoke(new PreCheckoutEventArgs() { preCheckoutQuery = checkoutQuery }); }
+        private static void OnPassportData(Message msg) { PassportDataEvent?.Invoke(new MessageEventArgs() { msg = msg }); }
+        private static void OnText(Message msg, bool isEdited) { TextEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
+        private static void OnChannelPost(Message msg, bool isEdited) { ChannelPostEvent?.Invoke(new MessageEventArgs() { msg = msg, isEdited = isEdited }); }
 
         #endregion
 
@@ -237,7 +231,7 @@ namespace DreadBot
 
         #region Non-Telegram Event Triggers
 
-        //public static void OnDatabaseExport(string[] args) { DatabaseExport?.Invoke(new MessageEventArgs() { Args = args }); }
+        //private static void OnDatabaseExport(string[] args) { DatabaseExport?.Invoke(new DatabaseExportEventArgs() { Args = args }); }
 
         #endregion
     }
