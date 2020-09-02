@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -333,6 +333,58 @@ namespace DreadBot
             result = sendRequest<Message>(Method.sendAnimation, buildRequest<SendAnimationUrlRequest>(anur));
             return result;
         }
+
+        public static Result<Message> sendAnimation(long chatId, Stream content, string fileName = null,
+            string caption = null,
+            string parseMode = "markdown", bool disableNotification = false, int replyToMessageId = 0,
+            InlineKeyboardMarkup keyboard = null)
+        {
+            using (MultipartFormDataContent form = new MultipartFormDataContent())
+            {
+                form.Add(new StringContent(chatId.ToString(), Encoding.UTF8), "chat_id");
+                fileName = fileName ?? "video.mp4";
+                string contentDisposition = $@"form-data; name=""animation""; filename=""{fileName}""";
+                HttpContent mediaPartContent = new StreamContent(content)
+                {
+                    Headers =
+                    {
+                        {"Content-Type", "application/octet-stream"},
+                        {"Content-Disposition", contentDisposition}
+                    }
+                };
+
+                form.Add(mediaPartContent, "animation");
+                if (caption != null)
+                {
+                    form.Add(new StringContent(caption, Encoding.UTF8), "caption");
+                }
+
+                if (parseMode != null)
+                {
+                    form.Add(new StringContent(parseMode, Encoding.UTF8), "parse_mode");
+                }
+
+                if (disableNotification)
+                {
+                    form.Add(new StringContent(disableNotification.ToString(), Encoding.UTF8), "disable_notification");
+                }
+
+                if (replyToMessageId != 0)
+                {
+                    form.Add(new StringContent(replyToMessageId.ToString(), Encoding.UTF8), "reply_to_message_id");
+                }
+
+                if (keyboard != null)
+                {
+                    form.Add(new StringContent(buildRequest<InlineKeyboardMarkup>(keyboard), Encoding.UTF8),
+                        "reply_markup");
+                }
+
+                Result<Message> result = sendRequest<Message>(Method.sendAnimation, "", "", form);
+                return result;
+            }
+        }
+
         public static Result<Message> sendVoice()
         {
             return null;
