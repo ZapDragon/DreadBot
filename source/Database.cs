@@ -44,8 +44,13 @@ namespace DreadBot
         private static LiteCollection<BotConfig> DreadBotCol;
         internal static bool newInstance = false;
 
-        internal static void Init() {
-            if (!System.IO.File.Exists(Environment.CurrentDirectory + @"\DreadBot.db")) { newInstance = true; }
+        internal static void Init()
+        {
+            var dbPath = Path.Combine(Environment.CurrentDirectory, "DreadBot.db");
+            if (!System.IO.File.Exists(dbPath))
+            {
+                newInstance = true;
+            }
             db = new LiteDatabase(@"DreadBot.db");
 
             DreadBotCol = db.GetCollection<BotConfig>("dreadbot");
@@ -58,7 +63,7 @@ namespace DreadBot
                 try { Configs.RunningConfig = DreadBotCol.FindAll().First<BotConfig>(); }
                 catch {
                     db.Dispose();
-                    System.IO.File.Delete(@"\DreadBot.db");
+                    System.IO.File.Delete(dbPath);
                     db = new LiteDatabase(@"DreadBot.db");
                     DreadBotCol = db.GetCollection<BotConfig>("dreadbot");
                     newInstance = true;
