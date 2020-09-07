@@ -107,7 +107,11 @@ namespace DreadBot
                     }
                     else
                     {
-                        GetUpdates request = new GetUpdates() { timeout = 20, offset = ++UpdateId, limit = Configs.RunningConfig.GULimit };
+                        GetUpdates request = new GetUpdates() {
+                            timeout = 20, 
+                            offset = UpdateId + 1, 
+                            limit = Configs.RunningConfig.GULimit
+                        };
                         Result<Update[]> updatesres = Methods.getUpdates(request);
                         if (updatesres == null || !updatesres.ok)
                         {
