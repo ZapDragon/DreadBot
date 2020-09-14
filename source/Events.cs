@@ -64,7 +64,8 @@ namespace DreadBot
 
         private static void ParseMessage(Message msg, bool isEdited = false, bool isChannel = false)
         {
-            if (msg.text != null)
+            if (msg.forward_from != null) { Events.OnForward(msg); }
+            else if (msg.text != null)
             {
                 if (isChannel) { OnChannelPost(msg, isEdited); return; }
                 if (Utilities.isAdminCommand(msg.text) != "") {
@@ -76,7 +77,6 @@ namespace DreadBot
                 }
                 Events.OnText(msg, isEdited);
             }
-            if (msg.forward_from != null) { Events.OnForward(msg); }
             else if (msg.sticker != null) { Events.OnSticker(msg); }
             else if (msg.photo != null) { Events.OnImage(msg, isEdited); }
             else if (msg.video_note != null) { Events.OnVideoNote(msg, isEdited); }
