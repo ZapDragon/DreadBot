@@ -380,7 +380,6 @@ namespace DreadBot
         }
         public static string isAdminCommand(string s)
         {
-            Console.WriteLine("Broken Text: \""+s+"\"");
             char c = s[0];
             switch (c)
             {
