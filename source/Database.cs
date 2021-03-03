@@ -49,6 +49,7 @@ namespace DreadBot
             var dbPath = Path.Combine(Environment.CurrentDirectory, "DreadBot.db");
             if (!System.IO.File.Exists(dbPath))
             {
+                Console.WriteLine("Database at path \"" + dbPath + "\" not found, starting a new instance");
                 newInstance = true;
             }
             db = new LiteDatabase(@"DreadBot.db");

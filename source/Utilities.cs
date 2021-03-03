@@ -134,7 +134,7 @@ namespace DreadBot
         {
             if (!Configs.RunningConfig.Admins.Contains(msg.from.id) && (Configs.RunningConfig.Owner != msg.from.id)) { return false; }
 
-            string[] cmd = msg.text.Split(' ');
+            string[] cmd = msg.text.Trim().Split(' ');
             switch (Utilities.isAdminCommand(cmd[0]))
             {
                 case "makemenu":
@@ -225,7 +225,7 @@ namespace DreadBot
 
         internal static bool Commands(Message msg)
         {
-            string[] cmd = msg.text.Split(' ');
+            string[] cmd = msg.text.Trim().Split(' ');
             switch (isCommand(cmd[0])) {
                   case "version":
                         {
@@ -380,6 +380,7 @@ namespace DreadBot
         }
         public static string isAdminCommand(string s)
         {
+            Console.WriteLine("Broken Text: \""+s+"\"");
             char c = s[0];
             switch (c)
             {

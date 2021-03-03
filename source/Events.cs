@@ -65,7 +65,7 @@ namespace DreadBot
         private static void ParseMessage(Message msg, bool isEdited = false, bool isChannel = false)
         {
             if (msg.forward_from != null) { Events.OnForward(msg); }
-            else if (msg.text != null)
+            else if (!String.IsNullOrEmpty(msg.text))
             {
                 if (isChannel) { OnChannelPost(msg, isEdited); return; }
                 if (Utilities.isAdminCommand(msg.text) != "") {
@@ -139,7 +139,7 @@ namespace DreadBot
 
         private static bool CommandParser(Update update)
         {
-            string[] args = update.message.text.Split(' ');
+            string[] args = update.message.text.Trim().Split(' ');
             string cmd = "";
             cmd = Utilities.isAdminCommand(args[0]);
             if (cmd != "")

@@ -80,6 +80,7 @@ namespace DreadBot
                 }
                 try
                 {
+                    //Console.WriteLine(method + " Timeout: " +client.Timeout);
                     if (dataPayload == null) {
                         StringContent content = new StringContent(payload, Encoding.UTF8, payloadType);
                         response = Task.Run(() => client.PostAsync(uriMethod, content)).Result;
