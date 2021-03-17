@@ -518,9 +518,18 @@ namespace DreadBot
             unbanResult = sendRequest<bool>(Method.unbanChatMember, buildRequest<KickChatMemberRequest>(kcmr));
             return unbanResult;
         }
-        public static Result<bool> restrictChatMember()
+        public static Result<bool> restrictChatMember(long chat_id, long user_id, ChatPermissions permissions, int untilDate = -1 )
         {
-            return null;
+            RestrictChatMemberRequest rcmr = new RestrictChatMemberRequest()
+            {
+                chat_id = chat_id,
+                user_id = user_id,
+                permissions = permissions
+            };
+            if (untilDate > 0) { rcmr.until_date = untilDate; }
+            Result<bool> restrictResult = null;
+            restrictResult = sendRequest<bool>(Method.restrictChatMember, buildRequest<RestrictChatMemberRequest>(rcmr));
+            return restrictResult;
         }
         public static Result<bool> promoteChatMember()
         {
@@ -539,7 +548,7 @@ namespace DreadBot
         {
             GetChatRequest gcr = new GetChatRequest() { chat_id = chat_id };
             Result<string> result = null;
-            result = sendRequest<string>(Method.exportChatInviteLink, buildRequest<KickChatMemberRequest>(gcr));
+            result = sendRequest<string>(Method.exportChatInviteLink, buildRequest<GetChatRequest>(gcr));
             return result;
         }
 
