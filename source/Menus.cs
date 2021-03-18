@@ -25,7 +25,7 @@
 
 namespace DreadBot
 {
-    class Menus
+    public class Menus
     {
         class Callback
         {
@@ -68,7 +68,13 @@ namespace DreadBot
             Result<Message> res = Methods.sendMessage(chatId, AdminMenuText, "Markdown", Menus.AdminMenu());
             if (!res.ok) { Logger.LogError("Error contacting the admin Chat: " + res.description); }
         }
-
+        internal static void ConfigMenu(CallbackQuery callback)
+        {
+            Methods.answerCallbackQuery(callback.id);
+            long chatID = long.Parse(callback.data.Split(':')[1]);
+            Methods.editMessageText(callback.from.id, callback.message.message_id, "Here is the list of active running plugins with menu's.", "markdown", PluginConfigMgr(chatID));
+            return;
+        }
         internal static void ButtonPush(CallbackQuery callback)
         {
             string arg = callback.data.Split(' ')[1];
@@ -535,10 +541,10 @@ namespace DreadBot
             keyboard.addCallbackButton("🔙", $"dreadbot {Callback.BotManagement}", 2);
             return keyboard;
         }
-        internal static InlineKeyboardMarkup PluginMgr()
+        internal static InlineKeyboardMarkup PluginConfigMgr(long chatID)
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
-
+            Events.OnPluginConfigKeyboardRequest(ref keyboard, chatID);
             return keyboard;
 
         }
@@ -599,6 +605,11 @@ namespace DreadBot
             
             keyboard.addCallbackButton("🔙", $"dreadbot {callBack}", 0);
             return keyboard;
+        }
+
+        public static void ConfigBackButton(ref InlineKeyboardMarkup keyboard, long chatID)
+        {
+            keyboard.addCallbackButton("🔙", $"config:{chatID}", keyboard.Keyboard.Count);
         }
 
         #endregion

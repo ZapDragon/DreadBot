@@ -31,6 +31,7 @@ using System.Net.Http;
 using System.IO;
 using System.IO.Compression;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace DreadBot
 {
@@ -177,8 +178,10 @@ namespace DreadBot
                         Menus.PostAdminMenu(msg.from.id);
                         return true;
                     }
-                case "admin":
+                case "admintoken":
                     {
+                        string token = Utilities.CreateAdminToken(false);
+                        Methods.sendMessage(msg.from.id, "Have an admin send this to me to add them to the admin list.\n`/token " + token + "`");
 
                         return true;
                     }
@@ -347,6 +350,12 @@ namespace DreadBot
                         }
                         return true;
                     }
+                case "config":
+                    {
+                        if (msg.chat.type != "supergroup") return false;
+                        Methods.sendMessage(msg.from.id, "Here is the list of active running plugins with Configs's.", "markdown", Menus.PluginConfigMgr(msg.chat.id));
+                        return true;
+                    }
 
                 default: return false;
             }
@@ -373,8 +382,8 @@ namespace DreadBot
             char c = s[0];
             switch (c)
             {
-                case '!': return s.Substring(1);
-                case '/': return s.Substring(1);
+                case '!': return Regex.Replace(s, @"^!([\w_]+)@" + Configs.Me.username, "$1");
+                case '/': return Regex.Replace(s, @"^\/([\w_]+)@" + Configs.Me.username, "$1");
                 default: return "";
             }
         }
@@ -383,7 +392,7 @@ namespace DreadBot
             char c = s[0];
             switch (c)
             {
-                case '$': return s.Substring(1);
+                case '$': return s.Substring(1).Replace(@"^([\w_]+)@" + Configs.Me.username, "$1"); ;
                 default: return "";
             }
         }

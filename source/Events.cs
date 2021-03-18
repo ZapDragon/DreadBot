@@ -51,6 +51,10 @@ namespace DreadBot
                     Menus.ButtonPush(update.callback_query); //All DreadBot specific Menus are to be ignored by Plugins.
                     return;
                 }
+                else if (update.callback_query.data.StartsWith("config:"))
+                {
+                    Menus.ConfigMenu(update.callback_query);
+                }
                 Events.OnCallback(update.callback_query);
             }
             else if (update.shipping_query != null) { OnShippingQuery(update.shipping_query); }
@@ -192,6 +196,7 @@ namespace DreadBot
 
         //Internal Event Providers
         public static event Action<DatabaseExportEventArgs> DatabaseExport;
+        public static event Func<long, CallbackButtonRequestArgs> PluginConfigKeyboardRequest;
 
         #endregion
 
@@ -232,7 +237,14 @@ namespace DreadBot
         #region Non-Telegram Event Triggers
 
         //private static void OnDatabaseExport(string[] args) { DatabaseExport?.Invoke(new DatabaseExportEventArgs() { Args = args }); }
-
+        internal static void OnPluginConfigKeyboardRequest(ref InlineKeyboardMarkup keyboard, long chatID) {
+            int row = 0;
+            foreach (Func<long, CallbackButtonRequestArgs> item in PluginConfigKeyboardRequest.GetInvocationList())
+            {
+                CallbackButtonRequestArgs args = item(chatID);
+                keyboard.addCallbackButton(args.text, args.callback, row++);
+            }
+        }
         #endregion
     }
 
@@ -243,6 +255,11 @@ namespace DreadBot
     public class DatabaseExportEventArgs : EventArgs
     {
         string args { get; set; } = "all";
+    }
+    public class CallbackButtonRequestArgs : EventArgs
+    {
+        public string text { get; set; }
+        public string callback { get; set; }
     }
 
     #endregion
