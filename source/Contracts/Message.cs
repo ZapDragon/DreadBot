@@ -41,6 +41,11 @@ namespace DreadBot
 		[DataMember(Name = "from", EmitDefaultValue = false)]
 		public User from { get; set; }
 		/// <summary>
+		/// Optional. Sender of the message, sent on behalf of a chat. The channel itself for channel messages. The supergroup itself for messages from anonymous group administrators. The linked channel for messages automatically forwarded to the discussion group
+		/// </summary>
+		[DataMember(Name = "sender_chat", EmitDefaultValue = false)]
+		public Chat sender_chat { get; set; }
+		/// <summary>
 		/// Date the message was sent in Unix time
 		/// </summary>
 		[DataMember(Name = "date", IsRequired = true)]
@@ -56,7 +61,7 @@ namespace DreadBot
 		[DataMember(Name = "forward_from", EmitDefaultValue = false)]
 		public User forward_from { get; set; }
 		/// <summary>
-		/// Optional. For messages forwarded from channels, information about the original channel
+		/// Optional. For messages forwarded from channels or from anonymous administrators, information about the original sender chat
 		/// </summary>
 		[DataMember(Name = "forward_from_chat", EmitDefaultValue = false)]
 		public Chat forward_from_chat { get; set; }
@@ -86,6 +91,11 @@ namespace DreadBot
 		[DataMember(Name = "reply_to_message", EmitDefaultValue = false)]
 		public Message reply_to_message { get; set; }
 		/// <summary>
+		/// Optional. Bot through which the message was sent
+		/// </summary>
+		[DataMember(Name = "via_bot", EmitDefaultValue = false)]
+		public User via_bot { get; set; }
+		/// <summary>
 		/// Optional. Date the message was last edited in Unix time
 		/// </summary>
 		[DataMember(Name = "edit_date", EmitDefaultValue = false)]
@@ -96,7 +106,7 @@ namespace DreadBot
 		[DataMember(Name = "media_group_id", EmitDefaultValue = false)]
 		public string media_group_id { get; set; }
 		/// <summary>
-		/// Optional. Signature of the post author for messages in channels
+		/// Optional. Signature of the post author for messages in channels, or the custom title of an anonymous group administrator
 		/// </summary>
 		[DataMember(Name = "author_signature", EmitDefaultValue = false)]
 		public string author_signature { get; set; }
@@ -111,10 +121,10 @@ namespace DreadBot
 		[DataMember(Name = "entities", EmitDefaultValue = false)]
 		public MessageEntity[] entities { get; set; }
 		/// <summary>
-		/// Optional. For messages with a caption, special entities like usernames, URLs, bot commands, etc. that appear in the caption
+		/// Optional. Message is an animation, information about the animation. For backward compatibility, when this field is set, the document field will also be set
 		/// </summary>
-		[DataMember(Name = "caption_entities", EmitDefaultValue = false)]
-		public MessageEntity[] caption_entities { get; set; }
+		[DataMember(Name = "animation", EmitDefaultValue = false)]
+		public Animation animation { get; set; }
 		/// <summary>
 		/// Optional. Message is an audio file, information about the file
 		/// </summary>
@@ -125,16 +135,6 @@ namespace DreadBot
 		/// </summary>
 		[DataMember(Name = "document", EmitDefaultValue = false)]
 		public Document document { get; set; }
-		/// <summary>
-		/// Optional. Message is an animation, information about the animation. For backward compatibility, when this field is set, the document field will also be set
-		/// </summary>
-		[DataMember(Name = "animation", EmitDefaultValue = false)]
-		public Animation animation { get; set; }
-		/// <summary>
-		/// Optional. Message is a game, information about the game. More about games »
-		/// </summary>
-		[DataMember(Name = "game", EmitDefaultValue = false)]
-		public Game game { get; set; }
 		/// <summary>
 		/// Optional. Message is a photo, available sizes of the photo
 		/// </summary>
@@ -151,45 +151,55 @@ namespace DreadBot
 		[DataMember(Name = "video", EmitDefaultValue = false)]
 		public Video video { get; set; }
 		/// <summary>
-		/// Optional. Message is a voice message, information about the file
-		/// </summary>
-		[DataMember(Name = "voice", EmitDefaultValue = false)]
-		public Voice voice { get; set; }
-		/// <summary>
 		/// Optional. Message is a video note, information about the video message
 		/// </summary>
 		[DataMember(Name = "video_note", EmitDefaultValue = false)]
 		public VideoNote video_note { get; set; }
+		/// <summary>
+		/// Optional. Message is a voice message, information about the file
+		/// </summary>
+		[DataMember(Name = "voice", EmitDefaultValue = false)]
+		public Voice voice { get; set; }
 		/// <summary>
 		/// Optional. Caption for the animation, audio, document, photo, video or voice, 0-1024 characters
 		/// </summary>
 		[DataMember(Name = "caption", EmitDefaultValue = false)]
 		public string caption { get; set; }
 		/// <summary>
+		/// Optional. For messages with a caption, special entities like usernames, URLs, bot commands, etc. that appear in the caption
+		/// </summary>
+		[DataMember(Name = "caption_entities", EmitDefaultValue = false)]
+		public MessageEntity[] caption_entities { get; set; }
+		/// <summary>
 		/// Optional. Message is a shared contact, information about the contact
 		/// </summary>
 		[DataMember(Name = "contact", EmitDefaultValue = false)]
 		public Contact contact { get; set; }
 		/// <summary>
-		/// Optional. Message is a shared location, information about the location
+		/// Optional. Message is a dice with random value from 1 to 6
 		/// </summary>
-		[DataMember(Name = "location", EmitDefaultValue = false)]
-		public Location location { get; set; }
+		[DataMember(Name = "dice", EmitDefaultValue = false)]
+		public Dice dice { get; set; }
 		/// <summary>
-		/// Optional. Message is a venue, information about the venue
+		/// Optional. Message is a game, information about the game. More about games »
 		/// </summary>
-		[DataMember(Name = "venue", EmitDefaultValue = false)]
-		public Venue venue { get; set; }
+		[DataMember(Name = "game", EmitDefaultValue = false)]
+		public Game game { get; set; }
 		/// <summary>
 		/// Optional. Message is a native poll, information about the poll
 		/// </summary>
 		[DataMember(Name = "poll", EmitDefaultValue = false)]
 		public Poll poll { get; set; }
 		/// <summary>
-		/// Optional. Message is a dice with random value from 1 to 6
+		/// Optional. Message is a venue, information about the venue. For backward compatibility, when this field is set, the location field will also be set
 		/// </summary>
-		[DataMember(Name = "dice", EmitDefaultValue = false)]
-		public Dice dice { get; set; }
+		[DataMember(Name = "venue", EmitDefaultValue = false)]
+		public Venue venue { get; set; }
+		/// <summary>
+		/// Optional. Message is a shared location, information about the location
+		/// </summary>
+		[DataMember(Name = "location", EmitDefaultValue = false)]
+		public Location location { get; set; }
 		/// <summary>
 		/// Optional. New members that were added to the group or supergroup and information about them (the bot itself may be one of these members)
 		/// </summary>
@@ -221,12 +231,12 @@ namespace DreadBot
 		[DataMember(Name = "group_chat_created", EmitDefaultValue = false)]
 		public bool group_chat_created { get; set; }
 		/// <summary>
-		/// Optional. Service message: the supergroup has been created. This field can‘t be received in a message coming through updates, because bot can’t be a member of a supergroup when it is created. It can only be found in reply_to_message if someone replies to a very first message in a directly created supergroup.
+		/// Optional. Service message: the supergroup has been created. This field can't be received in a message coming through updates, because bot can't be a member of a supergroup when it is created. It can only be found in reply_to_message if someone replies to a very first message in a directly created supergroup.
 		/// </summary>
 		[DataMember(Name = "supergroup_chat_created", EmitDefaultValue = false)]
 		public bool supergroup_chat_created { get; set; }
 		/// <summary>
-		/// Optional. Service message: the channel has been created. This field can‘t be received in a message coming through updates, because bot can’t be a member of a channel when it is created. It can only be found in reply_to_message if someone replies to a very first message in a channel.
+		/// Optional. Service message: the channel has been created. This field can't be received in a message coming through updates, because bot can't be a member of a channel when it is created. It can only be found in reply_to_message if someone replies to a very first message in a channel.
 		/// </summary>
 		[DataMember(Name = "channel_chat_created", EmitDefaultValue = false)]
 		public bool channel_chat_created { get; set; }
@@ -265,6 +275,11 @@ namespace DreadBot
 		/// </summary>
 		[DataMember(Name = "passport_data", EmitDefaultValue = false)]
 		public PassportData passport_data { get; set; }
+		/// <summary>
+		/// Optional. Service message. A user in the chat triggered another user's proximity alert while sharing Live Location.
+		/// </summary>
+		[DataMember(Name = "proximity_alert_triggered", EmitDefaultValue = false)]
+		public ProximityAlertTriggered proximity_alert_triggered { get; set; }
 		/// <summary>
 		/// Optional. Inline keyboard attached to the message. login_url buttons are represented as ordinary url buttons.
 		/// </summary>

@@ -25,35 +25,25 @@ using System.Runtime.Serialization;
 namespace DreadBot
 {
 	/// <summary>
-	/// Represents a video to be sent.
+	/// This object represents the content of a service message, sent whenever a user in the chat triggers a proximity alert set by another user.
 	/// </summary>
 	[DataContract]
-	public class InputMediaVideo : InputMedia
+	public class ProximityAlertTriggered
 	{
 		/// <summary>
-		/// Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
+		/// User that triggered the alert
 		/// </summary>
-		[DataMember(Name = "thumb", EmitDefaultValue = false)]
-		public InputFile thumb { get; set; }
+		[DataMember(Name = "traveler", IsRequired = true)]
+		public User traveler { get; set; }
 		/// <summary>
-		/// Optional. Video width
+		/// User that set the alert
 		/// </summary>
-		[DataMember(Name = "width", EmitDefaultValue = false)]
-		public int width { get; set; }
+		[DataMember(Name = "watcher", IsRequired = true)]
+		public User watcher { get; set; }
 		/// <summary>
-		/// Optional. Video height
+		/// The distance between the users
 		/// </summary>
-		[DataMember(Name = "height", EmitDefaultValue = false)]
-		public int height { get; set; }
-		/// <summary>
-		/// Optional. Video duration
-		/// </summary>
-		[DataMember(Name = "duration", EmitDefaultValue = false)]
-		public int duration { get; set; }
-		/// <summary>
-		/// Optional. Pass True, if the uploaded video is suitable for streaming
-		/// </summary>
-		[DataMember(Name = "supports_streaming", EmitDefaultValue = false)]
-		public bool supports_streaming { get; set; }
+		[DataMember(Name = "distance", IsRequired = true)]
+		public int distance { get; set; }
 	}
 }

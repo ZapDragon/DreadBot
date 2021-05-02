@@ -97,6 +97,7 @@
     <Compile Include="Contracts\BotCommand.cs" />
     <Compile Include="Contracts\CallbackQuery.cs" />
     <Compile Include="Contracts\Chat\Chat.cs" />
+    <Compile Include="Contracts\Chat\ChatLocation.cs" />
     <Compile Include="Contracts\Chat\ChatMember.cs" />
     <Compile Include="Contracts\Chat\ChatPermissions.cs" />
     <Compile Include="Contracts\Chat\ChatPhoto.cs" />
@@ -181,6 +182,7 @@
     <Compile Include="Contracts\Poll\Poll.cs" />
     <Compile Include="Contracts\Poll\PollAnswer.cs" />
     <Compile Include="Contracts\Poll\PollOption.cs" />
+    <Compile Include="Contracts\ProximityAlertTriggered.cs" />
     <Compile Include="Contracts\RequestContracts\Requests.cs" />
     <Compile Include="Contracts\ResponseParameters.cs" />
     <Compile Include="Contracts\SpecialContracts.cs" />

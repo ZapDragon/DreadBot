@@ -61,6 +61,11 @@ namespace DreadBot
 		[DataMember(Name = "parse_mode", EmitDefaultValue = false)]
 		public string parse_mode { get; set; }
 		/// <summary>
+		/// Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
+		/// </summary>
+		[DataMember(Name = "caption_entities", EmitDefaultValue = false)]
+		public MessageEntity[] caption_entities { get; set; }
+		/// <summary>
 		/// Optional. Video width
 		/// </summary>
 		[DataMember(Name = "video_width", EmitDefaultValue = false)]

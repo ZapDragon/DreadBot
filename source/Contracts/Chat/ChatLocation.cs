@@ -25,45 +25,20 @@ using System.Runtime.Serialization;
 namespace DreadBot
 {
 	/// <summary>
-	/// This object represents a venue.
+	/// Represents a location to which a chat is connected.
 	/// </summary>
 	[DataContract]
-	public class Venue
+	public class ChatLocation
 	{
 		/// <summary>
-		/// Venue location. Can't be a live location
+		/// The location to which the supergroup is connected. Can't be a live location.
 		/// </summary>
 		[DataMember(Name = "location", IsRequired = true)]
 		public Location location { get; set; }
 		/// <summary>
-		/// Name of the venue
-		/// </summary>
-		[DataMember(Name = "title", IsRequired = true)]
-		public string title { get; set; }
-		/// <summary>
-		/// Address of the venue
+		/// Location address; 1-64 characters, as defined by the chat owner
 		/// </summary>
 		[DataMember(Name = "address", IsRequired = true)]
 		public string address { get; set; }
-		/// <summary>
-		/// Optional. Foursquare identifier of the venue
-		/// </summary>
-		[DataMember(Name = "foursquare_id", EmitDefaultValue = false)]
-		public string foursquare_id { get; set; }
-		/// <summary>
-		/// Optional. Foursquare type of the venue. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)
-		/// </summary>
-		[DataMember(Name = "foursquare_type", EmitDefaultValue = false)]
-		public string foursquare_type { get; set; }
-		/// <summary>
-		/// Optional. Google Places identifier of the venue
-		/// </summary>
-		[DataMember(Name = "google_place_id", EmitDefaultValue = false)]
-		public string google_place_id { get; set; }
-		/// <summary>
-		/// Optional. Google Places type of the venue. (See supported types.)
-		/// </summary>
-		[DataMember(Name = "google_place_type", EmitDefaultValue = false)]
-		public string google_place_type { get; set; }
 	}
 }

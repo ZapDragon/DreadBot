@@ -46,6 +46,11 @@ namespace DreadBot
 		[DataMember(Name = "pending_update_count", IsRequired = true)]
 		public int pending_update_count { get; set; }
 		/// <summary>
+		/// Optional. Currently used webhook IP address
+		/// </summary>
+		[DataMember(Name = "ip_address", EmitDefaultValue = false)]
+		public string ip_address { get; set; }
+		/// <summary>
 		/// Optional. Unix time for the most recent error that happened when trying to deliver an update via webhook
 		/// </summary>
 		[DataMember(Name = "last_error_date", EmitDefaultValue = false)]

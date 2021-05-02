@@ -25,20 +25,15 @@ using System.Runtime.Serialization;
 namespace DreadBot
 {
 	/// <summary>
-	/// This object represents an animated emoji that displays a random value.
+	/// This object represents a unique message identifier.
 	/// </summary>
 	[DataContract]
-	public class Dice
+	public class MessageId
 	{
 		/// <summary>
-		/// Emoji on which the dice throw animation is based
+		/// Unique message identifier
 		/// </summary>
-		[DataMember(Name = "emoji", IsRequired = true)]
-		public string emoji { get; set; }
-		/// <summary>
-		/// Value of the dice, 1-6 for “” and “” base emoji, 1-5 for “” and “” base emoji, 1-64 for “” base emoji
-		/// </summary>
-		[DataMember(Name = "value", IsRequired = true)]
-		public int value { get; set; }
+		[DataMember(Name = "message_id", IsRequired = true)]
+		public long message_id { get; set; }
 	}
 }

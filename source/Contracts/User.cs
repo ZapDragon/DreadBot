@@ -41,17 +41,17 @@ namespace DreadBot
 		[DataMember(Name = "is_bot", IsRequired = true)]
 		public bool is_bot { get; set; }
 		/// <summary>
-		/// User‘s or bot’s first name
+		/// User's or bot's first name
 		/// </summary>
 		[DataMember(Name = "first_name", IsRequired = true)]
 		public string first_name { get; set; }
 		/// <summary>
-		/// Optional. User‘s or bot’s last name
+		/// Optional. User's or bot's last name
 		/// </summary>
 		[DataMember(Name = "last_name", EmitDefaultValue = false)]
 		public string last_name { get; set; }
 		/// <summary>
-		/// Optional. User‘s or bot’s username
+		/// Optional. User's or bot's username
 		/// </summary>
 		[DataMember(Name = "username", EmitDefaultValue = false)]
 		public string username { get; set; }

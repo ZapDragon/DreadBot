@@ -33,6 +33,7 @@ namespace DreadBot
 
                 foreach (Update update in result.result)
                 {
+                    if (updates.ContainsKey(update.update_id)) { continue; }
                     updates.Add(update.update_id, update);
                     if (update.update_id > MainClass.UpdateId) { MainClass.UpdateId = update.update_id; }
                 }

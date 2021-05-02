@@ -46,10 +46,10 @@ namespace DreadBot
 		[DataMember(Name = "custom_title", EmitDefaultValue = false)]
 		public string custom_title { get; set; }
 		/// <summary>
-		/// Optional. Restricted and kicked only. Date when restrictions will be lifted for this user; unix time
+		/// Optional. Owner and administrators only. True, if the user's presence in the chat is hidden
 		/// </summary>
-		[DataMember(Name = "until_date", EmitDefaultValue = false)]
-		public long until_date { get; set; }
+		[DataMember(Name = "is_anonymous", EmitDefaultValue = false)]
+		public bool is_anonymous { get; set; }
 		/// <summary>
 		/// Optional. Administrators only. True, if the bot is allowed to edit administrator privileges of that user
 		/// </summary>
@@ -125,5 +125,10 @@ namespace DreadBot
 		/// </summary>
 		[DataMember(Name = "can_add_web_page_previews", EmitDefaultValue = false)]
 		public bool can_add_web_page_previews { get; set; }
+		/// <summary>
+		/// Optional. Restricted and kicked only. Date when restrictions will be lifted for this user; unix time
+		/// </summary>
+		[DataMember(Name = "until_date", EmitDefaultValue = false)]
+		public long until_date { get; set; }
 	}
 }

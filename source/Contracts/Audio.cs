@@ -56,6 +56,11 @@ namespace DreadBot
 		[DataMember(Name = "title", EmitDefaultValue = false)]
 		public string title { get; set; }
 		/// <summary>
+		/// Optional. Original filename as defined by sender
+		/// </summary>
+		[DataMember(Name = "file_name", EmitDefaultValue = false)]
+		public string file_name { get; set; }
+		/// <summary>
 		/// Optional. MIME type of the file as defined by sender
 		/// </summary>
 		[DataMember(Name = "mime_type", EmitDefaultValue = false)]

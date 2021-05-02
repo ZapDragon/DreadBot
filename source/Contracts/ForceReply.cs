@@ -25,13 +25,13 @@ using System.Runtime.Serialization;
 namespace DreadBot
 {
 	/// <summary>
-	/// Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot‘s message and tapped ’Reply'). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice privacy mode.
+	/// Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot's message and tapped 'Reply'). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice privacy mode.
 	/// </summary>
 	[DataContract]
 	public class ForceReply
 	{
 		/// <summary>
-		/// Shows reply interface to the user, as if they manually selected the bot‘s message and tapped ’Reply'
+		/// Shows reply interface to the user, as if they manually selected the bot's message and tapped 'Reply'
 		/// </summary>
 		[DataMember(Name = "force_reply", IsRequired = true)]
 		public bool force_reply { get; set; }

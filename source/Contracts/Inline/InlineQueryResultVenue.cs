@@ -61,6 +61,16 @@ namespace DreadBot
 		[DataMember(Name = "foursquare_type", EmitDefaultValue = false)]
 		public string foursquare_type { get; set; }
 		/// <summary>
+		/// Optional. Google Places identifier of the venue
+		/// </summary>
+		[DataMember(Name = "google_place_id", EmitDefaultValue = false)]
+		public string google_place_id { get; set; }
+		/// <summary>
+		/// Optional. Google Places type of the venue. (See supported types.)
+		/// </summary>
+		[DataMember(Name = "google_place_type", EmitDefaultValue = false)]
+		public string google_place_type { get; set; }
+		/// <summary>
 		/// Optional. Content of the message to be sent instead of the venue
 		/// </summary>
 		[DataMember(Name = "input_message_content", EmitDefaultValue = false)]

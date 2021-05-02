@@ -40,5 +40,25 @@ namespace DreadBot
 		/// </summary>
 		[DataMember(Name = "latitude", IsRequired = true)]
 		public float latitude { get; set; }
+		/// <summary>
+		/// Optional. The radius of uncertainty for the location, measured in meters; 0-1500
+		/// </summary>
+		[DataMember(Name = "horizontal_accuracy", EmitDefaultValue = false)]
+		public float horizontal_accuracy { get; set; }
+		/// <summary>
+		/// Optional. Time relative to the message sending date, during which the location can be updated, in seconds. For active live locations only.
+		/// </summary>
+		[DataMember(Name = "live_period", EmitDefaultValue = false)]
+		public int live_period { get; set; }
+		/// <summary>
+		/// Optional. The direction in which user is moving, in degrees; 1-360. For active live locations only.
+		/// </summary>
+		[DataMember(Name = "heading", EmitDefaultValue = false)]
+		public int heading { get; set; }
+		/// <summary>
+		/// Optional. Maximum distance for proximity alerts about approaching another chat member, in meters. For sent live locations only.
+		/// </summary>
+		[DataMember(Name = "proximity_alert_radius", EmitDefaultValue = false)]
+		public int proximity_alert_radius { get; set; }
 	}
 }

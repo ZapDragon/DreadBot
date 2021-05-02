@@ -66,6 +66,11 @@ namespace DreadBot
 		[DataMember(Name = "photo", EmitDefaultValue = false)]
 		public ChatPhoto photo { get; set; }
 		/// <summary>
+		/// Optional. Bio of the other party in a private chat. Returned only in getChat.
+		/// </summary>
+		[DataMember(Name = "bio", EmitDefaultValue = false)]
+		public string bio { get; set; }
+		/// <summary>
 		/// Optional. Description, for groups, supergroups and channel chats. Returned only in getChat.
 		/// </summary>
 		[DataMember(Name = "description", EmitDefaultValue = false)]
@@ -76,7 +81,7 @@ namespace DreadBot
 		[DataMember(Name = "invite_link", EmitDefaultValue = false)]
 		public string invite_link { get; set; }
 		/// <summary>
-		/// Optional. Pinned message, for groups, supergroups and channels. Returned only in getChat.
+		/// Optional. The most recent pinned message (by sending date). Returned only in getChat.
 		/// </summary>
 		[DataMember(Name = "pinned_message", EmitDefaultValue = false)]
 		public Message pinned_message { get; set; }
@@ -86,7 +91,7 @@ namespace DreadBot
 		[DataMember(Name = "permissions", EmitDefaultValue = false)]
 		public ChatPermissions permissions { get; set; }
 		/// <summary>
-		/// Optional. For supergroups, the minimum allowed delay between consecutive messages sent by each unprivileged user. Returned only in getChat.
+		/// Optional. For supergroups, the minimum allowed delay between consecutive messages sent by each unpriviledged user. Returned only in getChat.
 		/// </summary>
 		[DataMember(Name = "slow_mode_delay", EmitDefaultValue = false)]
 		public int slow_mode_delay { get; set; }
@@ -100,5 +105,15 @@ namespace DreadBot
 		/// </summary>
 		[DataMember(Name = "can_set_sticker_set", EmitDefaultValue = false)]
 		public bool can_set_sticker_set { get; set; }
+		/// <summary>
+		/// Optional. Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats. This identifier may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier. Returned only in getChat.
+		/// </summary>
+		[DataMember(Name = "linked_chat_id", EmitDefaultValue = false)]
+		public int linked_chat_id { get; set; }
+		/// <summary>
+		/// Optional. For supergroups, the location to which the supergroup is connected. Returned only in getChat.
+		/// </summary>
+		[DataMember(Name = "location", EmitDefaultValue = false)]
+		public ChatLocation location { get; set; }
 	}
 }

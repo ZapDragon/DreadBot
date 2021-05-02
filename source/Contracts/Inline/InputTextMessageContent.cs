@@ -41,6 +41,11 @@ namespace DreadBot
 		[DataMember(Name = "parse_mode", EmitDefaultValue = false)]
 		public string parse_mode { get; set; }
 		/// <summary>
+		/// Optional. List of special entities that appear in message text, which can be specified instead of parse_mode
+		/// </summary>
+		[DataMember(Name = "entities", EmitDefaultValue = false)]
+		public MessageEntity[] entities { get; set; }
+		/// <summary>
 		/// Optional. Disables link previews for links in the sent message
 		/// </summary>
 		[DataMember(Name = "disable_web_page_preview", EmitDefaultValue = false)]

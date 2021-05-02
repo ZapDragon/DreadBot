@@ -61,6 +61,11 @@ namespace DreadBot
 		[DataMember(Name = "thumb", EmitDefaultValue = false)]
 		public PhotoSize thumb { get; set; }
 		/// <summary>
+		/// Optional. Original filename as defined by sender
+		/// </summary>
+		[DataMember(Name = "file_name", EmitDefaultValue = false)]
+		public string file_name { get; set; }
+		/// <summary>
 		/// Optional. Mime type of a file as defined by sender
 		/// </summary>
 		[DataMember(Name = "mime_type", EmitDefaultValue = false)]

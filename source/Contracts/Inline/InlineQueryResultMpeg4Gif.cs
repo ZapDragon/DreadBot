@@ -51,10 +51,15 @@ namespace DreadBot
 		[DataMember(Name = "mpeg4_duration", EmitDefaultValue = false)]
 		public int mpeg4_duration { get; set; }
 		/// <summary>
-		/// URL of the static thumbnail (jpeg or gif) for the result
+		/// URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result
 		/// </summary>
 		[DataMember(Name = "thumb_url", IsRequired = true)]
 		public string thumb_url { get; set; }
+		/// <summary>
+		/// Optional. MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or “video/mp4”. Defaults to “image/jpeg”
+		/// </summary>
+		[DataMember(Name = "thumb_mime_type", EmitDefaultValue = false)]
+		public string thumb_mime_type { get; set; }
 		/// <summary>
 		/// Optional. Title for the result
 		/// </summary>
@@ -70,6 +75,11 @@ namespace DreadBot
 		/// </summary>
 		[DataMember(Name = "parse_mode", EmitDefaultValue = false)]
 		public string parse_mode { get; set; }
+		/// <summary>
+		/// Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
+		/// </summary>
+		[DataMember(Name = "caption_entities", EmitDefaultValue = false)]
+		public MessageEntity[] caption_entities { get; set; }
 		/// <summary>
 		/// Optional. Content of the message to be sent instead of the video animation
 		/// </summary>
