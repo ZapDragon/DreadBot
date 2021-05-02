@@ -14,52 +14,60 @@ namespace DreadBot
             source.initRows(x);
         }
         [Obsolete("addButton is deprecated, use one of the available add___Button's instead.")]
-        public static void addButton(this KeyboardMarkup source, InlineKeyboardButton button, int row)
+        public static KeyboardMarkup addButton(this KeyboardMarkup source, InlineKeyboardButton button, int row)
         {
             source.initRows(row);
             source.Keyboard[row].Add(button);
+            return source;
         }
-        public static void addUrlButton(this KeyboardMarkup source, string Text, string Url, int row)
+        public static KeyboardMarkup addUrlButton(this KeyboardMarkup source, string Text, string Url, int row)
         {
             source.initRows(row);
             InlineKeyboardButton button = new InlineKeyboardButton() { text = Text, url = Url };
             source.Keyboard[row].Add(button);
+            return source;
         }
-        public static void addLoginButton(this KeyboardMarkup source, string Text, LoginUrl Url, int row)
+        public static KeyboardMarkup addLoginButton(this KeyboardMarkup source, string Text, LoginUrl Url, int row)
         {
             source.initRows(row);
             InlineKeyboardButton button = new InlineKeyboardButton() { text = Text, login_url = Url };
             source.Keyboard[row].Add(button);
+            return source;
         }
-        public static void addCallbackButton(this KeyboardMarkup source, string Text, string Callback, int row)
+        public static KeyboardMarkup addCallbackButton(this KeyboardMarkup source, string Text, string Callback, int row)
         {
             source.initRows(row);
             InlineKeyboardButton button = new InlineKeyboardButton() { text = Text, callback_data = Callback };
             source.Keyboard[row].Add(button);
+            return source;
         }
-        public static void addSIQButton(this KeyboardMarkup source, string Text, string siq, int row)
+        public static KeyboardMarkup addSIQButton(this KeyboardMarkup source, string Text, string siq, int row)
         {
             source.initRows(row);
             InlineKeyboardButton button = new InlineKeyboardButton() { text = Text, switch_inline_query = siq };
             source.Keyboard[row].Add(button);
+            return source;
         }
-        public static void addSIQCCButton(this KeyboardMarkup source, string Text, string siq, int row)
+        public static KeyboardMarkup addSIQCCButton(this KeyboardMarkup source, string Text, string siq, int row)
         {
             source.initRows(row);
             InlineKeyboardButton button = new InlineKeyboardButton() { text = Text, switch_inline_query_current_chat = siq };
             source.Keyboard[row].Add(button);
+            return source;
         }
-        public static void addGameButton(this KeyboardMarkup source, string Text, CallbackGame game, int row)
+        public static KeyboardMarkup addGameButton(this KeyboardMarkup source, string Text, CallbackGame game, int row)
         {
             source.initRows(row);
             InlineKeyboardButton button = new InlineKeyboardButton() { text = Text, callback_game = game };
             source.Keyboard[row].Add(button);
+            return source;
         }
-        public static void addPayButton(this KeyboardMarkup source, string Text)
+        public static KeyboardMarkup addPayButton(this KeyboardMarkup source, string Text)
         {
             source.initRows(0);
             InlineKeyboardButton button = new InlineKeyboardButton() { text = Text, pay = true };
             source.Keyboard[0].Insert(0, button);
+            return source;
 
         }
         private static void initRows(this KeyboardMarkup source, int row)

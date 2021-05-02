@@ -396,6 +396,22 @@ namespace DreadBot
     }
 
     [DataContract]
+    public class RestrictChatMemberRequest
+    {
+        [DataMember(Name = "chat_id", IsRequired = true)]
+        public long chat_id { get; set; }
+
+        [DataMember(Name = "user_id", IsRequired = true)]
+        public long user_id { get; set; }
+
+        [DataMember(Name = "permissions", IsRequired = true)]
+        public ChatPermissions permissions { get; set; }
+
+        [DataMember(Name = "until_date", IsRequired = false)]
+        public int until_date { get; set; }
+    }
+
+    [DataContract]
     public class AnswerCallBackRequest
     {
         [DataMember(Name = "callback_query_id", IsRequired = true)]

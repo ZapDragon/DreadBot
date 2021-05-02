@@ -28,7 +28,10 @@ namespace DreadBot
 
                 if (result == null || !result.ok || result.result.Length < 1) {
                     if (MainClass.UpdateId > 0) { return null; }
-                    else { continue; }
+                    else {
+                        Thread.Sleep(1000);
+                        continue; 
+                    }
                 }
 
                 foreach (Update update in result.result)
