@@ -370,6 +370,7 @@ namespace DreadBot
 
         public static string isCommand(string s)
         {
+            if (String.IsNullOrEmpty(s)) { return ""; }
             char c = s[0];
             switch (c)
             {
@@ -380,6 +381,7 @@ namespace DreadBot
         }
         public static string isAdminCommand(string s)
         {
+            if (String.IsNullOrEmpty(s)) { return ""; }
             char c = s[0];
             switch (c)
             {
