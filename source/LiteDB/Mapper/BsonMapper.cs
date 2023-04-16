@@ -241,7 +241,9 @@ namespace LiteDB
             var idAttr = typeof(BsonIdAttribute);
             var ignoreAttr = typeof(BsonIgnoreAttribute);
             var fieldAttr = typeof(BsonFieldAttribute);
+#pragma warning disable CS0618 // Type or member is obsolete
             var indexAttr = typeof(BsonIndexAttribute);
+#pragma warning restore CS0618 // Type or member is obsolete
             var dbrefAttr = typeof(BsonRefAttribute);
 
             var members = this.GetTypeMembers(type);

@@ -144,8 +144,7 @@ namespace DreadBot
         private static bool CommandParser(Update update)
         {
             string[] args = update.message.text.Trim().Split(' ');
-            string cmd = "";
-            cmd = Utilities.isAdminCommand(args[0]);
+            string cmd = Utilities.isAdminCommand(args[0]);
             if (cmd != "")
             {
                 if (!Utilities.isBotAdmin(update.message.from)) { return false; }
