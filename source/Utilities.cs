@@ -383,8 +383,8 @@ namespace DreadBot
             char c = s[0];
             switch (c)
             {
-                case '!': return Regex.Replace(s, @"^!([\w_]+)@" + Configs.Me.username, "$1");
-                case '/': return Regex.Replace(s, @"^\/([\w_]+)@" + Configs.Me.username, "$1");
+                case '!': return Regex.Replace(s, @"^!([\w_]+)(@" + Configs.Me.username + ")?", "$1");
+                case '/': return Regex.Replace(s, @"^\/([\w_]+)(@" + Configs.Me.username + ")?", "$1");
                 default: return "";
             }
         }
