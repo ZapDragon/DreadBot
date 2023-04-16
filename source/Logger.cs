@@ -47,7 +47,7 @@ namespace DreadBot
                 case LogLevel.Admin: { Console.ForegroundColor = ConsoleColor.DarkCyan; break; }
             }
 
-            if (CurrentLogLevel >= level) { System.IO.File.AppendAllText(@"log.txt", "[" + level + "] " + text); }
+            if (CurrentLogLevel >= level) { System.IO.File.AppendAllText(@"log.txt", "[" + level + "] " + text + "\r\n"); }
             if (CurrentConsoleLevel >= level) { Console.WriteLine("[" + level + "] " + text); }
             Console.ResetColor();
         }
