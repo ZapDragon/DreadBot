@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2020]
+//Copyright(c) [2023]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -31,7 +31,7 @@ namespace DreadBot
 	public class User
 	{
 		/// <summary>
-		/// Unique identifier for this user or bot
+		/// Unique identifier for this user or bot. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.
 		/// </summary>
 		[DataMember(Name = "id", IsRequired = true)]
 		public long id { get; set; }
@@ -60,6 +60,16 @@ namespace DreadBot
 		/// </summary>
 		[DataMember(Name = "language_code", EmitDefaultValue = false)]
 		public string language_code { get; set; }
+		/// <summary>
+		/// Optional. True, if this user is a Telegram Premium user
+		/// </summary>
+		[DataMember(Name = "is_premium", EmitDefaultValue = false)]
+		public bool is_premium { get; set; }
+		/// <summary>
+		/// Optional. True, if this user added the bot to the attachment menu
+		/// </summary>
+		[DataMember(Name = "added_to_attachment_menu", EmitDefaultValue = false)]
+		public bool added_to_attachment_menu { get; set; }
 		/// <summary>
 		/// Optional. True, if the bot can be invited to groups. Returned only in getMe.
 		/// </summary>

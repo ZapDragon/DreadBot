@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2020]
+//Copyright(c) [2023]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -36,12 +36,12 @@ namespace DreadBot
 		[DataMember(Name = "video_url", IsRequired = true)]
 		public string video_url { get; set; }
 		/// <summary>
-		/// Mime type of the content of video url, “text/html” or “video/mp4”
+		/// MIME type of the content of the video URL, “text/html” or “video/mp4”
 		/// </summary>
 		[DataMember(Name = "mime_type", IsRequired = true)]
 		public string mime_type { get; set; }
 		/// <summary>
-		/// URL of the thumbnail (jpeg only) for the video
+		/// URL of the thumbnail (JPEG only) for the video
 		/// </summary>
 		[DataMember(Name = "thumb_url", IsRequired = true)]
 		public string thumb_url { get; set; }
@@ -64,7 +64,7 @@ namespace DreadBot
 		/// Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
 		/// </summary>
 		[DataMember(Name = "caption_entities", EmitDefaultValue = false)]
-		public MessageEntity[] caption_entities { get; set; }
+		public Array<MessageEntity> caption_entities { get; set; }
 		/// <summary>
 		/// Optional. Video width
 		/// </summary>

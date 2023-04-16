@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2020]
+//Copyright(c) [2023]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -31,7 +31,7 @@ namespace DreadBot
 	public class InlineQueryResultMpeg4Gif : InlineQueryResult
 	{
 		/// <summary>
-		/// A valid URL for the MP4 file. File size must not exceed 1MB
+		/// A valid URL for the MPEG4 file. File size must not exceed 1MB
 		/// </summary>
 		[DataMember(Name = "mpeg4_url", IsRequired = true)]
 		public string mpeg4_url { get; set; }
@@ -46,7 +46,7 @@ namespace DreadBot
 		[DataMember(Name = "mpeg4_height", EmitDefaultValue = false)]
 		public int mpeg4_height { get; set; }
 		/// <summary>
-		/// Optional. Video duration
+		/// Optional. Video duration in seconds
 		/// </summary>
 		[DataMember(Name = "mpeg4_duration", EmitDefaultValue = false)]
 		public int mpeg4_duration { get; set; }
@@ -79,7 +79,7 @@ namespace DreadBot
 		/// Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
 		/// </summary>
 		[DataMember(Name = "caption_entities", EmitDefaultValue = false)]
-		public MessageEntity[] caption_entities { get; set; }
+		public Array<MessageEntity> caption_entities { get; set; }
 		/// <summary>
 		/// Optional. Content of the message to be sent instead of the video animation
 		/// </summary>

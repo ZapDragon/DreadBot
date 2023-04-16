@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2020]
+//Copyright(c) [2023]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -36,12 +36,17 @@ namespace DreadBot
 		[DataMember(Name = "message_id", IsRequired = true)]
 		public long message_id { get; set; }
 		/// <summary>
-		/// Optional. Sender, empty for messages sent to channels
+		/// Optional. Unique identifier of a message thread to which the message belongs; for supergroups only
+		/// </summary>
+		[DataMember(Name = "message_thread_id", EmitDefaultValue = false)]
+		public int message_thread_id { get; set; }
+		/// <summary>
+		/// Optional. Sender of the message; empty for messages sent to channels. For backward compatibility, the field contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat.
 		/// </summary>
 		[DataMember(Name = "from", EmitDefaultValue = false)]
 		public User from { get; set; }
 		/// <summary>
-		/// Optional. Sender of the message, sent on behalf of a chat. The channel itself for channel messages. The supergroup itself for messages from anonymous group administrators. The linked channel for messages automatically forwarded to the discussion group
+		/// Optional. Sender of the message, sent on behalf of a chat. For example, the channel itself for channel posts, the supergroup itself for messages from anonymous group administrators, the linked channel for messages automatically forwarded to the discussion group. For backward compatibility, the field from contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat.
 		/// </summary>
 		[DataMember(Name = "sender_chat", EmitDefaultValue = false)]
 		public Chat sender_chat { get; set; }
@@ -71,7 +76,7 @@ namespace DreadBot
 		[DataMember(Name = "forward_from_message_id", EmitDefaultValue = false)]
 		public long forward_from_message_id { get; set; }
 		/// <summary>
-		/// Optional. For messages forwarded from channels, signature of the post author if present
+		/// Optional. For forwarded messages that were originally sent in channels or by an anonymous chat administrator, signature of the message sender if present
 		/// </summary>
 		[DataMember(Name = "forward_signature", EmitDefaultValue = false)]
 		public string forward_signature { get; set; }
@@ -85,6 +90,16 @@ namespace DreadBot
 		/// </summary>
 		[DataMember(Name = "forward_date", EmitDefaultValue = false)]
 		public long forward_date { get; set; }
+		/// <summary>
+		/// Optional. True, if the message is sent to a forum topic
+		/// </summary>
+		[DataMember(Name = "is_topic_message", EmitDefaultValue = false)]
+		public bool is_topic_message { get; set; }
+		/// <summary>
+		/// Optional. True, if the message is a channel post that was automatically forwarded to the connected discussion group
+		/// </summary>
+		[DataMember(Name = "is_automatic_forward", EmitDefaultValue = false)]
+		public bool is_automatic_forward { get; set; }
 		/// <summary>
 		/// Optional. For replies, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
 		/// </summary>
@@ -101,6 +116,11 @@ namespace DreadBot
 		[DataMember(Name = "edit_date", EmitDefaultValue = false)]
 		public long edit_date { get; set; } = 0;
 		/// <summary>
+		/// Optional. True, if the message can't be forwarded
+		/// </summary>
+		[DataMember(Name = "has_protected_content", EmitDefaultValue = false)]
+		public bool has_protected_content { get; set; }
+		/// <summary>
 		/// Optional. The unique identifier of a media message group this message belongs to
 		/// </summary>
 		[DataMember(Name = "media_group_id", EmitDefaultValue = false)]
@@ -111,7 +131,7 @@ namespace DreadBot
 		[DataMember(Name = "author_signature", EmitDefaultValue = false)]
 		public string author_signature { get; set; }
 		/// <summary>
-		/// Optional. For text messages, the actual UTF-8 text of the message, 0-4096 characters
+		/// Optional. For text messages, the actual UTF-8 text of the message
 		/// </summary>
 		[DataMember(Name = "text", EmitDefaultValue = false)]
 		public string text { get; set; }
@@ -119,7 +139,7 @@ namespace DreadBot
 		/// Optional. For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text
 		/// </summary>
 		[DataMember(Name = "entities", EmitDefaultValue = false)]
-		public MessageEntity[] entities { get; set; }
+		public Array<MessageEntity> entities { get; set; }
 		/// <summary>
 		/// Optional. Message is an animation, information about the animation. For backward compatibility, when this field is set, the document field will also be set
 		/// </summary>
@@ -139,7 +159,7 @@ namespace DreadBot
 		/// Optional. Message is a photo, available sizes of the photo
 		/// </summary>
 		[DataMember(Name = "photo", EmitDefaultValue = false)]
-		public PhotoSize[] photo { get; set; }
+		public Array<PhotoSize> photo { get; set; }
 		/// <summary>
 		/// Optional. Message is a sticker, information about the sticker
 		/// </summary>
@@ -161,7 +181,7 @@ namespace DreadBot
 		[DataMember(Name = "voice", EmitDefaultValue = false)]
 		public Voice voice { get; set; }
 		/// <summary>
-		/// Optional. Caption for the animation, audio, document, photo, video or voice, 0-1024 characters
+		/// Optional. Caption for the animation, audio, document, photo, video or voice
 		/// </summary>
 		[DataMember(Name = "caption", EmitDefaultValue = false)]
 		public string caption { get; set; }
@@ -169,14 +189,14 @@ namespace DreadBot
 		/// Optional. For messages with a caption, special entities like usernames, URLs, bot commands, etc. that appear in the caption
 		/// </summary>
 		[DataMember(Name = "caption_entities", EmitDefaultValue = false)]
-		public MessageEntity[] caption_entities { get; set; }
+		public Array<MessageEntity> caption_entities { get; set; }
 		/// <summary>
 		/// Optional. Message is a shared contact, information about the contact
 		/// </summary>
 		[DataMember(Name = "contact", EmitDefaultValue = false)]
 		public Contact contact { get; set; }
 		/// <summary>
-		/// Optional. Message is a dice with random value from 1 to 6
+		/// Optional. Message is a dice with random value
 		/// </summary>
 		[DataMember(Name = "dice", EmitDefaultValue = false)]
 		public Dice dice { get; set; }
@@ -204,7 +224,7 @@ namespace DreadBot
 		/// Optional. New members that were added to the group or supergroup and information about them (the bot itself may be one of these members)
 		/// </summary>
 		[DataMember(Name = "new_chat_members", EmitDefaultValue = false)]
-		public User[] new_chat_members { get; set; }
+		public Array<User> new_chat_members { get; set; }
 		/// <summary>
 		/// Optional. A member was removed from the group, information about them (this member may be the bot itself)
 		/// </summary>
@@ -219,7 +239,7 @@ namespace DreadBot
 		/// Optional. A chat photo was change to this value
 		/// </summary>
 		[DataMember(Name = "new_chat_photo", EmitDefaultValue = false)]
-		public PhotoSize[] new_chat_photo { get; set; }
+		public Array<PhotoSize> new_chat_photo { get; set; }
 		/// <summary>
 		/// Optional. Service message: the chat photo was deleted
 		/// </summary>
@@ -241,12 +261,17 @@ namespace DreadBot
 		[DataMember(Name = "channel_chat_created", EmitDefaultValue = false)]
 		public bool channel_chat_created { get; set; }
 		/// <summary>
-		/// Optional. The group has been migrated to a supergroup with the specified identifier. This number may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
+		/// Optional. Service message: auto-delete timer settings changed in the chat
+		/// </summary>
+		[DataMember(Name = "message_auto_delete_timer_changed", EmitDefaultValue = false)]
+		public MessageAutoDeleteTimerChanged message_auto_delete_timer_changed { get; set; }
+		/// <summary>
+		/// Optional. The group has been migrated to a supergroup with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
 		/// </summary>
 		[DataMember(Name = "migrate_to_chat_id", EmitDefaultValue = false)]
 		public long migrate_to_chat_id { get; set; } = 0;
 		/// <summary>
-		/// Optional. The supergroup has been migrated from a group with the specified identifier. This number may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
+		/// Optional. The supergroup has been migrated from a group with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
 		/// </summary>
 		[DataMember(Name = "migrate_from_chat_id", EmitDefaultValue = false)]
 		public long migrate_from_chat_id { get; set; } = 0;
@@ -280,6 +305,46 @@ namespace DreadBot
 		/// </summary>
 		[DataMember(Name = "proximity_alert_triggered", EmitDefaultValue = false)]
 		public ProximityAlertTriggered proximity_alert_triggered { get; set; }
+		/// <summary>
+		/// Optional. Service message: forum topic created
+		/// </summary>
+		[DataMember(Name = "forum_topic_created", EmitDefaultValue = false)]
+		public ForumTopicCreated forum_topic_created { get; set; }
+		/// <summary>
+		/// Optional. Service message: forum topic closed
+		/// </summary>
+		[DataMember(Name = "forum_topic_closed", EmitDefaultValue = false)]
+		public ForumTopicClosed forum_topic_closed { get; set; }
+		/// <summary>
+		/// Optional. Service message: forum topic reopened
+		/// </summary>
+		[DataMember(Name = "forum_topic_reopened", EmitDefaultValue = false)]
+		public ForumTopicReopened forum_topic_reopened { get; set; }
+		/// <summary>
+		/// Optional. Service message: video chat scheduled
+		/// </summary>
+		[DataMember(Name = "video_chat_scheduled", EmitDefaultValue = false)]
+		public VideoChatScheduled video_chat_scheduled { get; set; }
+		/// <summary>
+		/// Optional. Service message: video chat started
+		/// </summary>
+		[DataMember(Name = "video_chat_started", EmitDefaultValue = false)]
+		public VideoChatStarted video_chat_started { get; set; }
+		/// <summary>
+		/// Optional. Service message: video chat ended
+		/// </summary>
+		[DataMember(Name = "video_chat_ended", EmitDefaultValue = false)]
+		public VideoChatEnded video_chat_ended { get; set; }
+		/// <summary>
+		/// Optional. Service message: new participants invited to a video chat
+		/// </summary>
+		[DataMember(Name = "video_chat_participants_invited", EmitDefaultValue = false)]
+		public VideoChatParticipantsInvited video_chat_participants_invited { get; set; }
+		/// <summary>
+		/// Optional. Service message: data sent by a Web App
+		/// </summary>
+		[DataMember(Name = "web_app_data", EmitDefaultValue = false)]
+		public WebAppData web_app_data { get; set; }
 		/// <summary>
 		/// Optional. Inline keyboard attached to the message. login_url buttons are represented as ordinary url buttons.
 		/// </summary>

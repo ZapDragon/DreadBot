@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2020]
+//Copyright(c) [2023]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -56,7 +56,7 @@ namespace DreadBot
 		[DataMember(Name = "thumb", EmitDefaultValue = false)]
 		public PhotoSize thumb { get; set; }
 		/// <summary>
-		/// Optional. File size
+		/// Optional. File size in bytes
 		/// </summary>
 		[DataMember(Name = "file_size", EmitDefaultValue = false)]
 		public long file_size { get; set; }

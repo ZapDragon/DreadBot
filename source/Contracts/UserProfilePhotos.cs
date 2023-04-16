@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2020]
+//Copyright(c) [2023]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -39,6 +39,6 @@ namespace DreadBot
 		/// Requested profile pictures (in up to 4 sizes each)
 		/// </summary>
 		[DataMember(Name = "photos", IsRequired = true)]
-		public PhotoSize[][] photos { get; set; }
+		public Array<Array<PhotoSize>> photos { get; set; }
 	}
 }

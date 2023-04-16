@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2020]
+//Copyright(c) [2023]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -54,7 +54,7 @@ namespace DreadBot
 		/// Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
 		/// </summary>
 		[DataMember(Name = "caption_entities", EmitDefaultValue = false)]
-		public MessageEntity[] caption_entities { get; set; }
+		public Array<MessageEntity> caption_entities { get; set; }
 		/// <summary>
 		/// Optional. Recording duration in seconds
 		/// </summary>

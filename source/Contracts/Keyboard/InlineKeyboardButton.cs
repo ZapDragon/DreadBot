@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2020]
+//Copyright(c) [2023]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -36,27 +36,32 @@ namespace DreadBot
 		[DataMember(Name = "text", IsRequired = true)]
 		public string text { get; set; }
 		/// <summary>
-		/// Optional. HTTP or tg:// url to be opened when button is pressed
+		/// Optional. HTTP or tg:// URL to be opened when the button is pressed. Links tg://user?id=<user_id> can be used to mention a user by their ID without using a username, if this is allowed by their privacy settings.
 		/// </summary>
 		[DataMember(Name = "url", EmitDefaultValue = false)]
 		public string url { get; set; }
-		/// <summary>
-		/// Optional. An HTTP URL used to automatically authorize the user. Can be used as a replacement for the Telegram Login Widget.
-		/// </summary>
-		[DataMember(Name = "login_url", EmitDefaultValue = false)]
-		public LoginUrl login_url { get; set; }
 		/// <summary>
 		/// Optional. Data to be sent in a callback query to the bot when button is pressed, 1-64 bytes
 		/// </summary>
 		[DataMember(Name = "callback_data", EmitDefaultValue = false)]
 		public string callback_data { get; set; }
 		/// <summary>
-		/// Optional. If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot's username and the specified inline query in the input field. Can be empty, in which case just the bot's username will be inserted.Note: This offers an easy way for users to start using your bot in inline mode when they are currently in a private chat with it. Especially useful when combined with switch_pm… actions – in this case the user will be automatically returned to the chat they switched from, skipping the chat selection screen.
+		/// Optional. Description of the Web App that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method answerWebAppQuery. Available only in private chats between a user and the bot.
+		/// </summary>
+		[DataMember(Name = "web_app", EmitDefaultValue = false)]
+		public WebAppInfo web_app { get; set; }
+		/// <summary>
+		/// Optional. An HTTPS URL used to automatically authorize the user. Can be used as a replacement for the Telegram Login Widget.
+		/// </summary>
+		[DataMember(Name = "login_url", EmitDefaultValue = false)]
+		public LoginUrl login_url { get; set; }
+		/// <summary>
+		/// Optional. If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot's username and the specified inline query in the input field. May be empty, in which case just the bot's username will be inserted.Note: This offers an easy way for users to start using your bot in inline mode when they are currently in a private chat with it. Especially useful when combined with switch_pm… actions - in this case the user will be automatically returned to the chat they switched from, skipping the chat selection screen.
 		/// </summary>
 		[DataMember(Name = "switch_inline_query", EmitDefaultValue = false)]
 		public string switch_inline_query { get; set; }
 		/// <summary>
-		/// Optional. If set, pressing the button will insert the bot's username and the specified inline query in the current chat's input field. Can be empty, in which case only the bot's username will be inserted.This offers a quick way for the user to open your bot in inline mode in the same chat – good for selecting something from multiple options.
+		/// Optional. If set, pressing the button will insert the bot's username and the specified inline query in the current chat's input field. May be empty, in which case only the bot's username will be inserted.This offers a quick way for the user to open your bot in inline mode in the same chat - good for selecting something from multiple options.
 		/// </summary>
 		[DataMember(Name = "switch_inline_query_current_chat", EmitDefaultValue = false)]
 		public string switch_inline_query_current_chat { get; set; }
@@ -66,7 +71,7 @@ namespace DreadBot
 		[DataMember(Name = "callback_game", EmitDefaultValue = false)]
 		public CallbackGame callback_game { get; set; }
 		/// <summary>
-		/// Optional. Specify True, to send a Pay button.NOTE: This type of button must always be the first button in the first row.
+		/// Optional. Specify True, to send a Pay button.NOTE: This type of button must always be the first button in the first row and can only be used in invoice messages.
 		/// </summary>
 		[DataMember(Name = "pay", EmitDefaultValue = false)]
 		public bool pay { get; set; }

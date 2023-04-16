@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2020]
+//Copyright(c) [2023]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -31,7 +31,7 @@ namespace DreadBot
 	public class MessageEntity
 	{
 		/// <summary>
-		/// Type of the entity. Can be “mention” (@username), “hashtag” (#hashtag), “cashtag” ($USD), “bot_command” (/start@jobs_bot), “url” (https://telegram.org), “email” (do-not-reply@telegram.org), “phone_number” (+1-212-555-0123), “bold” (bold text), “italic” (italic text), “underline” (underlined text), “strikethrough” (strikethrough text), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users without usernames)
+		/// Type of the entity. Currently, can be “mention” (@username), “hashtag” (#hashtag), “cashtag” ($USD), “bot_command” (/start@jobs_bot), “url” (https://telegram.org), “email” (do-not-reply@telegram.org), “phone_number” (+1-212-555-0123), “bold” (bold text), “italic” (italic text), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users without usernames), “custom_emoji” (for inline custom emoji stickers)
 		/// </summary>
 		[DataMember(Name = "type", IsRequired = true)]
 		public string type { get; set; }
@@ -46,7 +46,7 @@ namespace DreadBot
 		[DataMember(Name = "length", IsRequired = true)]
 		public int length { get; set; }
 		/// <summary>
-		/// Optional. For “text_link” only, url that will be opened after user taps on the text
+		/// Optional. For “text_link” only, URL that will be opened after user taps on the text
 		/// </summary>
 		[DataMember(Name = "url", EmitDefaultValue = false)]
 		public string url { get; set; }
@@ -60,5 +60,10 @@ namespace DreadBot
 		/// </summary>
 		[DataMember(Name = "language", EmitDefaultValue = false)]
 		public string language { get; set; }
+		/// <summary>
+		/// Optional. For “custom_emoji” only, unique identifier of the custom emoji. Use getCustomEmojiStickers to get full information about the sticker
+		/// </summary>
+		[DataMember(Name = "custom_emoji_id", EmitDefaultValue = false)]
+		public string custom_emoji_id { get; set; }
 	}
 }

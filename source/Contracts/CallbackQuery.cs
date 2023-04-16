@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2020]
+//Copyright(c) [2023]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -56,7 +56,7 @@ namespace DreadBot
 		[DataMember(Name = "chat_instance", IsRequired = true)]
 		public string chat_instance { get; set; }
 		/// <summary>
-		/// Optional. Data associated with the callback button. Be aware that a bad client can send arbitrary data in this field.
+		/// Optional. Data associated with the callback button. Be aware that the message originated the query can contain no callback buttons with this data.
 		/// </summary>
 		[DataMember(Name = "data", EmitDefaultValue = false)]
 		public string data { get; set; }

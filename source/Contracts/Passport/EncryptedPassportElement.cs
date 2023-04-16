@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2020]
+//Copyright(c) [2023]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,7 +25,7 @@ using System.Runtime.Serialization;
 namespace DreadBot
 {
 	/// <summary>
-	/// Contains information about documents or other Telegram Passport elements shared with the bot by the user.
+	/// Describes documents or other Telegram Passport elements shared with the bot by the user.
 	/// </summary>
 	[DataContract]
 	public class EncryptedPassportElement
@@ -54,7 +54,7 @@ namespace DreadBot
 		/// Optional. Array of encrypted files with documents provided by the user, available for “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration” types. Files can be decrypted and verified using the accompanying EncryptedCredentials.
 		/// </summary>
 		[DataMember(Name = "files", EmitDefaultValue = false)]
-		public PassportFile[] files { get; set; }
+		public Array<PassportFile> files { get; set; }
 		/// <summary>
 		/// Optional. Encrypted file with the front side of the document, provided by the user. Available for “passport”, “driver_license”, “identity_card” and “internal_passport”. The file can be decrypted and verified using the accompanying EncryptedCredentials.
 		/// </summary>
@@ -74,7 +74,7 @@ namespace DreadBot
 		/// Optional. Array of encrypted files with translated versions of documents provided by the user. Available if requested for “passport”, “driver_license”, “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration” types. Files can be decrypted and verified using the accompanying EncryptedCredentials.
 		/// </summary>
 		[DataMember(Name = "translation", EmitDefaultValue = false)]
-		public PassportFile[] translation { get; set; }
+		public Array<PassportFile> translation { get; set; }
 		/// <summary>
 		/// Base64-encoded element hash for using in PassportElementErrorUnspecified
 		/// </summary>

@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2020]
+//Copyright(c) [2023]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -31,7 +31,7 @@ namespace DreadBot
 	public class InlineQueryResultPhoto : InlineQueryResult
 	{
 		/// <summary>
-		/// A valid URL of the photo. Photo must be in jpeg format. Photo size must not exceed 5MB
+		/// A valid URL of the photo. Photo must be in JPEG format. Photo size must not exceed 5MB
 		/// </summary>
 		[DataMember(Name = "photo_url", IsRequired = true)]
 		public string photo_url { get; set; }
@@ -74,7 +74,7 @@ namespace DreadBot
 		/// Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
 		/// </summary>
 		[DataMember(Name = "caption_entities", EmitDefaultValue = false)]
-		public MessageEntity[] caption_entities { get; set; }
+		public Array<MessageEntity> caption_entities { get; set; }
 		/// <summary>
 		/// Optional. Content of the message to be sent instead of the photo
 		/// </summary>

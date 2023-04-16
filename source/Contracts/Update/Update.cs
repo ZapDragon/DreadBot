@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2020]
+//Copyright(c) [2023]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -31,12 +31,12 @@ namespace DreadBot
 	public class Update
 	{
 		/// <summary>
-		/// The update's unique identifier. Update identifiers start from a certain positive number and increase sequentially. This ID becomes especially handy if you're using Webhooks, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order. If there are no new updates for at least a week, then identifier of the next update will be chosen randomly instead of sequentially.
+		/// The update's unique identifier. Update identifiers start from a certain positive number and increase sequentially. This ID becomes especially handy if you're using webhooks, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order. If there are no new updates for at least a week, then identifier of the next update will be chosen randomly instead of sequentially.
 		/// </summary>
 		[DataMember(Name = "update_id", IsRequired = true)]
 		public long update_id { get; set; }
 		/// <summary>
-		/// Optional. New incoming message of any kind — text, photo, sticker, etc.
+		/// Optional. New incoming message of any kind - text, photo, sticker, etc.
 		/// </summary>
 		[DataMember(Name = "message", EmitDefaultValue = false)]
 		public Message message { get; set; }
@@ -46,7 +46,7 @@ namespace DreadBot
 		[DataMember(Name = "edited_message", EmitDefaultValue = false)]
 		public Message edited_message { get; set; }
 		/// <summary>
-		/// Optional. New incoming channel post of any kind — text, photo, sticker, etc.
+		/// Optional. New incoming channel post of any kind - text, photo, sticker, etc.
 		/// </summary>
 		[DataMember(Name = "channel_post", EmitDefaultValue = false)]
 		public Message channel_post { get; set; }
@@ -90,5 +90,20 @@ namespace DreadBot
 		/// </summary>
 		[DataMember(Name = "poll_answer", EmitDefaultValue = false)]
 		public PollAnswer poll_answer { get; set; }
+		/// <summary>
+		/// Optional. The bot's chat member status was updated in a chat. For private chats, this update is received only when the bot is blocked or unblocked by the user.
+		/// </summary>
+		[DataMember(Name = "my_chat_member", EmitDefaultValue = false)]
+		public ChatMemberUpdated my_chat_member { get; set; }
+		/// <summary>
+		/// Optional. A chat member's status was updated in a chat. The bot must be an administrator in the chat and must explicitly specify “chat_member” in the list of allowed_updates to receive these updates.
+		/// </summary>
+		[DataMember(Name = "chat_member", EmitDefaultValue = false)]
+		public ChatMemberUpdated chat_member { get; set; }
+		/// <summary>
+		/// Optional. A request to join the chat has been sent. The bot must have the can_invite_users administrator right in the chat to receive these updates.
+		/// </summary>
+		[DataMember(Name = "chat_join_request", EmitDefaultValue = false)]
+		public ChatJoinRequest chat_join_request { get; set; }
 	}
 }

@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2020]
+//Copyright(c) [2023]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,7 +25,7 @@ using System.Runtime.Serialization;
 namespace DreadBot
 {
 	/// <summary>
-	/// Contains information about Telegram Passport data shared with the bot by the user.
+	/// Describes Telegram Passport data shared with the bot by the user.
 	/// </summary>
 	[DataContract]
 	public class PassportData
@@ -34,7 +34,7 @@ namespace DreadBot
 		/// Array with information about documents and other Telegram Passport elements that was shared with the bot
 		/// </summary>
 		[DataMember(Name = "data", IsRequired = true)]
-		public EncryptedPassportElement[] data { get; set; }
+		public Array<EncryptedPassportElement> data { get; set; }
 		/// <summary>
 		/// Encrypted credentials required to decrypt the data
 		/// </summary>

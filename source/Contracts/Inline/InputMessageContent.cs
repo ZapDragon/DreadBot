@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2020]
+//Copyright(c) [2023]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,7 +25,7 @@ using System.Runtime.Serialization;
 namespace DreadBot
 {
 	/// <summary>
-	/// This object represents the content of a message to be sent as a result of an inline query. Telegram clients currently support the following 4 types:
+	/// This object represents the content of a message to be sent as a result of an inline query. Telegram clients currently support the following 5 types:
 	/// </summary>
 	[DataContract]
 	public class InputMessageContent

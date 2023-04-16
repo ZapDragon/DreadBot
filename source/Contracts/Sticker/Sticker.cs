@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2020]
+//Copyright(c) [2023]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -41,6 +41,11 @@ namespace DreadBot
 		[DataMember(Name = "file_unique_id", IsRequired = true)]
 		public string file_unique_id { get; set; }
 		/// <summary>
+		/// Type of the sticker, currently one of “regular”, “mask”, “custom_emoji”. The type of the sticker is independent from its format, which is determined by the fields is_animated and is_video.
+		/// </summary>
+		[DataMember(Name = "type", IsRequired = true)]
+		public string type { get; set; }
+		/// <summary>
 		/// Sticker width
 		/// </summary>
 		[DataMember(Name = "width", IsRequired = true)]
@@ -55,6 +60,11 @@ namespace DreadBot
 		/// </summary>
 		[DataMember(Name = "is_animated", IsRequired = true)]
 		public bool is_animated { get; set; }
+		/// <summary>
+		/// True, if the sticker is a video sticker
+		/// </summary>
+		[DataMember(Name = "is_video", IsRequired = true)]
+		public bool is_video { get; set; }
 		/// <summary>
 		/// Optional. Sticker thumbnail in the .WEBP or .JPG format
 		/// </summary>
@@ -71,12 +81,22 @@ namespace DreadBot
 		[DataMember(Name = "set_name", EmitDefaultValue = false)]
 		public string set_name { get; set; }
 		/// <summary>
+		/// Optional. For premium regular stickers, premium animation for the sticker
+		/// </summary>
+		[DataMember(Name = "premium_animation", EmitDefaultValue = false)]
+		public File premium_animation { get; set; }
+		/// <summary>
 		/// Optional. For mask stickers, the position where the mask should be placed
 		/// </summary>
 		[DataMember(Name = "mask_position", EmitDefaultValue = false)]
 		public MaskPosition mask_position { get; set; }
 		/// <summary>
-		/// Optional. File size
+		/// Optional. For custom emoji stickers, unique identifier of the custom emoji
+		/// </summary>
+		[DataMember(Name = "custom_emoji_id", EmitDefaultValue = false)]
+		public string custom_emoji_id { get; set; }
+		/// <summary>
+		/// Optional. File size in bytes
 		/// </summary>
 		[DataMember(Name = "file_size", EmitDefaultValue = false)]
 		public long file_size { get; set; }

@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2020]
+//Copyright(c) [2023]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -44,6 +44,6 @@ namespace DreadBot
 		/// 0-based identifiers of answer options, chosen by the user. May be empty if the user retracted their vote.
 		/// </summary>
 		[DataMember(Name = "option_ids", IsRequired = true)]
-		public int[] option_ids { get; set; }
+		public Array<int> option_ids { get; set; }
 	}
 }

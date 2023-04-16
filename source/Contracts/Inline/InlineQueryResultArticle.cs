@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2020]
+//Copyright(c) [2023]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -46,7 +46,7 @@ namespace DreadBot
 		[DataMember(Name = "url", EmitDefaultValue = false)]
 		public string url { get; set; }
 		/// <summary>
-		/// Optional. Pass True, if you don't want the URL to be shown in the message
+		/// Optional. Pass True if you don't want the URL to be shown in the message
 		/// </summary>
 		[DataMember(Name = "hide_url", EmitDefaultValue = false)]
 		public bool hide_url { get; set; }

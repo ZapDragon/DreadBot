@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2020]
+//Copyright(c) [2023]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -49,14 +49,14 @@ namespace DreadBot
 		/// Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
 		/// </summary>
 		[DataMember(Name = "caption_entities", EmitDefaultValue = false)]
-		public MessageEntity[] caption_entities { get; set; }
+		public Array<MessageEntity> caption_entities { get; set; }
 		/// <summary>
 		/// A valid URL for the file
 		/// </summary>
 		[DataMember(Name = "document_url", IsRequired = true)]
 		public string document_url { get; set; }
 		/// <summary>
-		/// Mime type of the content of the file, either “application/pdf” or “application/zip”
+		/// MIME type of the content of the file, either “application/pdf” or “application/zip”
 		/// </summary>
 		[DataMember(Name = "mime_type", IsRequired = true)]
 		public string mime_type { get; set; }
@@ -71,7 +71,7 @@ namespace DreadBot
 		[DataMember(Name = "input_message_content", EmitDefaultValue = false)]
 		public InputMessageContent input_message_content { get; set; }
 		/// <summary>
-		/// Optional. URL of the thumbnail (jpeg only) for the file
+		/// Optional. URL of the thumbnail (JPEG only) for the file
 		/// </summary>
 		[DataMember(Name = "thumb_url", EmitDefaultValue = false)]
 		public string thumb_url { get; set; }

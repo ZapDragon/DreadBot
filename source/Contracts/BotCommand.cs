@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2020]
+//Copyright(c) [2023]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -31,12 +31,12 @@ namespace DreadBot
 	public class BotCommand
 	{
 		/// <summary>
-		/// Text of the command, 1-32 characters. Can contain only lowercase English letters, digits and underscores.
+		/// Text of the command; 1-32 characters. Can contain only lowercase English letters, digits and underscores.
 		/// </summary>
 		[DataMember(Name = "command", IsRequired = true)]
 		public string command { get; set; }
 		/// <summary>
-		/// Description of the command, 3-256 characters.
+		/// Description of the command; 1-256 characters.
 		/// </summary>
 		[DataMember(Name = "description", IsRequired = true)]
 		public string description { get; set; }

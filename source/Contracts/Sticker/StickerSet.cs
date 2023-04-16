@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2020]
+//Copyright(c) [2023]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -41,22 +41,27 @@ namespace DreadBot
 		[DataMember(Name = "title", IsRequired = true)]
 		public string title { get; set; }
 		/// <summary>
+		/// Type of stickers in the set, currently one of “regular”, “mask”, “custom_emoji”
+		/// </summary>
+		[DataMember(Name = "sticker_type", IsRequired = true)]
+		public string sticker_type { get; set; }
+		/// <summary>
 		/// True, if the sticker set contains animated stickers
 		/// </summary>
 		[DataMember(Name = "is_animated", IsRequired = true)]
 		public bool is_animated { get; set; }
 		/// <summary>
-		/// True, if the sticker set contains masks
+		/// True, if the sticker set contains video stickers
 		/// </summary>
-		[DataMember(Name = "contains_masks", IsRequired = true)]
-		public bool contains_masks { get; set; }
+		[DataMember(Name = "is_video", IsRequired = true)]
+		public bool is_video { get; set; }
 		/// <summary>
 		/// List of all set stickers
 		/// </summary>
 		[DataMember(Name = "stickers", IsRequired = true)]
-		public Sticker[] stickers { get; set; }
+		public Array<Sticker> stickers { get; set; }
 		/// <summary>
-		/// Optional. Sticker set thumbnail in the .WEBP or .TGS format
+		/// Optional. Sticker set thumbnail in the .WEBP, .TGS, or .WEBM format
 		/// </summary>
 		[DataMember(Name = "thumb", EmitDefaultValue = false)]
 		public PhotoSize thumb { get; set; }

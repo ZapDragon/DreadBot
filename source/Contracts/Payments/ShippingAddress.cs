@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2020]
+//Copyright(c) [2023]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -31,7 +31,7 @@ namespace DreadBot
 	public class ShippingAddress
 	{
 		/// <summary>
-		/// ISO 3166-1 alpha-2 country code
+		/// Two-letter ISO 3166-1 alpha-2 country code
 		/// </summary>
 		[DataMember(Name = "country_code", IsRequired = true)]
 		public string country_code { get; set; }

@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2020]
+//Copyright(c) [2023]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -34,6 +34,6 @@ namespace DreadBot
 		/// List of base64-encoded file hashes
 		/// </summary>
 		[DataMember(Name = "file_hashes", IsRequired = true)]
-		public string[] file_hashes { get; set; }
+		public Array<string> file_hashes { get; set; }
 	}
 }

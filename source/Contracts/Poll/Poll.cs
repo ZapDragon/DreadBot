@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2020]
+//Copyright(c) [2023]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -36,7 +36,7 @@ namespace DreadBot
 		[DataMember(Name = "id", IsRequired = true)]
 		public string id { get; set; }
 		/// <summary>
-		/// Poll question, 1-255 characters
+		/// Poll question, 1-300 characters
 		/// </summary>
 		[DataMember(Name = "question", IsRequired = true)]
 		public string question { get; set; }
@@ -44,7 +44,7 @@ namespace DreadBot
 		/// List of poll options
 		/// </summary>
 		[DataMember(Name = "options", IsRequired = true)]
-		public PollOption[] options { get; set; }
+		public Array<PollOption> options { get; set; }
 		/// <summary>
 		/// Total number of users that voted in the poll
 		/// </summary>
@@ -84,7 +84,7 @@ namespace DreadBot
 		/// Optional. Special entities like usernames, URLs, bot commands, etc. that appear in the explanation
 		/// </summary>
 		[DataMember(Name = "explanation_entities", EmitDefaultValue = false)]
-		public MessageEntity[] explanation_entities { get; set; }
+		public Array<MessageEntity> explanation_entities { get; set; }
 		/// <summary>
 		/// Optional. Amount of time in seconds the poll will be active after creation
 		/// </summary>

@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2020]
+//Copyright(c) [2023]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,7 +25,7 @@ using System.Runtime.Serialization;
 namespace DreadBot
 {
 	/// <summary>
-	/// Contains information about the current status of a webhook.
+	/// Describes the current status of a webhook.
 	/// </summary>
 	[DataContract]
 	public class WebhookInfo
@@ -61,14 +61,19 @@ namespace DreadBot
 		[DataMember(Name = "last_error_message", EmitDefaultValue = false)]
 		public string last_error_message { get; set; }
 		/// <summary>
-		/// Optional. Maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery
+		/// Optional. Unix time of the most recent error that happened when trying to synchronize available updates with Telegram datacenters
+		/// </summary>
+		[DataMember(Name = "last_synchronization_error_date", EmitDefaultValue = false)]
+		public int last_synchronization_error_date { get; set; }
+		/// <summary>
+		/// Optional. The maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery
 		/// </summary>
 		[DataMember(Name = "max_connections", EmitDefaultValue = false)]
 		public int max_connections { get; set; }
 		/// <summary>
-		/// Optional. A list of update types the bot is subscribed to. Defaults to all update types
+		/// Optional. A list of update types the bot is subscribed to. Defaults to all update types except chat_member
 		/// </summary>
 		[DataMember(Name = "allowed_updates", EmitDefaultValue = false)]
-		public string[] allowed_updates { get; set; }
+		public Array<string> allowed_updates { get; set; }
 	}
 }

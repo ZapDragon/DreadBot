@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2020]
+//Copyright(c) [2023]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -70,5 +70,10 @@ namespace DreadBot
 		/// </summary>
 		[DataMember(Name = "can_pin_messages", EmitDefaultValue = false)]
 		public bool can_pin_messages { get; set; }
+		/// <summary>
+		/// Optional. True, if the user is allowed to create forum topics. If omitted defaults to the value of can_pin_messages
+		/// </summary>
+		[DataMember(Name = "can_manage_topics", EmitDefaultValue = false)]
+		public bool can_manage_topics { get; set; }
 	}
 }

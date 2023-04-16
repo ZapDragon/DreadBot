@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2020]
+//Copyright(c) [2023]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -51,7 +51,7 @@ namespace DreadBot
 		[DataMember(Name = "shipping_option_id", EmitDefaultValue = false)]
 		public string shipping_option_id { get; set; }
 		/// <summary>
-		/// Optional. Order info provided by the user
+		/// Optional. Order information provided by the user
 		/// </summary>
 		[DataMember(Name = "order_info", EmitDefaultValue = false)]
 		public OrderInfo order_info { get; set; }

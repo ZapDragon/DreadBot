@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2020]
+//Copyright(c) [2023]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -31,10 +31,10 @@ namespace DreadBot
 	public class InputMediaVideo : InputMedia
 	{
 		/// <summary>
-		/// Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
+		/// Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More information on Sending Files »
 		/// </summary>
 		[DataMember(Name = "thumb", EmitDefaultValue = false)]
-		public InputFile thumb { get; set; }
+		public object thumb { get; set; }
 		/// <summary>
 		/// Optional. Video width
 		/// </summary>
@@ -46,12 +46,12 @@ namespace DreadBot
 		[DataMember(Name = "height", EmitDefaultValue = false)]
 		public int height { get; set; }
 		/// <summary>
-		/// Optional. Video duration
+		/// Optional. Video duration in seconds
 		/// </summary>
 		[DataMember(Name = "duration", EmitDefaultValue = false)]
 		public int duration { get; set; }
 		/// <summary>
-		/// Optional. Pass True, if the uploaded video is suitable for streaming
+		/// Optional. Pass True if the uploaded video is suitable for streaming
 		/// </summary>
 		[DataMember(Name = "supports_streaming", EmitDefaultValue = false)]
 		public bool supports_streaming { get; set; }

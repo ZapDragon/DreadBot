@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2020]
+//Copyright(c) [2023]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -46,7 +46,7 @@ namespace DreadBot
 		[DataMember(Name = "last_name", EmitDefaultValue = false)]
 		public string last_name { get; set; }
 		/// <summary>
-		/// Optional. Contact's user identifier in Telegram
+		/// Optional. Contact's user identifier in Telegram. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.
 		/// </summary>
 		[DataMember(Name = "user_id", EmitDefaultValue = false)]
 		public long user_id { get; set; }

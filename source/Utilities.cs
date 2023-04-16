@@ -118,11 +118,11 @@ namespace DreadBot
                 else
                 {
                     ChatMember member = memberResult.result;
-                    if (!member.is_member) { return false; }
+                    if (member is ChatMemberRestricted resMem && !resMem.is_member) { return false; }
                     if (member.status == "left") { return false; }
                     if (member.status == "kicked") { return false; }
                     if (member.status == "restricted") { return PermCheck(member, perm); }
-                    if (member.status == "member") { return PermCheck(member, perm); }
+                    //if (member.status == "member") { return PermCheck(member, perm); }
                 }
             }
             return false;
@@ -401,24 +401,38 @@ namespace DreadBot
 
         private static bool PermCheck(ChatMember user, ChatMemberPerms perm)
         {
-            switch (perm)
+            if (user is ChatMemberRestricted resUser)
             {
-                case ChatMemberPerms.CanBeEdited: { return user.can_be_edited ? true : false; }
-                case ChatMemberPerms.CanPostMessages: { return user.can_post_messages ? true : false; }
-                case ChatMemberPerms.CanEditMessages: { return user.can_edit_messages ? true : false; }
-                case ChatMemberPerms.CanDeleteMessages: { return user.can_delete_messages ? true : false; }
-                case ChatMemberPerms.CanRestrictMembers: { return user.can_restrict_members ? true : false; }
-                case ChatMemberPerms.CanPromoteMembers: { return user.can_promote_members ? true : false; }
-                case ChatMemberPerms.CanChangeInfo: { return user.can_change_info ? true : false; }
-                case ChatMemberPerms.CanInviteUsers: { return user.can_invite_users ? true : false; }
-                case ChatMemberPerms.CanPinMessages: { return user.can_pin_messages ? true : false; }
-                case ChatMemberPerms.CanSendMessages: { return user.can_send_messages ? true : false; }
-                case ChatMemberPerms.CanSendMedia: { return user.can_send_media_messages ? true : false; }
-                case ChatMemberPerms.CanSendPolls: { return user.can_send_polls ? true : false; }
-                case ChatMemberPerms.CanSendOther: { return user.can_send_other_messages ? true : false; }
-                case ChatMemberPerms.CanAddWebPagePreviews: { return user.can_add_web_page_previews ? true : false; }
-                default: return false;
+                switch (perm)
+                {
+                    case ChatMemberPerms.CanChangeInfo: { return resUser.can_change_info; }
+                    case ChatMemberPerms.CanInviteUsers: { return resUser.can_invite_users; }
+                    case ChatMemberPerms.CanPinMessages: { return resUser.can_pin_messages; }
+                    case ChatMemberPerms.CanSendMessages: { return resUser.can_send_messages; }
+                    case ChatMemberPerms.CanSendMedia: { return resUser.can_send_media_messages; }
+                    case ChatMemberPerms.CanSendPolls: { return resUser.can_send_polls; }
+                    case ChatMemberPerms.CanSendOther: { return resUser.can_send_other_messages; }
+                    case ChatMemberPerms.CanAddWebPagePreviews: { return resUser.can_add_web_page_previews; }
+                    default: return false;
+                }
             }
+            if (user is ChatMemberAdministrator admin)
+            {
+                switch (perm)
+                {
+                    case ChatMemberPerms.CanBeEdited: { return admin.can_be_edited; }
+                    case ChatMemberPerms.CanPostMessages: { return admin.can_post_messages; }
+                    case ChatMemberPerms.CanEditMessages: { return admin.can_edit_messages; }
+                    case ChatMemberPerms.CanDeleteMessages: { return admin.can_delete_messages; }
+                    case ChatMemberPerms.CanRestrictMembers: { return admin.can_restrict_members; }
+                    case ChatMemberPerms.CanPromoteMembers: { return admin.can_promote_members; }
+                    case ChatMemberPerms.CanChangeInfo: { return admin.can_change_info; }
+                    case ChatMemberPerms.CanInviteUsers: { return admin.can_invite_users; }
+                    case ChatMemberPerms.CanPinMessages: { return admin.can_pin_messages; }
+                    default: return false;
+                }
+            }
+            return false;
         }
 
         public enum ChatMemberPerms

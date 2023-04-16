@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2020]
+//Copyright(c) [2023]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -46,7 +46,7 @@ namespace DreadBot
 		[DataMember(Name = "gif_height", EmitDefaultValue = false)]
 		public int gif_height { get; set; }
 		/// <summary>
-		/// Optional. Duration of the GIF
+		/// Optional. Duration of the GIF in seconds
 		/// </summary>
 		[DataMember(Name = "gif_duration", EmitDefaultValue = false)]
 		public int gif_duration { get; set; }
@@ -79,7 +79,7 @@ namespace DreadBot
 		/// Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
 		/// </summary>
 		[DataMember(Name = "caption_entities", EmitDefaultValue = false)]
-		public MessageEntity[] caption_entities { get; set; }
+		public Array<MessageEntity> caption_entities { get; set; }
 		/// <summary>
 		/// Optional. Content of the message to be sent instead of the GIF animation
 		/// </summary>

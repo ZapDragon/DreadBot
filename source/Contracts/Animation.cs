@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2020]
+//Copyright(c) [2023]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -71,7 +71,7 @@ namespace DreadBot
 		[DataMember(Name = "mime_type", EmitDefaultValue = false)]
 		public string mime_type { get; set; }
 		/// <summary>
-		/// Optional. File size
+		/// Optional. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
 		/// </summary>
 		[DataMember(Name = "file_size", EmitDefaultValue = false)]
 		public long file_size { get; set; }

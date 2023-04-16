@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2020]
+//Copyright(c) [2023]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -46,7 +46,7 @@ namespace DreadBot
 		[DataMember(Name = "horizontal_accuracy", EmitDefaultValue = false)]
 		public float horizontal_accuracy { get; set; }
 		/// <summary>
-		/// Optional. Time relative to the message sending date, during which the location can be updated, in seconds. For active live locations only.
+		/// Optional. Time relative to the message sending date, during which the location can be updated; in seconds. For active live locations only.
 		/// </summary>
 		[DataMember(Name = "live_period", EmitDefaultValue = false)]
 		public int live_period { get; set; }
@@ -56,7 +56,7 @@ namespace DreadBot
 		[DataMember(Name = "heading", EmitDefaultValue = false)]
 		public int heading { get; set; }
 		/// <summary>
-		/// Optional. Maximum distance for proximity alerts about approaching another chat member, in meters. For sent live locations only.
+		/// Optional. The maximum distance for proximity alerts about approaching another chat member, in meters. For sent live locations only.
 		/// </summary>
 		[DataMember(Name = "proximity_alert_radius", EmitDefaultValue = false)]
 		public int proximity_alert_radius { get; set; }
