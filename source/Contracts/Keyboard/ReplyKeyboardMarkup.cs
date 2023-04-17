@@ -37,6 +37,11 @@ namespace DreadBot
 		[DataMember(Name = "keyboard", IsRequired = true)]
 		public List<List<InlineKeyboardButton>> keyboard { get { return Keyboard; } set { Keyboard = value; } }
 		/// <summary>
+		/// Optional. Requests clients to always show the keyboard when the regular keyboard is hidden. Defaults to false, in which case the custom keyboard can be hidden and opened with a keyboard icon.
+		/// </summary>
+		[DataMember(Name = "is_persistent", EmitDefaultValue = false)]
+		public bool is_persistent { get; set; }
+		/// <summary>
 		/// Optional. Requests clients to resize the keyboard vertically for optimal fit (e.g., make the keyboard smaller if there are just two rows of buttons). Defaults to false, in which case the custom keyboard is always of the same height as the app's standard keyboard.
 		/// </summary>
 		[DataMember(Name = "resize_keyboard", EmitDefaultValue = false)]

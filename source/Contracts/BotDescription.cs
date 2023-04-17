@@ -25,40 +25,15 @@ using System.Runtime.Serialization;
 namespace DreadBot
 {
 	/// <summary>
-	/// This object represents a video message (available in Telegram apps as of v.4.0).
+	/// This object represents the bot's description.
 	/// </summary>
 	[DataContract]
-	public class VideoNote
+	public class BotDescription
 	{
 		/// <summary>
-		/// Identifier for this file, which can be used to download or reuse the file
+		/// The bot's description
 		/// </summary>
-		[DataMember(Name = "file_id", IsRequired = true)]
-		public string file_id { get; set; }
-		/// <summary>
-		/// Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
-		/// </summary>
-		[DataMember(Name = "file_unique_id", IsRequired = true)]
-		public string file_unique_id { get; set; }
-		/// <summary>
-		/// Video width and height (diameter of the video message) as defined by sender
-		/// </summary>
-		[DataMember(Name = "length", IsRequired = true)]
-		public int length { get; set; }
-		/// <summary>
-		/// Duration of the video in seconds as defined by sender
-		/// </summary>
-		[DataMember(Name = "duration", IsRequired = true)]
-		public int duration { get; set; }
-		/// <summary>
-		/// Optional. Video thumbnail
-		/// </summary>
-		[DataMember(Name = "thumbnail", EmitDefaultValue = false)]
-		public PhotoSize thumbnail { get; set; }
-		/// <summary>
-		/// Optional. File size in bytes
-		/// </summary>
-		[DataMember(Name = "file_size", EmitDefaultValue = false)]
-		public long file_size { get; set; }
+		[DataMember(Name = "description", IsRequired = true)]
+		public string description { get; set; }
 	}
 }

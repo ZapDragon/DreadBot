@@ -68,8 +68,8 @@ namespace DreadBot
 		/// <summary>
 		/// Optional. Sticker thumbnail in the .WEBP or .JPG format
 		/// </summary>
-		[DataMember(Name = "thumb", EmitDefaultValue = false)]
-		public PhotoSize thumb { get; set; }
+		[DataMember(Name = "thumbnail", EmitDefaultValue = false)]
+		public PhotoSize thumbnail { get; set; }
 		/// <summary>
 		/// Optional. Emoji associated with the sticker
 		/// </summary>
@@ -95,6 +95,11 @@ namespace DreadBot
 		/// </summary>
 		[DataMember(Name = "custom_emoji_id", EmitDefaultValue = false)]
 		public string custom_emoji_id { get; set; }
+		/// <summary>
+		/// Optional. True, if the sticker must be repainted to a text color in messages, the color of the Telegram Premium badge in emoji status, white color on chat photos, or another appropriate color in other places
+		/// </summary>
+		[DataMember(Name = "needs_repainting", EmitDefaultValue = false)]
+		public bool needs_repainting { get; set; }
 		/// <summary>
 		/// Optional. File size in bytes
 		/// </summary>

@@ -36,6 +36,56 @@ namespace DreadBot
 		[DataMember(Name = "is_member", IsRequired = true)]
 		public bool is_member { get; set; }
 		/// <summary>
+		/// True, if the user is allowed to send text messages, contacts, invoices, locations and venues
+		/// </summary>
+		[DataMember(Name = "can_send_messages", IsRequired = true)]
+		public bool can_send_messages { get; set; }
+		/// <summary>
+		/// True, if the user is allowed to send audios
+		/// </summary>
+		[DataMember(Name = "can_send_audios", IsRequired = true)]
+		public bool can_send_audios { get; set; }
+		/// <summary>
+		/// True, if the user is allowed to send documents
+		/// </summary>
+		[DataMember(Name = "can_send_documents", IsRequired = true)]
+		public bool can_send_documents { get; set; }
+		/// <summary>
+		/// True, if the user is allowed to send photos
+		/// </summary>
+		[DataMember(Name = "can_send_photos", IsRequired = true)]
+		public bool can_send_photos { get; set; }
+		/// <summary>
+		/// True, if the user is allowed to send videos
+		/// </summary>
+		[DataMember(Name = "can_send_videos", IsRequired = true)]
+		public bool can_send_videos { get; set; }
+		/// <summary>
+		/// True, if the user is allowed to send video notes
+		/// </summary>
+		[DataMember(Name = "can_send_video_notes", IsRequired = true)]
+		public bool can_send_video_notes { get; set; }
+		/// <summary>
+		/// True, if the user is allowed to send voice notes
+		/// </summary>
+		[DataMember(Name = "can_send_voice_notes", IsRequired = true)]
+		public bool can_send_voice_notes { get; set; }
+		/// <summary>
+		/// True, if the user is allowed to send polls
+		/// </summary>
+		[DataMember(Name = "can_send_polls", IsRequired = true)]
+		public bool can_send_polls { get; set; }
+		/// <summary>
+		/// True, if the user is allowed to send animations, games, stickers and use inline bots
+		/// </summary>
+		[DataMember(Name = "can_send_other_messages", IsRequired = true)]
+		public bool can_send_other_messages { get; set; }
+		/// <summary>
+		/// True, if the user is allowed to add web page previews to their messages
+		/// </summary>
+		[DataMember(Name = "can_add_web_page_previews", IsRequired = true)]
+		public bool can_add_web_page_previews { get; set; }
+		/// <summary>
 		/// True, if the user is allowed to change the chat title, photo and other settings
 		/// </summary>
 		[DataMember(Name = "can_change_info", IsRequired = true)]
@@ -55,31 +105,6 @@ namespace DreadBot
 		/// </summary>
 		[DataMember(Name = "can_manage_topics", IsRequired = true)]
 		public bool can_manage_topics { get; set; }
-		/// <summary>
-		/// True, if the user is allowed to send text messages, contacts, locations and venues
-		/// </summary>
-		[DataMember(Name = "can_send_messages", IsRequired = true)]
-		public bool can_send_messages { get; set; }
-		/// <summary>
-		/// True, if the user is allowed to send audios, documents, photos, videos, video notes and voice notes
-		/// </summary>
-		[DataMember(Name = "can_send_media_messages", IsRequired = true)]
-		public bool can_send_media_messages { get; set; }
-		/// <summary>
-		/// True, if the user is allowed to send polls
-		/// </summary>
-		[DataMember(Name = "can_send_polls", IsRequired = true)]
-		public bool can_send_polls { get; set; }
-		/// <summary>
-		/// True, if the user is allowed to send animations, games, stickers and use inline bots
-		/// </summary>
-		[DataMember(Name = "can_send_other_messages", IsRequired = true)]
-		public bool can_send_other_messages { get; set; }
-		/// <summary>
-		/// True, if the user is allowed to add web page previews to their messages
-		/// </summary>
-		[DataMember(Name = "can_add_web_page_previews", IsRequired = true)]
-		public bool can_add_web_page_previews { get; set; }
 		/// <summary>
 		/// Date when restrictions will be lifted for this user; unix time. If 0, then the user is restricted forever
 		/// </summary>

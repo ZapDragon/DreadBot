@@ -41,6 +41,11 @@ namespace DreadBot
 		[DataMember(Name = "from", IsRequired = true)]
 		public User from { get; set; }
 		/// <summary>
+		/// Identifier of a private chat with the user who sent the join request. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier. The bot can use this identifier for 24 hours to send messages until the join request is processed, assuming no other administrator contacted the user.
+		/// </summary>
+		[DataMember(Name = "user_chat_id", IsRequired = true)]
+		public long user_chat_id { get; set; }
+		/// <summary>
 		/// Date the request was sent in Unix time
 		/// </summary>
 		[DataMember(Name = "date", IsRequired = true)]

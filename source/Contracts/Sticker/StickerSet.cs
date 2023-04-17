@@ -63,7 +63,7 @@ namespace DreadBot
 		/// <summary>
 		/// Optional. Sticker set thumbnail in the .WEBP, .TGS, or .WEBM format
 		/// </summary>
-		[DataMember(Name = "thumb", EmitDefaultValue = false)]
-		public PhotoSize thumb { get; set; }
+		[DataMember(Name = "thumbnail", EmitDefaultValue = false)]
+		public PhotoSize thumbnail { get; set; }
 	}
 }

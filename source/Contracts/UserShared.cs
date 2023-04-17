@@ -25,40 +25,20 @@ using System.Runtime.Serialization;
 namespace DreadBot
 {
 	/// <summary>
-	/// This object represents a video message (available in Telegram apps as of v.4.0).
+	/// This object contains information about the user whose identifier was shared with the bot using a KeyboardButtonRequestUser button.
 	/// </summary>
 	[DataContract]
-	public class VideoNote
+	public class UserShared
 	{
 		/// <summary>
-		/// Identifier for this file, which can be used to download or reuse the file
+		/// Identifier of the request
 		/// </summary>
-		[DataMember(Name = "file_id", IsRequired = true)]
-		public string file_id { get; set; }
+		[DataMember(Name = "request_id", IsRequired = true)]
+		public int request_id { get; set; }
 		/// <summary>
-		/// Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
+		/// Identifier of the shared user. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier. The bot may not have access to the user and could be unable to use this identifier, unless the user is already known to the bot by some other means.
 		/// </summary>
-		[DataMember(Name = "file_unique_id", IsRequired = true)]
-		public string file_unique_id { get; set; }
-		/// <summary>
-		/// Video width and height (diameter of the video message) as defined by sender
-		/// </summary>
-		[DataMember(Name = "length", IsRequired = true)]
-		public int length { get; set; }
-		/// <summary>
-		/// Duration of the video in seconds as defined by sender
-		/// </summary>
-		[DataMember(Name = "duration", IsRequired = true)]
-		public int duration { get; set; }
-		/// <summary>
-		/// Optional. Video thumbnail
-		/// </summary>
-		[DataMember(Name = "thumbnail", EmitDefaultValue = false)]
-		public PhotoSize thumbnail { get; set; }
-		/// <summary>
-		/// Optional. File size in bytes
-		/// </summary>
-		[DataMember(Name = "file_size", EmitDefaultValue = false)]
-		public long file_size { get; set; }
+		[DataMember(Name = "user_id", IsRequired = true)]
+		public long user_id { get; set; }
 	}
 }

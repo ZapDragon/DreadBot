@@ -33,8 +33,8 @@ namespace DreadBot
 		/// <summary>
 		/// Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More information on Sending Files »
 		/// </summary>
-		[DataMember(Name = "thumb", EmitDefaultValue = false)]
-		public object thumb { get; set; }
+		[DataMember(Name = "thumbnail", EmitDefaultValue = false)]
+		public object thumbnail { get; set; }
 		/// <summary>
 		/// Optional. Animation width
 		/// </summary>
@@ -50,5 +50,10 @@ namespace DreadBot
 		/// </summary>
 		[DataMember(Name = "duration", EmitDefaultValue = false)]
 		public int duration { get; set; }
+		/// <summary>
+		/// Optional. Pass True if the animation needs to be covered with a spoiler animation
+		/// </summary>
+		[DataMember(Name = "has_spoiler", EmitDefaultValue = false)]
+		public bool has_spoiler { get; set; }
 	}
 }

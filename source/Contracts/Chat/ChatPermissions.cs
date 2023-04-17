@@ -31,27 +31,52 @@ namespace DreadBot
 	public class ChatPermissions
 	{
 		/// <summary>
-		/// Optional. True, if the user is allowed to send text messages, contacts, locations and venues
+		/// Optional. True, if the user is allowed to send text messages, contacts, invoices, locations and venues
 		/// </summary>
 		[DataMember(Name = "can_send_messages", EmitDefaultValue = false)]
 		public bool can_send_messages { get; set; }
 		/// <summary>
-		/// Optional. True, if the user is allowed to send audios, documents, photos, videos, video notes and voice notes, implies can_send_messages
+		/// Optional. True, if the user is allowed to send audios
 		/// </summary>
-		[DataMember(Name = "can_send_media_messages", EmitDefaultValue = false)]
-		public bool can_send_media_messages { get; set; }
+		[DataMember(Name = "can_send_audios", EmitDefaultValue = false)]
+		public bool can_send_audios { get; set; }
 		/// <summary>
-		/// Optional. True, if the user is allowed to send polls, implies can_send_messages
+		/// Optional. True, if the user is allowed to send documents
+		/// </summary>
+		[DataMember(Name = "can_send_documents", EmitDefaultValue = false)]
+		public bool can_send_documents { get; set; }
+		/// <summary>
+		/// Optional. True, if the user is allowed to send photos
+		/// </summary>
+		[DataMember(Name = "can_send_photos", EmitDefaultValue = false)]
+		public bool can_send_photos { get; set; }
+		/// <summary>
+		/// Optional. True, if the user is allowed to send videos
+		/// </summary>
+		[DataMember(Name = "can_send_videos", EmitDefaultValue = false)]
+		public bool can_send_videos { get; set; }
+		/// <summary>
+		/// Optional. True, if the user is allowed to send video notes
+		/// </summary>
+		[DataMember(Name = "can_send_video_notes", EmitDefaultValue = false)]
+		public bool can_send_video_notes { get; set; }
+		/// <summary>
+		/// Optional. True, if the user is allowed to send voice notes
+		/// </summary>
+		[DataMember(Name = "can_send_voice_notes", EmitDefaultValue = false)]
+		public bool can_send_voice_notes { get; set; }
+		/// <summary>
+		/// Optional. True, if the user is allowed to send polls
 		/// </summary>
 		[DataMember(Name = "can_send_polls", EmitDefaultValue = false)]
 		public bool can_send_polls { get; set; }
 		/// <summary>
-		/// Optional. True, if the user is allowed to send animations, games, stickers and use inline bots, implies can_send_media_messages
+		/// Optional. True, if the user is allowed to send animations, games, stickers and use inline bots
 		/// </summary>
 		[DataMember(Name = "can_send_other_messages", EmitDefaultValue = false)]
 		public bool can_send_other_messages { get; set; }
 		/// <summary>
-		/// Optional. True, if the user is allowed to add web page previews to their messages, implies can_send_media_messages
+		/// Optional. True, if the user is allowed to add web page previews to their messages
 		/// </summary>
 		[DataMember(Name = "can_add_web_page_previews", EmitDefaultValue = false)]
 		public bool can_add_web_page_previews { get; set; }

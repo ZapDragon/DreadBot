@@ -25,40 +25,25 @@ using System.Runtime.Serialization;
 namespace DreadBot
 {
 	/// <summary>
-	/// This object represents a video message (available in Telegram apps as of v.4.0).
+	/// This object defines the criteria used to request a suitable user. The identifier of the selected user will be shared with the bot when the corresponding button is pressed.
 	/// </summary>
 	[DataContract]
-	public class VideoNote
+	public class KeyboardButtonRequestUser
 	{
 		/// <summary>
-		/// Identifier for this file, which can be used to download or reuse the file
+		/// Signed 32-bit identifier of the request, which will be received back in the UserShared object. Must be unique within the message
 		/// </summary>
-		[DataMember(Name = "file_id", IsRequired = true)]
-		public string file_id { get; set; }
+		[DataMember(Name = "request_id", IsRequired = true)]
+		public int request_id { get; set; }
 		/// <summary>
-		/// Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
+		/// Optional. Pass True to request a bot, pass False to request a regular user. If not specified, no additional restrictions are applied.
 		/// </summary>
-		[DataMember(Name = "file_unique_id", IsRequired = true)]
-		public string file_unique_id { get; set; }
+		[DataMember(Name = "user_is_bot", EmitDefaultValue = false)]
+		public bool user_is_bot { get; set; }
 		/// <summary>
-		/// Video width and height (diameter of the video message) as defined by sender
+		/// Optional. Pass True to request a premium user, pass False to request a non-premium user. If not specified, no additional restrictions are applied.
 		/// </summary>
-		[DataMember(Name = "length", IsRequired = true)]
-		public int length { get; set; }
-		/// <summary>
-		/// Duration of the video in seconds as defined by sender
-		/// </summary>
-		[DataMember(Name = "duration", IsRequired = true)]
-		public int duration { get; set; }
-		/// <summary>
-		/// Optional. Video thumbnail
-		/// </summary>
-		[DataMember(Name = "thumbnail", EmitDefaultValue = false)]
-		public PhotoSize thumbnail { get; set; }
-		/// <summary>
-		/// Optional. File size in bytes
-		/// </summary>
-		[DataMember(Name = "file_size", EmitDefaultValue = false)]
-		public long file_size { get; set; }
+		[DataMember(Name = "user_is_premium", EmitDefaultValue = false)]
+		public bool user_is_premium { get; set; }
 	}
 }

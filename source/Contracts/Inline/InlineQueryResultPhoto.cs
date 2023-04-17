@@ -38,8 +38,8 @@ namespace DreadBot
 		/// <summary>
 		/// URL of the thumbnail for the photo
 		/// </summary>
-		[DataMember(Name = "thumb_url", IsRequired = true)]
-		public string thumb_url { get; set; }
+		[DataMember(Name = "thumbnail_url", IsRequired = true)]
+		public string thumbnail_url { get; set; }
 		/// <summary>
 		/// Optional. Width of the photo
 		/// </summary>

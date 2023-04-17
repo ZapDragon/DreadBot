@@ -78,17 +78,17 @@ namespace DreadBot
 		/// <summary>
 		/// Optional. Url of the thumbnail for the result
 		/// </summary>
-		[DataMember(Name = "thumb_url", EmitDefaultValue = false)]
-		public string thumb_url { get; set; }
+		[DataMember(Name = "thumbnail_url", EmitDefaultValue = false)]
+		public string thumbnail_url { get; set; }
 		/// <summary>
 		/// Optional. Thumbnail width
 		/// </summary>
-		[DataMember(Name = "thumb_width", EmitDefaultValue = false)]
-		public int thumb_width { get; set; }
+		[DataMember(Name = "thumbnail_width", EmitDefaultValue = false)]
+		public int thumbnail_width { get; set; }
 		/// <summary>
 		/// Optional. Thumbnail height
 		/// </summary>
-		[DataMember(Name = "thumb_height", EmitDefaultValue = false)]
-		public int thumb_height { get; set; }
+		[DataMember(Name = "thumbnail_height", EmitDefaultValue = false)]
+		public int thumbnail_height { get; set; }
 	}
 }

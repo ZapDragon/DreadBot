@@ -409,7 +409,12 @@ namespace DreadBot
                     case ChatMemberPerms.CanInviteUsers: { return resUser.can_invite_users; }
                     case ChatMemberPerms.CanPinMessages: { return resUser.can_pin_messages; }
                     case ChatMemberPerms.CanSendMessages: { return resUser.can_send_messages; }
-                    case ChatMemberPerms.CanSendMedia: { return resUser.can_send_media_messages; }
+                    case ChatMemberPerms.CanSendAudio: { return resUser.can_send_audios; }
+                    case ChatMemberPerms.CanSendDocuments: { return resUser.can_send_documents; }
+                    case ChatMemberPerms.CanSendPhotos: { return resUser.can_send_photos; }
+                    case ChatMemberPerms.CanSendVideos: { return resUser.can_send_videos; }
+                    case ChatMemberPerms.CanSendVideoNotes: { return resUser.can_send_video_notes; }
+                    case ChatMemberPerms.CanSendVoiceNotes: { return resUser.can_send_voice_notes; }
                     case ChatMemberPerms.CanSendPolls: { return resUser.can_send_polls; }
                     case ChatMemberPerms.CanSendOther: { return resUser.can_send_other_messages; }
                     case ChatMemberPerms.CanAddWebPagePreviews: { return resUser.can_add_web_page_previews; }
@@ -447,7 +452,12 @@ namespace DreadBot
             CanInviteUsers, //Administrators and restricted only. True, if the user is allowed to invite new users to the chat
             CanPinMessages, //Administrators and restricted only. True, if the user is allowed to pin messages; groups and supergroups only
             CanSendMessages, //Restricted only. True, if the user is allowed to send text messages, contacts, locations and venues
-            CanSendMedia, //Restricted only. True, if the user is allowed to send audios, documents, photos, videos, video notes and voice notes
+            CanSendAudio, //Restricted only. True, if the user is allowed to send audios, documents, photos, videos, video notes and voice notes
+            CanSendDocuments, //Restricted only. True, if the user is allowed to send audios, documents, photos, videos, video notes and voice notes
+            CanSendPhotos, //Restricted only. True, if the user is allowed to send audios, documents, photos, videos, video notes and voice notes
+            CanSendVideos, //Restricted only. True, if the user is allowed to send audios, documents, photos, videos, video notes and voice notes
+            CanSendVideoNotes, //Restricted only. True, if the user is allowed to send audios, documents, photos, videos, video notes and voice notes
+            CanSendVoiceNotes, //Restricted only. True, if the user is allowed to send audios, documents, photos, videos, video notes and voice notes
             CanSendPolls, //Restricted only. True, if the user is allowed to send polls
             CanSendOther, //Gifs, Games, Stickers, Inline
             CanAddWebPagePreviews //Restricted only. True, if the user is allowed to add web page previews to their messages

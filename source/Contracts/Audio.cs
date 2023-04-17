@@ -73,7 +73,7 @@ namespace DreadBot
 		/// <summary>
 		/// Optional. Thumbnail of the album cover to which the music file belongs
 		/// </summary>
-		[DataMember(Name = "thumb", EmitDefaultValue = false)]
-		public PhotoSize thumb { get; set; }
+		[DataMember(Name = "thumbnail", EmitDefaultValue = false)]
+		public PhotoSize thumbnail { get; set; }
 	}
 }

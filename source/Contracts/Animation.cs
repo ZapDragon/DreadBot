@@ -58,8 +58,8 @@ namespace DreadBot
 		/// <summary>
 		/// Optional. Animation thumbnail as defined by sender
 		/// </summary>
-		[DataMember(Name = "thumb", EmitDefaultValue = false)]
-		public PhotoSize thumb { get; set; }
+		[DataMember(Name = "thumbnail", EmitDefaultValue = false)]
+		public PhotoSize thumbnail { get; set; }
 		/// <summary>
 		/// Optional. Original animation filename as defined by sender
 		/// </summary>

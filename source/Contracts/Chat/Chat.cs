@@ -136,6 +136,16 @@ namespace DreadBot
 		[DataMember(Name = "message_auto_delete_time", EmitDefaultValue = false)]
 		public int message_auto_delete_time { get; set; }
 		/// <summary>
+		/// Optional. True, if aggressive anti-spam checks are enabled in the supergroup. The field is only available to chat administrators. Returned only in getChat.
+		/// </summary>
+		[DataMember(Name = "has_aggressive_anti_spam_enabled", EmitDefaultValue = false)]
+		public bool has_aggressive_anti_spam_enabled { get; set; }
+		/// <summary>
+		/// Optional. True, if non-administrators can only get the list of bots and administrators in the chat. Returned only in getChat.
+		/// </summary>
+		[DataMember(Name = "has_hidden_members", EmitDefaultValue = false)]
+		public bool has_hidden_members { get; set; }
+		/// <summary>
 		/// Optional. True, if messages from the chat can't be forwarded to other chats. Returned only in getChat.
 		/// </summary>
 		[DataMember(Name = "has_protected_content", EmitDefaultValue = false)]

@@ -25,15 +25,10 @@ using System.Runtime.Serialization;
 namespace DreadBot
 {
 	/// <summary>
-	/// Represents a photo to be sent.
+	/// This object represents a service message about General forum topic hidden in the chat. Currently holds no information.
 	/// </summary>
 	[DataContract]
-	public class InputMediaPhoto : InputMedia
+	public class GeneralForumTopicHidden
 	{
-		/// <summary>
-		/// Optional. Pass True if the photo needs to be covered with a spoiler animation
-		/// </summary>
-		[DataMember(Name = "has_spoiler", EmitDefaultValue = false)]
-		public bool has_spoiler { get; set; }
 	}
 }

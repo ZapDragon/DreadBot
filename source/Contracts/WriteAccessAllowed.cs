@@ -25,15 +25,10 @@ using System.Runtime.Serialization;
 namespace DreadBot
 {
 	/// <summary>
-	/// Represents a photo to be sent.
+	/// This object represents a service message about a user allowing a bot added to the attachment menu to write messages. Currently holds no information.
 	/// </summary>
 	[DataContract]
-	public class InputMediaPhoto : InputMedia
+	public class WriteAccessAllowed
 	{
-		/// <summary>
-		/// Optional. Pass True if the photo needs to be covered with a spoiler animation
-		/// </summary>
-		[DataMember(Name = "has_spoiler", EmitDefaultValue = false)]
-		public bool has_spoiler { get; set; }
 	}
 }

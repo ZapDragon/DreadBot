@@ -43,8 +43,8 @@ namespace DreadBot
 		/// <summary>
 		/// Optional. Document thumbnail as defined by sender
 		/// </summary>
-		[DataMember(Name = "thumb", EmitDefaultValue = false)]
-		public PhotoSize thumb { get; set; }
+		[DataMember(Name = "thumbnail", EmitDefaultValue = false)]
+		public PhotoSize thumbnail { get; set; }
 		/// <summary>
 		/// Optional. Original filename as defined by sender
 		/// </summary>

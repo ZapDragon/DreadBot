@@ -191,6 +191,11 @@ namespace DreadBot
 		[DataMember(Name = "caption_entities", EmitDefaultValue = false)]
 		public Array<MessageEntity> caption_entities { get; set; }
 		/// <summary>
+		/// Optional. True, if the message media is covered by a spoiler animation
+		/// </summary>
+		[DataMember(Name = "has_media_spoiler", EmitDefaultValue = false)]
+		public bool has_media_spoiler { get; set; }
+		/// <summary>
 		/// Optional. Message is a shared contact, information about the contact
 		/// </summary>
 		[DataMember(Name = "contact", EmitDefaultValue = false)]
@@ -291,10 +296,25 @@ namespace DreadBot
 		[DataMember(Name = "successful_payment", EmitDefaultValue = false)]
 		public SuccessfulPayment successful_payment { get; set; }
 		/// <summary>
+		/// Optional. Service message: a user was shared with the bot
+		/// </summary>
+		[DataMember(Name = "user_shared", EmitDefaultValue = false)]
+		public UserShared user_shared { get; set; }
+		/// <summary>
+		/// Optional. Service message: a chat was shared with the bot
+		/// </summary>
+		[DataMember(Name = "chat_shared", EmitDefaultValue = false)]
+		public ChatShared chat_shared { get; set; }
+		/// <summary>
 		/// Optional. The domain name of the website on which the user has logged in. More about Telegram Login »
 		/// </summary>
 		[DataMember(Name = "connected_website", EmitDefaultValue = false)]
 		public string connected_website { get; set; }
+		/// <summary>
+		/// Optional. Service message: the user allowed the bot added to the attachment menu to write messages
+		/// </summary>
+		[DataMember(Name = "write_access_allowed", EmitDefaultValue = false)]
+		public WriteAccessAllowed write_access_allowed { get; set; }
 		/// <summary>
 		/// Optional. Telegram Passport data
 		/// </summary>
@@ -311,6 +331,11 @@ namespace DreadBot
 		[DataMember(Name = "forum_topic_created", EmitDefaultValue = false)]
 		public ForumTopicCreated forum_topic_created { get; set; }
 		/// <summary>
+		/// Optional. Service message: forum topic edited
+		/// </summary>
+		[DataMember(Name = "forum_topic_edited", EmitDefaultValue = false)]
+		public ForumTopicEdited forum_topic_edited { get; set; }
+		/// <summary>
 		/// Optional. Service message: forum topic closed
 		/// </summary>
 		[DataMember(Name = "forum_topic_closed", EmitDefaultValue = false)]
@@ -320,6 +345,16 @@ namespace DreadBot
 		/// </summary>
 		[DataMember(Name = "forum_topic_reopened", EmitDefaultValue = false)]
 		public ForumTopicReopened forum_topic_reopened { get; set; }
+		/// <summary>
+		/// Optional. Service message: the 'General' forum topic hidden
+		/// </summary>
+		[DataMember(Name = "general_forum_topic_hidden", EmitDefaultValue = false)]
+		public GeneralForumTopicHidden general_forum_topic_hidden { get; set; }
+		/// <summary>
+		/// Optional. Service message: the 'General' forum topic unhidden
+		/// </summary>
+		[DataMember(Name = "general_forum_topic_unhidden", EmitDefaultValue = false)]
+		public GeneralForumTopicUnhidden general_forum_topic_unhidden { get; set; }
 		/// <summary>
 		/// Optional. Service message: video chat scheduled
 		/// </summary>

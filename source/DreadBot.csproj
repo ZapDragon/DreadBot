@@ -98,6 +98,8 @@
     <Compile Include="Contracts\BotCommand.cs" />
     <Compile Include="Contracts\BotCommandScope.cs" />
     <Compile Include="Contracts\BotCommandScopeDefault.cs" />
+    <Compile Include="Contracts\BotDescription.cs" />
+    <Compile Include="Contracts\BotShortDescription.cs" />
     <Compile Include="Contracts\CallbackQuery.cs" />
     <Compile Include="Contracts\Chat\BotCommandScopeAllChatAdministrators.cs" />
     <Compile Include="Contracts\Chat\BotCommandScopeAllGroupChats.cs" />
@@ -119,6 +121,8 @@
     <Compile Include="Contracts\Chat\ChatMemberRestricted.cs" />
     <Compile Include="Contracts\Chat\ChatPermissions.cs" />
     <Compile Include="Contracts\Chat\ChatPhoto.cs" />
+    <Compile Include="Contracts\Chat\ChatShared.cs" />
+    <Compile Include="Contracts\Chat\KeyboardButtonRequestChat.cs" />
     <Compile Include="Contracts\Chat\VideoChatEnded.cs" />
     <Compile Include="Contracts\Chat\VideoChatParticipantsInvited.cs" />
     <Compile Include="Contracts\Chat\VideoChatScheduled.cs" />
@@ -130,11 +134,14 @@
     <Compile Include="Contracts\ForumTopic.cs" />
     <Compile Include="Contracts\ForumTopicClosed.cs" />
     <Compile Include="Contracts\ForumTopicCreated.cs" />
+    <Compile Include="Contracts\ForumTopicEdited.cs" />
     <Compile Include="Contracts\ForumTopicReopened.cs" />
     <Compile Include="Contracts\Game\CallbackGame.cs" />
     <Compile Include="Contracts\Game\Dice.cs" />
     <Compile Include="Contracts\Game\Game.cs" />
     <Compile Include="Contracts\Game\GameHighScore.cs" />
+    <Compile Include="Contracts\GeneralForumTopicHidden.cs" />
+    <Compile Include="Contracts\GeneralForumTopicUnhidden.cs" />
     <Compile Include="Contracts\Inline\ChosenInlineResult.cs" />
     <Compile Include="Contracts\Inline\InlineQuery.cs" />
     <Compile Include="Contracts\Inline\InlineQueryResult.cs" />
@@ -175,6 +182,10 @@
     <Compile Include="Contracts\Keyboard\InlineKeyboardMarkup.cs" />
     <Compile Include="Contracts\Keyboard\KeyboardButton.cs" />
     <Compile Include="Contracts\Keyboard\KeyboardButtonPollType.cs" />
+    <Compile Include="Contracts\Keyboard\KeyboardButtonRequestUser.cs" />
+    <Compile Include="Contracts\Sticker\InputSticker.cs" />
+    <Compile Include="Contracts\UserShared.cs" />
+    <Compile Include="Contracts\WriteAccessAllowed.cs" />
     <Compile Include="SpecialContracts\KeyboardExtensions.cs" />
     <Compile Include="Contracts\Keyboard\KeyboardMarkup.cs" />
     <Compile Include="Contracts\Keyboard\ReplyKeyboardMarkup.cs" />

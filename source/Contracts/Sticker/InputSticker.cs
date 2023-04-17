@@ -25,40 +25,30 @@ using System.Runtime.Serialization;
 namespace DreadBot
 {
 	/// <summary>
-	/// This object represents a video message (available in Telegram apps as of v.4.0).
+	/// This object describes a sticker to be added to a sticker set.
 	/// </summary>
 	[DataContract]
-	public class VideoNote
+	public class InputSticker
 	{
 		/// <summary>
-		/// Identifier for this file, which can be used to download or reuse the file
+		/// The added sticker. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. Animated and video stickers can't be uploaded via HTTP URL. More information on Sending Files »
 		/// </summary>
-		[DataMember(Name = "file_id", IsRequired = true)]
-		public string file_id { get; set; }
+		[DataMember(Name = "sticker", IsRequired = true)]
+		public object sticker { get; set; }
 		/// <summary>
-		/// Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
+		/// List of 1-20 emoji associated with the sticker
 		/// </summary>
-		[DataMember(Name = "file_unique_id", IsRequired = true)]
-		public string file_unique_id { get; set; }
+		[DataMember(Name = "emoji_list", IsRequired = true)]
+		public Array<string> emoji_list { get; set; }
 		/// <summary>
-		/// Video width and height (diameter of the video message) as defined by sender
+		/// Optional. Position where the mask should be placed on faces. For “mask” stickers only.
 		/// </summary>
-		[DataMember(Name = "length", IsRequired = true)]
-		public int length { get; set; }
+		[DataMember(Name = "mask_position", EmitDefaultValue = false)]
+		public MaskPosition mask_position { get; set; }
 		/// <summary>
-		/// Duration of the video in seconds as defined by sender
+		/// Optional. List of 0-20 search keywords for the sticker with total length of up to 64 characters. For “regular” and “custom_emoji” stickers only.
 		/// </summary>
-		[DataMember(Name = "duration", IsRequired = true)]
-		public int duration { get; set; }
-		/// <summary>
-		/// Optional. Video thumbnail
-		/// </summary>
-		[DataMember(Name = "thumbnail", EmitDefaultValue = false)]
-		public PhotoSize thumbnail { get; set; }
-		/// <summary>
-		/// Optional. File size in bytes
-		/// </summary>
-		[DataMember(Name = "file_size", EmitDefaultValue = false)]
-		public long file_size { get; set; }
+		[DataMember(Name = "keywords", EmitDefaultValue = false)]
+		public Array<string> keywords { get; set; }
 	}
 }

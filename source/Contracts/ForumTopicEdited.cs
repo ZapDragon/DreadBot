@@ -25,40 +25,20 @@ using System.Runtime.Serialization;
 namespace DreadBot
 {
 	/// <summary>
-	/// This object represents a video message (available in Telegram apps as of v.4.0).
+	/// This object represents a service message about an edited forum topic.
 	/// </summary>
 	[DataContract]
-	public class VideoNote
+	public class ForumTopicEdited
 	{
 		/// <summary>
-		/// Identifier for this file, which can be used to download or reuse the file
+		/// Optional. New name of the topic, if it was edited
 		/// </summary>
-		[DataMember(Name = "file_id", IsRequired = true)]
-		public string file_id { get; set; }
+		[DataMember(Name = "name", EmitDefaultValue = false)]
+		public string name { get; set; }
 		/// <summary>
-		/// Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
+		/// Optional. New identifier of the custom emoji shown as the topic icon, if it was edited; an empty string if the icon was removed
 		/// </summary>
-		[DataMember(Name = "file_unique_id", IsRequired = true)]
-		public string file_unique_id { get; set; }
-		/// <summary>
-		/// Video width and height (diameter of the video message) as defined by sender
-		/// </summary>
-		[DataMember(Name = "length", IsRequired = true)]
-		public int length { get; set; }
-		/// <summary>
-		/// Duration of the video in seconds as defined by sender
-		/// </summary>
-		[DataMember(Name = "duration", IsRequired = true)]
-		public int duration { get; set; }
-		/// <summary>
-		/// Optional. Video thumbnail
-		/// </summary>
-		[DataMember(Name = "thumbnail", EmitDefaultValue = false)]
-		public PhotoSize thumbnail { get; set; }
-		/// <summary>
-		/// Optional. File size in bytes
-		/// </summary>
-		[DataMember(Name = "file_size", EmitDefaultValue = false)]
-		public long file_size { get; set; }
+		[DataMember(Name = "icon_custom_emoji_id", EmitDefaultValue = false)]
+		public string icon_custom_emoji_id { get; set; }
 	}
 }

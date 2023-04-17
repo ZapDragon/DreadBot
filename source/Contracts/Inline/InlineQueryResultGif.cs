@@ -53,13 +53,13 @@ namespace DreadBot
 		/// <summary>
 		/// URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result
 		/// </summary>
-		[DataMember(Name = "thumb_url", IsRequired = true)]
-		public string thumb_url { get; set; }
+		[DataMember(Name = "thumbnail_url", IsRequired = true)]
+		public string thumbnail_url { get; set; }
 		/// <summary>
 		/// Optional. MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or “video/mp4”. Defaults to “image/jpeg”
 		/// </summary>
-		[DataMember(Name = "thumb_mime_type", EmitDefaultValue = false)]
-		public string thumb_mime_type { get; set; }
+		[DataMember(Name = "thumbnail_mime_type", EmitDefaultValue = false)]
+		public string thumbnail_mime_type { get; set; }
 		/// <summary>
 		/// Optional. Title for the result
 		/// </summary>
