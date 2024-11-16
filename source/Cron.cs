@@ -49,7 +49,7 @@ namespace DreadBot
         {
             while (true)
             {
-                Logger.LogDebug("Cron");
+                //Logger.LogDebug("Cron");
                 OnCronFire();
                 Thread.Sleep(600000);
             }

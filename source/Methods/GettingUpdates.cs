@@ -40,13 +40,14 @@ namespace DreadBot
         //This method is called by EVERY Telegram method. This is used to handle Most error checking, and the variable 'result' object is returned to the method that called this.
         private static Result<T> sendRequest<T>(Method method, string payload = "", string payloadType = "application/json", MultipartFormDataContent dataPayload = null)
         {
+            string BotApiEndpoint = "api.telegram.org";//10.1.1.5
             bool connected = false;
             while (!connected)
             {
                 try
                 {
                     Ping myPing = new Ping();
-                    String host = "api.telegram.org";
+                    string host = BotApiEndpoint;
                     byte[] buffer = new byte[32];
                     int timeout = 1000;
                     PingOptions pingOptions = new PingOptions();
@@ -58,16 +59,17 @@ namespace DreadBot
                         continue;
                     }
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    Logger.LogError("Connection Error. Cannot Connect to Telegram.");
+                    Logger.LogError("Connection Exception Error. Cannot Connect to Telegram. Exception:");
+                    Logger.LogError(e.Message);
                     Thread.Sleep(10000);
                     continue;
                 }
             }
 
             //Console.WriteLine(method + " | " + payload);
-            string uriMethod = "https://api.telegram.org/bot" + Configs.RunningConfig.token + "/" + method;
+            string uriMethod = "http://"+BotApiEndpoint+"/bot" + Configs.RunningConfig.token + "/" + method;
             HttpClient client = new HttpClient();
             HttpResponseMessage response = null;
             int tryCount = 6;
