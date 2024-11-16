@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -51,7 +51,7 @@ namespace DreadBot
 		[DataMember(Name = "horizontal_accuracy", EmitDefaultValue = false)]
 		public float horizontal_accuracy { get; set; }
 		/// <summary>
-		/// Optional. Period in seconds for which the location can be updated, should be between 60 and 86400.
+		/// Optional. Period in seconds during which the location can be updated, should be between 60 and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely.
 		/// </summary>
 		[DataMember(Name = "live_period", EmitDefaultValue = false)]
 		public int live_period { get; set; }

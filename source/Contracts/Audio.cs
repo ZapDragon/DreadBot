@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -41,27 +41,27 @@ namespace DreadBot
 		[DataMember(Name = "file_unique_id", IsRequired = true)]
 		public string file_unique_id { get; set; }
 		/// <summary>
-		/// Duration of the audio in seconds as defined by sender
+		/// Duration of the audio in seconds as defined by the sender
 		/// </summary>
 		[DataMember(Name = "duration", IsRequired = true)]
 		public int duration { get; set; }
 		/// <summary>
-		/// Optional. Performer of the audio as defined by sender or by audio tags
+		/// Optional. Performer of the audio as defined by the sender or by audio tags
 		/// </summary>
 		[DataMember(Name = "performer", EmitDefaultValue = false)]
 		public string performer { get; set; }
 		/// <summary>
-		/// Optional. Title of the audio as defined by sender or by audio tags
+		/// Optional. Title of the audio as defined by the sender or by audio tags
 		/// </summary>
 		[DataMember(Name = "title", EmitDefaultValue = false)]
 		public string title { get; set; }
 		/// <summary>
-		/// Optional. Original filename as defined by sender
+		/// Optional. Original filename as defined by the sender
 		/// </summary>
 		[DataMember(Name = "file_name", EmitDefaultValue = false)]
 		public string file_name { get; set; }
 		/// <summary>
-		/// Optional. MIME type of the file as defined by sender
+		/// Optional. MIME type of the file as defined by the sender
 		/// </summary>
 		[DataMember(Name = "mime_type", EmitDefaultValue = false)]
 		public string mime_type { get; set; }

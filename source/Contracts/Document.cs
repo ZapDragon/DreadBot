@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -41,17 +41,17 @@ namespace DreadBot
 		[DataMember(Name = "file_unique_id", IsRequired = true)]
 		public string file_unique_id { get; set; }
 		/// <summary>
-		/// Optional. Document thumbnail as defined by sender
+		/// Optional. Document thumbnail as defined by the sender
 		/// </summary>
 		[DataMember(Name = "thumbnail", EmitDefaultValue = false)]
 		public PhotoSize thumbnail { get; set; }
 		/// <summary>
-		/// Optional. Original filename as defined by sender
+		/// Optional. Original filename as defined by the sender
 		/// </summary>
 		[DataMember(Name = "file_name", EmitDefaultValue = false)]
 		public string file_name { get; set; }
 		/// <summary>
-		/// Optional. MIME type of the file as defined by sender
+		/// Optional. MIME type of the file as defined by the sender
 		/// </summary>
 		[DataMember(Name = "mime_type", EmitDefaultValue = false)]
 		public string mime_type { get; set; }

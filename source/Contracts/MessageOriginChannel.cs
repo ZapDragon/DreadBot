@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,25 +25,35 @@ using System.Runtime.Serialization;
 namespace DreadBot
 {
 	/// <summary>
-	/// This object defines the criteria used to request a suitable user. The identifier of the selected user will be shared with the bot when the corresponding button is pressed.
+	/// The message was originally sent to a channel chat.
 	/// </summary>
 	[DataContract]
-	public class KeyboardButtonRequestUser
+	public class MessageOriginChannel
 	{
 		/// <summary>
-		/// Signed 32-bit identifier of the request, which will be received back in the UserShared object. Must be unique within the message
+		/// Type of the message origin, always “channel”
 		/// </summary>
-		[DataMember(Name = "request_id", IsRequired = true)]
-		public int request_id { get; set; }
+		[DataMember(Name = "type", IsRequired = true)]
+		public string type { get; set; }
 		/// <summary>
-		/// Optional. Pass True to request a bot, pass False to request a regular user. If not specified, no additional restrictions are applied.
+		/// Date the message was sent originally in Unix time
 		/// </summary>
-		[DataMember(Name = "user_is_bot", EmitDefaultValue = false)]
-		public bool user_is_bot { get; set; }
+		[DataMember(Name = "date", IsRequired = true)]
+		public long date { get; set; }
 		/// <summary>
-		/// Optional. Pass True to request a premium user, pass False to request a non-premium user. If not specified, no additional restrictions are applied.
+		/// Channel chat to which the message was originally sent
 		/// </summary>
-		[DataMember(Name = "user_is_premium", EmitDefaultValue = false)]
-		public bool user_is_premium { get; set; }
+		[DataMember(Name = "chat", IsRequired = true)]
+		public Chat chat { get; set; }
+		/// <summary>
+		/// Unique message identifier inside the chat
+		/// </summary>
+		[DataMember(Name = "message_id", IsRequired = true)]
+		public long message_id { get; set; }
+		/// <summary>
+		/// Optional. Signature of the original post author
+		/// </summary>
+		[DataMember(Name = "author_signature", EmitDefaultValue = false)]
+		public string author_signature { get; set; }
 	}
 }

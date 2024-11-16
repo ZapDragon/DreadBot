@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -31,15 +31,15 @@ namespace DreadBot
 	public class Location
 	{
 		/// <summary>
-		/// Longitude as defined by sender
-		/// </summary>
-		[DataMember(Name = "longitude", IsRequired = true)]
-		public float longitude { get; set; }
-		/// <summary>
-		/// Latitude as defined by sender
+		/// Latitude as defined by the sender
 		/// </summary>
 		[DataMember(Name = "latitude", IsRequired = true)]
 		public float latitude { get; set; }
+		/// <summary>
+		/// Longitude as defined by the sender
+		/// </summary>
+		[DataMember(Name = "longitude", IsRequired = true)]
+		public float longitude { get; set; }
 		/// <summary>
 		/// Optional. The radius of uncertainty for the location, measured in meters; 0-1500
 		/// </summary>

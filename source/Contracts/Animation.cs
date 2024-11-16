@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -41,32 +41,32 @@ namespace DreadBot
 		[DataMember(Name = "file_unique_id", IsRequired = true)]
 		public string file_unique_id { get; set; }
 		/// <summary>
-		/// Video width as defined by sender
+		/// Video width as defined by the sender
 		/// </summary>
 		[DataMember(Name = "width", IsRequired = true)]
 		public int width { get; set; }
 		/// <summary>
-		/// Video height as defined by sender
+		/// Video height as defined by the sender
 		/// </summary>
 		[DataMember(Name = "height", IsRequired = true)]
 		public int height { get; set; }
 		/// <summary>
-		/// Duration of the video in seconds as defined by sender
+		/// Duration of the video in seconds as defined by the sender
 		/// </summary>
 		[DataMember(Name = "duration", IsRequired = true)]
 		public int duration { get; set; }
 		/// <summary>
-		/// Optional. Animation thumbnail as defined by sender
+		/// Optional. Animation thumbnail as defined by the sender
 		/// </summary>
 		[DataMember(Name = "thumbnail", EmitDefaultValue = false)]
 		public PhotoSize thumbnail { get; set; }
 		/// <summary>
-		/// Optional. Original animation filename as defined by sender
+		/// Optional. Original animation filename as defined by the sender
 		/// </summary>
 		[DataMember(Name = "file_name", EmitDefaultValue = false)]
 		public string file_name { get; set; }
 		/// <summary>
-		/// Optional. MIME type of the file as defined by sender
+		/// Optional. MIME type of the file as defined by the sender
 		/// </summary>
 		[DataMember(Name = "mime_type", EmitDefaultValue = false)]
 		public string mime_type { get; set; }

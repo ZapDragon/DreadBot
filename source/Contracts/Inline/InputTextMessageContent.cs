@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -46,9 +46,9 @@ namespace DreadBot
 		[DataMember(Name = "entities", EmitDefaultValue = false)]
 		public Array<MessageEntity> entities { get; set; }
 		/// <summary>
-		/// Optional. Disables link previews for links in the sent message
+		/// Optional. Link preview generation options for the message
 		/// </summary>
-		[DataMember(Name = "disable_web_page_preview", EmitDefaultValue = false)]
-		public bool disable_web_page_preview { get; set; }
+		[DataMember(Name = "link_preview_options", EmitDefaultValue = false)]
+		public LinkPreviewOptions link_preview_options { get; set; }
 	}
 }

@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -45,16 +45,6 @@ namespace DreadBot
 		/// </summary>
 		[DataMember(Name = "sticker_type", IsRequired = true)]
 		public string sticker_type { get; set; }
-		/// <summary>
-		/// True, if the sticker set contains animated stickers
-		/// </summary>
-		[DataMember(Name = "is_animated", IsRequired = true)]
-		public bool is_animated { get; set; }
-		/// <summary>
-		/// True, if the sticker set contains video stickers
-		/// </summary>
-		[DataMember(Name = "is_video", IsRequired = true)]
-		public bool is_video { get; set; }
 		/// <summary>
 		/// List of all set stickers
 		/// </summary>

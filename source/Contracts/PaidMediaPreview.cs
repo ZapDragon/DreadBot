@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,20 +25,30 @@ using System.Runtime.Serialization;
 namespace DreadBot
 {
 	/// <summary>
-	/// This object contains information about the user whose identifier was shared with the bot using a KeyboardButtonRequestUser button.
+	/// The paid media isn't available before the payment.
 	/// </summary>
 	[DataContract]
-	public class UserShared
+	public class PaidMediaPreview
 	{
 		/// <summary>
-		/// Identifier of the request
+		/// Type of the paid media, always “preview”
 		/// </summary>
-		[DataMember(Name = "request_id", IsRequired = true)]
-		public int request_id { get; set; }
+		[DataMember(Name = "type", IsRequired = true)]
+		public string type { get; set; }
 		/// <summary>
-		/// Identifier of the shared user. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier. The bot may not have access to the user and could be unable to use this identifier, unless the user is already known to the bot by some other means.
+		/// Optional. Media width as defined by the sender
 		/// </summary>
-		[DataMember(Name = "user_id", IsRequired = true)]
-		public long user_id { get; set; }
+		[DataMember(Name = "width", EmitDefaultValue = false)]
+		public int width { get; set; }
+		/// <summary>
+		/// Optional. Media height as defined by the sender
+		/// </summary>
+		[DataMember(Name = "height", EmitDefaultValue = false)]
+		public int height { get; set; }
+		/// <summary>
+		/// Optional. Duration of the media in seconds as defined by the sender
+		/// </summary>
+		[DataMember(Name = "duration", EmitDefaultValue = false)]
+		public int duration { get; set; }
 	}
 }

@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -75,5 +75,15 @@ namespace DreadBot
 		/// </summary>
 		[DataMember(Name = "pending_join_request_count", EmitDefaultValue = false)]
 		public int pending_join_request_count { get; set; }
+		/// <summary>
+		/// Optional. The number of seconds the subscription will be active for before the next payment
+		/// </summary>
+		[DataMember(Name = "subscription_period", EmitDefaultValue = false)]
+		public int subscription_period { get; set; }
+		/// <summary>
+		/// Optional. The amount of Telegram Stars a user must pay initially and after each subsequent subscription period to be a member of the chat using the link
+		/// </summary>
+		[DataMember(Name = "subscription_price", EmitDefaultValue = false)]
+		public int subscription_price { get; set; }
 	}
 }

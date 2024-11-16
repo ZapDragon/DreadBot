@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,7 +25,7 @@ using System.Runtime.Serialization;
 namespace DreadBot
 {
 	/// <summary>
-	/// This object contains information about the chat whose identifier was shared with the bot using a KeyboardButtonRequestChat button.
+	/// This object contains information about a chat that was shared with the bot using a KeyboardButtonRequestChat button.
 	/// </summary>
 	[DataContract]
 	public class ChatShared
@@ -40,5 +40,20 @@ namespace DreadBot
 		/// </summary>
 		[DataMember(Name = "chat_id", IsRequired = true)]
 		public int chat_id { get; set; }
+		/// <summary>
+		/// Optional. Title of the chat, if the title was requested by the bot.
+		/// </summary>
+		[DataMember(Name = "title", EmitDefaultValue = false)]
+		public string title { get; set; }
+		/// <summary>
+		/// Optional. Username of the chat, if the username was requested by the bot and available.
+		/// </summary>
+		[DataMember(Name = "username", EmitDefaultValue = false)]
+		public string username { get; set; }
+		/// <summary>
+		/// Optional. Available sizes of the chat photo, if the photo was requested by the bot
+		/// </summary>
+		[DataMember(Name = "photo", EmitDefaultValue = false)]
+		public Array<PhotoSize> photo { get; set; }
 	}
 }

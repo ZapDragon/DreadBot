@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -46,7 +46,7 @@ namespace DreadBot
 		[DataMember(Name = "start_parameter", IsRequired = true)]
 		public string start_parameter { get; set; }
 		/// <summary>
-		/// Three-letter ISO 4217 currency code
+		/// Three-letter ISO 4217 currency code, or “XTR” for payments in Telegram Stars
 		/// </summary>
 		[DataMember(Name = "currency", IsRequired = true)]
 		public string currency { get; set; }

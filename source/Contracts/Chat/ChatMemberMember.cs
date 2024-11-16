@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -30,5 +30,10 @@ namespace DreadBot
 	[DataContract]
 	public class ChatMemberMember : ChatMember
 	{
+		/// <summary>
+		/// Optional. Date when the user's subscription will expire; Unix time
+		/// </summary>
+		[DataMember(Name = "until_date", EmitDefaultValue = false)]
+		public long until_date { get; set; }
 	}
 }

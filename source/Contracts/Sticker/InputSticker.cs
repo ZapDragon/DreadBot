@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -31,10 +31,15 @@ namespace DreadBot
 	public class InputSticker
 	{
 		/// <summary>
-		/// The added sticker. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. Animated and video stickers can't be uploaded via HTTP URL. More information on Sending Files »
+		/// The added sticker. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, upload a new one using multipart/form-data, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. Animated and video stickers can't be uploaded via HTTP URL. More information on Sending Files »
 		/// </summary>
 		[DataMember(Name = "sticker", IsRequired = true)]
 		public object sticker { get; set; }
+		/// <summary>
+		/// Format of the added sticker, must be one of “static” for a .WEBP or .PNG image, “animated” for a .TGS animation, “video” for a WEBM video
+		/// </summary>
+		[DataMember(Name = "format", IsRequired = true)]
+		public string format { get; set; }
 		/// <summary>
 		/// List of 1-20 emoji associated with the sticker
 		/// </summary>

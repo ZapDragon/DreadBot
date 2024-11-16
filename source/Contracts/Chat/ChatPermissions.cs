@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -31,7 +31,7 @@ namespace DreadBot
 	public class ChatPermissions
 	{
 		/// <summary>
-		/// Optional. True, if the user is allowed to send text messages, contacts, invoices, locations and venues
+		/// Optional. True, if the user is allowed to send text messages, contacts, giveaways, giveaway winners, invoices, locations and venues
 		/// </summary>
 		[DataMember(Name = "can_send_messages", EmitDefaultValue = false)]
 		public bool can_send_messages { get; set; }

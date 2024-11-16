@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -31,7 +31,7 @@ namespace DreadBot
 	public class ChatMemberBanned : ChatMember
 	{
 		/// <summary>
-		/// Date when restrictions will be lifted for this user; unix time. If 0, then the user is banned forever
+		/// Date when restrictions will be lifted for this user; Unix time. If 0, then the user is banned forever
 		/// </summary>
 		[DataMember(Name = "until_date", IsRequired = true)]
 		public long until_date { get; set; }

@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -41,10 +41,10 @@ namespace DreadBot
 		[DataMember(Name = "from", IsRequired = true)]
 		public User from { get; set; }
 		/// <summary>
-		/// Optional. Message with the callback button that originated the query. Note that message content and message date will not be available if the message is too old
+		/// Optional. Message sent by the bot with the callback button that originated the query
 		/// </summary>
 		[DataMember(Name = "message", EmitDefaultValue = false)]
-		public Message message { get; set; }
+		public MaybeInaccessibleMessage message { get; set; }
 		/// <summary>
 		/// Optional. Identifier of the message sent via the bot in inline mode, that originated the query.
 		/// </summary>

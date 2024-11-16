@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -46,22 +46,22 @@ namespace DreadBot
 		[DataMember(Name = "payload", IsRequired = true)]
 		public string payload { get; set; }
 		/// <summary>
-		/// Payment provider token, obtained via @BotFather
+		/// Optional. Payment provider token, obtained via @BotFather. Pass an empty string for payments in Telegram Stars.
 		/// </summary>
-		[DataMember(Name = "provider_token", IsRequired = true)]
+		[DataMember(Name = "provider_token", EmitDefaultValue = false)]
 		public string provider_token { get; set; }
 		/// <summary>
-		/// Three-letter ISO 4217 currency code, see more on currencies
+		/// Three-letter ISO 4217 currency code, see more on currencies. Pass “XTR” for payments in Telegram Stars.
 		/// </summary>
 		[DataMember(Name = "currency", IsRequired = true)]
 		public string currency { get; set; }
 		/// <summary>
-		/// Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)
+		/// Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.). Must contain exactly one item for payments in Telegram Stars.
 		/// </summary>
 		[DataMember(Name = "prices", IsRequired = true)]
 		public Array<LabeledPrice> prices { get; set; }
 		/// <summary>
-		/// Optional. The maximum accepted amount for tips in the smallest units of the currency (integer, not float/double). For example, for a maximum tip of US$ 1.45 pass max_tip_amount = 145. See the exp parameter in currencies.json, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0
+		/// Optional. The maximum accepted amount for tips in the smallest units of the currency (integer, not float/double). For example, for a maximum tip of US$ 1.45 pass max_tip_amount = 145. See the exp parameter in currencies.json, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in Telegram Stars.
 		/// </summary>
 		[DataMember(Name = "max_tip_amount", EmitDefaultValue = false)]
 		public int max_tip_amount { get; set; }
@@ -96,37 +96,37 @@ namespace DreadBot
 		[DataMember(Name = "photo_height", EmitDefaultValue = false)]
 		public int photo_height { get; set; }
 		/// <summary>
-		/// Optional. Pass True if you require the user's full name to complete the order
+		/// Optional. Pass True if you require the user's full name to complete the order. Ignored for payments in Telegram Stars.
 		/// </summary>
 		[DataMember(Name = "need_name", EmitDefaultValue = false)]
 		public bool need_name { get; set; }
 		/// <summary>
-		/// Optional. Pass True if you require the user's phone number to complete the order
+		/// Optional. Pass True if you require the user's phone number to complete the order. Ignored for payments in Telegram Stars.
 		/// </summary>
 		[DataMember(Name = "need_phone_number", EmitDefaultValue = false)]
 		public bool need_phone_number { get; set; }
 		/// <summary>
-		/// Optional. Pass True if you require the user's email address to complete the order
+		/// Optional. Pass True if you require the user's email address to complete the order. Ignored for payments in Telegram Stars.
 		/// </summary>
 		[DataMember(Name = "need_email", EmitDefaultValue = false)]
 		public bool need_email { get; set; }
 		/// <summary>
-		/// Optional. Pass True if you require the user's shipping address to complete the order
+		/// Optional. Pass True if you require the user's shipping address to complete the order. Ignored for payments in Telegram Stars.
 		/// </summary>
 		[DataMember(Name = "need_shipping_address", EmitDefaultValue = false)]
 		public bool need_shipping_address { get; set; }
 		/// <summary>
-		/// Optional. Pass True if the user's phone number should be sent to provider
+		/// Optional. Pass True if the user's phone number should be sent to the provider. Ignored for payments in Telegram Stars.
 		/// </summary>
 		[DataMember(Name = "send_phone_number_to_provider", EmitDefaultValue = false)]
 		public bool send_phone_number_to_provider { get; set; }
 		/// <summary>
-		/// Optional. Pass True if the user's email address should be sent to provider
+		/// Optional. Pass True if the user's email address should be sent to the provider. Ignored for payments in Telegram Stars.
 		/// </summary>
 		[DataMember(Name = "send_email_to_provider", EmitDefaultValue = false)]
 		public bool send_email_to_provider { get; set; }
 		/// <summary>
-		/// Optional. Pass True if the final price depends on the shipping method
+		/// Optional. Pass True if the final price depends on the shipping method. Ignored for payments in Telegram Stars.
 		/// </summary>
 		[DataMember(Name = "is_flexible", EmitDefaultValue = false)]
 		public bool is_flexible { get; set; }

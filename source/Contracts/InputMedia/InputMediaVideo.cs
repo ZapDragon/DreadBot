@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -35,6 +35,11 @@ namespace DreadBot
 		/// </summary>
 		[DataMember(Name = "thumbnail", EmitDefaultValue = false)]
 		public object thumbnail { get; set; }
+		/// <summary>
+		/// Optional. Pass True, if the caption must be shown above the message media
+		/// </summary>
+		[DataMember(Name = "show_caption_above_media", EmitDefaultValue = false)]
+		public bool show_caption_above_media { get; set; }
 		/// <summary>
 		/// Optional. Video width
 		/// </summary>

@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -60,5 +60,15 @@ namespace DreadBot
 		/// </summary>
 		[DataMember(Name = "invite_link", EmitDefaultValue = false)]
 		public ChatInviteLink invite_link { get; set; }
+		/// <summary>
+		/// Optional. True, if the user joined the chat after sending a direct join request without using an invite link and being approved by an administrator
+		/// </summary>
+		[DataMember(Name = "via_join_request", EmitDefaultValue = false)]
+		public bool via_join_request { get; set; }
+		/// <summary>
+		/// Optional. True, if the user joined the chat via a chat folder invite link
+		/// </summary>
+		[DataMember(Name = "via_chat_folder_invite_link", EmitDefaultValue = false)]
+		public bool via_chat_folder_invite_link { get; set; }
 	}
 }

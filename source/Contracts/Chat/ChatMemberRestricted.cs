@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -36,7 +36,7 @@ namespace DreadBot
 		[DataMember(Name = "is_member", IsRequired = true)]
 		public bool is_member { get; set; }
 		/// <summary>
-		/// True, if the user is allowed to send text messages, contacts, invoices, locations and venues
+		/// True, if the user is allowed to send text messages, contacts, giveaways, giveaway winners, invoices, locations and venues
 		/// </summary>
 		[DataMember(Name = "can_send_messages", IsRequired = true)]
 		public bool can_send_messages { get; set; }
@@ -106,7 +106,7 @@ namespace DreadBot
 		[DataMember(Name = "can_manage_topics", IsRequired = true)]
 		public bool can_manage_topics { get; set; }
 		/// <summary>
-		/// Date when restrictions will be lifted for this user; unix time. If 0, then the user is restricted forever
+		/// Date when restrictions will be lifted for this user; Unix time. If 0, then the user is restricted forever
 		/// </summary>
 		[DataMember(Name = "until_date", IsRequired = true)]
 		public long until_date { get; set; }

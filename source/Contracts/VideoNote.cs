@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -41,12 +41,12 @@ namespace DreadBot
 		[DataMember(Name = "file_unique_id", IsRequired = true)]
 		public string file_unique_id { get; set; }
 		/// <summary>
-		/// Video width and height (diameter of the video message) as defined by sender
+		/// Video width and height (diameter of the video message) as defined by the sender
 		/// </summary>
 		[DataMember(Name = "length", IsRequired = true)]
 		public int length { get; set; }
 		/// <summary>
-		/// Duration of the video in seconds as defined by sender
+		/// Duration of the video in seconds as defined by the sender
 		/// </summary>
 		[DataMember(Name = "duration", IsRequired = true)]
 		public int duration { get; set; }

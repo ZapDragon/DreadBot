@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,7 +25,7 @@ using System.Runtime.Serialization;
 namespace DreadBot
 {
 	/// <summary>
-	/// This object represents one button of the reply keyboard. For simple text buttons, String can be used instead of this object to specify the button text. The optional fields web_app, request_user, request_chat, request_contact, request_location, and request_poll are mutually exclusive.
+	/// This object represents one button of the reply keyboard. At most one of the optional fields must be used to specify type of the button. For simple text buttons, String can be used instead of this object to specify the button text.
 	/// </summary>
 	[DataContract]
 	public class KeyboardButton
@@ -36,10 +36,10 @@ namespace DreadBot
 		[DataMember(Name = "text", IsRequired = true)]
 		public string text { get; set; }
 		/// <summary>
-		/// Optional. If specified, pressing the button will open a list of suitable users. Tapping on any user will send their identifier to the bot in a “user_shared” service message. Available in private chats only.
+		/// Optional. If specified, pressing the button will open a list of suitable users. Identifiers of selected users will be sent to the bot in a “users_shared” service message. Available in private chats only.
 		/// </summary>
-		[DataMember(Name = "request_user", EmitDefaultValue = false)]
-		public KeyboardButtonRequestUser request_user { get; set; }
+		[DataMember(Name = "request_users", EmitDefaultValue = false)]
+		public KeyboardButtonRequestUsers request_users { get; set; }
 		/// <summary>
 		/// Optional. If specified, pressing the button will open a list of suitable chats. Tapping on a chat will send its identifier to the bot in a “chat_shared” service message. Available in private chats only.
 		/// </summary>

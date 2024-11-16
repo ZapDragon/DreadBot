@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,7 +25,7 @@ using System.Runtime.Serialization;
 namespace DreadBot
 {
 	/// <summary>
-	/// Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot's message and tapped 'Reply'). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice privacy mode.
+	/// Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot's message and tapped 'Reply'). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice privacy mode. Not supported in channels and for messages sent on behalf of a Telegram Business account.
 	/// </summary>
 	[DataContract]
 	public class ForceReply
@@ -41,7 +41,7 @@ namespace DreadBot
 		[DataMember(Name = "input_field_placeholder", EmitDefaultValue = false)]
 		public string input_field_placeholder { get; set; }
 		/// <summary>
-		/// Optional. Use this parameter if you want to force reply from specific users only. Targets: 1) users that are @mentioned in the text of the Message object; 2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.
+		/// Optional. Use this parameter if you want to force reply from specific users only. Targets: 1) users that are @mentioned in the text of the Message object; 2) if the bot's message is a reply to a message in the same chat and forum topic, sender of the original message.
 		/// </summary>
 		[DataMember(Name = "selective", EmitDefaultValue = false)]
 		public bool selective { get; set; }

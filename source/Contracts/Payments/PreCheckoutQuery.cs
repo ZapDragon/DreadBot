@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -41,7 +41,7 @@ namespace DreadBot
 		[DataMember(Name = "from", IsRequired = true)]
 		public User from { get; set; }
 		/// <summary>
-		/// Three-letter ISO 4217 currency code
+		/// Three-letter ISO 4217 currency code, or “XTR” for payments in Telegram Stars
 		/// </summary>
 		[DataMember(Name = "currency", IsRequired = true)]
 		public string currency { get; set; }
@@ -51,7 +51,7 @@ namespace DreadBot
 		[DataMember(Name = "total_amount", IsRequired = true)]
 		public int total_amount { get; set; }
 		/// <summary>
-		/// Bot specified invoice payload
+		/// Bot-specified invoice payload
 		/// </summary>
 		[DataMember(Name = "invoice_payload", IsRequired = true)]
 		public string invoice_payload { get; set; }

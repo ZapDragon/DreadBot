@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -35,6 +35,11 @@ namespace DreadBot
 		/// </summary>
 		[DataMember(Name = "text", IsRequired = true)]
 		public string text { get; set; }
+		/// <summary>
+		/// Optional. Special entities that appear in the option text. Currently, only custom emoji entities are allowed in poll option texts
+		/// </summary>
+		[DataMember(Name = "text_entities", EmitDefaultValue = false)]
+		public Array<MessageEntity> text_entities { get; set; }
 		/// <summary>
 		/// Number of users that voted for this option
 		/// </summary>

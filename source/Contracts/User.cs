@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -85,5 +85,15 @@ namespace DreadBot
 		/// </summary>
 		[DataMember(Name = "supports_inline_queries", EmitDefaultValue = false)]
 		public bool supports_inline_queries { get; set; }
+		/// <summary>
+		/// Optional. True, if the bot can be connected to a Telegram Business account to receive its messages. Returned only in getMe.
+		/// </summary>
+		[DataMember(Name = "can_connect_to_business", EmitDefaultValue = false)]
+		public bool can_connect_to_business { get; set; }
+		/// <summary>
+		/// Optional. True, if the bot has a main Web App. Returned only in getMe.
+		/// </summary>
+		[DataMember(Name = "has_main_web_app", EmitDefaultValue = false)]
+		public bool has_main_web_app { get; set; }
 	}
 }

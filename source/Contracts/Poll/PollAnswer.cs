@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -36,12 +36,17 @@ namespace DreadBot
 		[DataMember(Name = "poll_id", IsRequired = true)]
 		public string poll_id { get; set; }
 		/// <summary>
-		/// The user, who changed the answer to the poll
+		/// Optional. The chat that changed the answer to the poll, if the voter is anonymous
 		/// </summary>
-		[DataMember(Name = "user", IsRequired = true)]
+		[DataMember(Name = "voter_chat", EmitDefaultValue = false)]
+		public Chat voter_chat { get; set; }
+		/// <summary>
+		/// Optional. The user that changed the answer to the poll, if the voter isn't anonymous
+		/// </summary>
+		[DataMember(Name = "user", EmitDefaultValue = false)]
 		public User user { get; set; }
 		/// <summary>
-		/// 0-based identifiers of answer options, chosen by the user. May be empty if the user retracted their vote.
+		/// 0-based identifiers of chosen answer options. May be empty if the vote was retracted.
 		/// </summary>
 		[DataMember(Name = "option_ids", IsRequired = true)]
 		public Array<int> option_ids { get; set; }

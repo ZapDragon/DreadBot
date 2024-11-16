@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -41,55 +41,45 @@ namespace DreadBot
 		[DataMember(Name = "message_thread_id", EmitDefaultValue = false)]
 		public int message_thread_id { get; set; }
 		/// <summary>
-		/// Optional. Sender of the message; empty for messages sent to channels. For backward compatibility, the field contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat.
+		/// Optional. Sender of the message; may be empty for messages sent to channels. For backward compatibility, if the message was sent on behalf of a chat, the field contains a fake sender user in non-channel chats
 		/// </summary>
 		[DataMember(Name = "from", EmitDefaultValue = false)]
 		public User from { get; set; }
 		/// <summary>
-		/// Optional. Sender of the message, sent on behalf of a chat. For example, the channel itself for channel posts, the supergroup itself for messages from anonymous group administrators, the linked channel for messages automatically forwarded to the discussion group. For backward compatibility, the field from contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat.
+		/// Optional. Sender of the message when sent on behalf of a chat. For example, the supergroup itself for messages sent by its anonymous administrators or a linked channel for messages automatically forwarded to the channel's discussion group. For backward compatibility, if the message was sent on behalf of a chat, the field from contains a fake sender user in non-channel chats.
 		/// </summary>
 		[DataMember(Name = "sender_chat", EmitDefaultValue = false)]
 		public Chat sender_chat { get; set; }
 		/// <summary>
-		/// Date the message was sent in Unix time
+		/// Optional. If the sender of the message boosted the chat, the number of boosts added by the user
+		/// </summary>
+		[DataMember(Name = "sender_boost_count", EmitDefaultValue = false)]
+		public int sender_boost_count { get; set; }
+		/// <summary>
+		/// Optional. The bot that actually sent the message on behalf of the business account. Available only for outgoing messages sent on behalf of the connected business account.
+		/// </summary>
+		[DataMember(Name = "sender_business_bot", EmitDefaultValue = false)]
+		public User sender_business_bot { get; set; }
+		/// <summary>
+		/// Date the message was sent in Unix time. It is always a positive number, representing a valid date.
 		/// </summary>
 		[DataMember(Name = "date", IsRequired = true)]
 		public long date { get; set; }
 		/// <summary>
-		/// Conversation the message belongs to
+		/// Optional. Unique identifier of the business connection from which the message was received. If non-empty, the message belongs to a chat of the corresponding business account that is independent from any potential bot chat which might share the same identifier.
+		/// </summary>
+		[DataMember(Name = "business_connection_id", EmitDefaultValue = false)]
+		public string business_connection_id { get; set; }
+		/// <summary>
+		/// Chat the message belongs to
 		/// </summary>
 		[DataMember(Name = "chat", IsRequired = true)]
 		public Chat chat { get; set; }
 		/// <summary>
-		/// Optional. For forwarded messages, sender of the original message
+		/// Optional. Information about the original message for forwarded messages
 		/// </summary>
-		[DataMember(Name = "forward_from", EmitDefaultValue = false)]
-		public User forward_from { get; set; }
-		/// <summary>
-		/// Optional. For messages forwarded from channels or from anonymous administrators, information about the original sender chat
-		/// </summary>
-		[DataMember(Name = "forward_from_chat", EmitDefaultValue = false)]
-		public Chat forward_from_chat { get; set; }
-		/// <summary>
-		/// Optional. For messages forwarded from channels, identifier of the original message in the channel
-		/// </summary>
-		[DataMember(Name = "forward_from_message_id", EmitDefaultValue = false)]
-		public long forward_from_message_id { get; set; }
-		/// <summary>
-		/// Optional. For forwarded messages that were originally sent in channels or by an anonymous chat administrator, signature of the message sender if present
-		/// </summary>
-		[DataMember(Name = "forward_signature", EmitDefaultValue = false)]
-		public string forward_signature { get; set; }
-		/// <summary>
-		/// Optional. Sender's name for messages forwarded from users who disallow adding a link to their account in forwarded messages
-		/// </summary>
-		[DataMember(Name = "forward_sender_name", EmitDefaultValue = false)]
-		public string forward_sender_name { get; set; }
-		/// <summary>
-		/// Optional. For forwarded messages, date the original message was sent in Unix time
-		/// </summary>
-		[DataMember(Name = "forward_date", EmitDefaultValue = false)]
-		public long forward_date { get; set; }
+		[DataMember(Name = "forward_origin", EmitDefaultValue = false)]
+		public MessageOrigin forward_origin { get; set; }
 		/// <summary>
 		/// Optional. True, if the message is sent to a forum topic
 		/// </summary>
@@ -101,10 +91,25 @@ namespace DreadBot
 		[DataMember(Name = "is_automatic_forward", EmitDefaultValue = false)]
 		public bool is_automatic_forward { get; set; }
 		/// <summary>
-		/// Optional. For replies, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
+		/// Optional. For replies in the same chat and message thread, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
 		/// </summary>
 		[DataMember(Name = "reply_to_message", EmitDefaultValue = false)]
 		public Message reply_to_message { get; set; }
+		/// <summary>
+		/// Optional. Information about the message that is being replied to, which may come from another chat or forum topic
+		/// </summary>
+		[DataMember(Name = "external_reply", EmitDefaultValue = false)]
+		public ExternalReplyInfo external_reply { get; set; }
+		/// <summary>
+		/// Optional. For replies that quote part of the original message, the quoted part of the message
+		/// </summary>
+		[DataMember(Name = "quote", EmitDefaultValue = false)]
+		public TextQuote quote { get; set; }
+		/// <summary>
+		/// Optional. For replies to a story, the original story
+		/// </summary>
+		[DataMember(Name = "reply_to_story", EmitDefaultValue = false)]
+		public Story reply_to_story { get; set; }
 		/// <summary>
 		/// Optional. Bot through which the message was sent
 		/// </summary>
@@ -120,6 +125,11 @@ namespace DreadBot
 		/// </summary>
 		[DataMember(Name = "has_protected_content", EmitDefaultValue = false)]
 		public bool has_protected_content { get; set; }
+		/// <summary>
+		/// Optional. True, if the message was sent by an implicit action, for example, as an away or a greeting business message, or as a scheduled message
+		/// </summary>
+		[DataMember(Name = "is_from_offline", EmitDefaultValue = false)]
+		public bool is_from_offline { get; set; }
 		/// <summary>
 		/// Optional. The unique identifier of a media message group this message belongs to
 		/// </summary>
@@ -141,6 +151,16 @@ namespace DreadBot
 		[DataMember(Name = "entities", EmitDefaultValue = false)]
 		public Array<MessageEntity> entities { get; set; }
 		/// <summary>
+		/// Optional. Options used for link preview generation for the message, if it is a text message and link preview options were changed
+		/// </summary>
+		[DataMember(Name = "link_preview_options", EmitDefaultValue = false)]
+		public LinkPreviewOptions link_preview_options { get; set; }
+		/// <summary>
+		/// Optional. Unique identifier of the message effect added to the message
+		/// </summary>
+		[DataMember(Name = "effect_id", EmitDefaultValue = false)]
+		public string effect_id { get; set; }
+		/// <summary>
 		/// Optional. Message is an animation, information about the animation. For backward compatibility, when this field is set, the document field will also be set
 		/// </summary>
 		[DataMember(Name = "animation", EmitDefaultValue = false)]
@@ -156,6 +176,11 @@ namespace DreadBot
 		[DataMember(Name = "document", EmitDefaultValue = false)]
 		public Document document { get; set; }
 		/// <summary>
+		/// Optional. Message contains paid media; information about the paid media
+		/// </summary>
+		[DataMember(Name = "paid_media", EmitDefaultValue = false)]
+		public PaidMediaInfo paid_media { get; set; }
+		/// <summary>
 		/// Optional. Message is a photo, available sizes of the photo
 		/// </summary>
 		[DataMember(Name = "photo", EmitDefaultValue = false)]
@@ -165,6 +190,11 @@ namespace DreadBot
 		/// </summary>
 		[DataMember(Name = "sticker", EmitDefaultValue = false)]
 		public Sticker sticker { get; set; }
+		/// <summary>
+		/// Optional. Message is a forwarded story
+		/// </summary>
+		[DataMember(Name = "story", EmitDefaultValue = false)]
+		public Story story { get; set; }
 		/// <summary>
 		/// Optional. Message is a video, information about the video
 		/// </summary>
@@ -181,7 +211,7 @@ namespace DreadBot
 		[DataMember(Name = "voice", EmitDefaultValue = false)]
 		public Voice voice { get; set; }
 		/// <summary>
-		/// Optional. Caption for the animation, audio, document, photo, video or voice
+		/// Optional. Caption for the animation, audio, document, paid media, photo, video or voice
 		/// </summary>
 		[DataMember(Name = "caption", EmitDefaultValue = false)]
 		public string caption { get; set; }
@@ -190,6 +220,11 @@ namespace DreadBot
 		/// </summary>
 		[DataMember(Name = "caption_entities", EmitDefaultValue = false)]
 		public Array<MessageEntity> caption_entities { get; set; }
+		/// <summary>
+		/// Optional. True, if the caption must be shown above the message media
+		/// </summary>
+		[DataMember(Name = "show_caption_above_media", EmitDefaultValue = false)]
+		public bool show_caption_above_media { get; set; }
 		/// <summary>
 		/// Optional. True, if the message media is covered by a spoiler animation
 		/// </summary>
@@ -281,10 +316,10 @@ namespace DreadBot
 		[DataMember(Name = "migrate_from_chat_id", EmitDefaultValue = false)]
 		public long migrate_from_chat_id { get; set; } = 0;
 		/// <summary>
-		/// Optional. Specified message was pinned. Note that the Message object in this field will not contain further reply_to_message fields even if it is itself a reply.
+		/// Optional. Specified message was pinned. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
 		/// </summary>
 		[DataMember(Name = "pinned_message", EmitDefaultValue = false)]
-		public Message pinned_message { get; set; }
+		public MaybeInaccessibleMessage pinned_message { get; set; }
 		/// <summary>
 		/// Optional. Message is an invoice for a payment, information about the invoice. More about payments »
 		/// </summary>
@@ -296,10 +331,15 @@ namespace DreadBot
 		[DataMember(Name = "successful_payment", EmitDefaultValue = false)]
 		public SuccessfulPayment successful_payment { get; set; }
 		/// <summary>
-		/// Optional. Service message: a user was shared with the bot
+		/// Optional. Message is a service message about a refunded payment, information about the payment. More about payments »
 		/// </summary>
-		[DataMember(Name = "user_shared", EmitDefaultValue = false)]
-		public UserShared user_shared { get; set; }
+		[DataMember(Name = "refunded_payment", EmitDefaultValue = false)]
+		public RefundedPayment refunded_payment { get; set; }
+		/// <summary>
+		/// Optional. Service message: users were shared with the bot
+		/// </summary>
+		[DataMember(Name = "users_shared", EmitDefaultValue = false)]
+		public UsersShared users_shared { get; set; }
 		/// <summary>
 		/// Optional. Service message: a chat was shared with the bot
 		/// </summary>
@@ -311,7 +351,7 @@ namespace DreadBot
 		[DataMember(Name = "connected_website", EmitDefaultValue = false)]
 		public string connected_website { get; set; }
 		/// <summary>
-		/// Optional. Service message: the user allowed the bot added to the attachment menu to write messages
+		/// Optional. Service message: the user allowed the bot to write messages after adding it to the attachment or side menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method requestWriteAccess
 		/// </summary>
 		[DataMember(Name = "write_access_allowed", EmitDefaultValue = false)]
 		public WriteAccessAllowed write_access_allowed { get; set; }
@@ -325,6 +365,16 @@ namespace DreadBot
 		/// </summary>
 		[DataMember(Name = "proximity_alert_triggered", EmitDefaultValue = false)]
 		public ProximityAlertTriggered proximity_alert_triggered { get; set; }
+		/// <summary>
+		/// Optional. Service message: user boosted the chat
+		/// </summary>
+		[DataMember(Name = "boost_added", EmitDefaultValue = false)]
+		public ChatBoostAdded boost_added { get; set; }
+		/// <summary>
+		/// Optional. Service message: chat background set
+		/// </summary>
+		[DataMember(Name = "chat_background_set", EmitDefaultValue = false)]
+		public ChatBackground chat_background_set { get; set; }
 		/// <summary>
 		/// Optional. Service message: forum topic created
 		/// </summary>
@@ -355,6 +405,26 @@ namespace DreadBot
 		/// </summary>
 		[DataMember(Name = "general_forum_topic_unhidden", EmitDefaultValue = false)]
 		public GeneralForumTopicUnhidden general_forum_topic_unhidden { get; set; }
+		/// <summary>
+		/// Optional. Service message: a scheduled giveaway was created
+		/// </summary>
+		[DataMember(Name = "giveaway_created", EmitDefaultValue = false)]
+		public GiveawayCreated giveaway_created { get; set; }
+		/// <summary>
+		/// Optional. The message is a scheduled giveaway message
+		/// </summary>
+		[DataMember(Name = "giveaway", EmitDefaultValue = false)]
+		public Giveaway giveaway { get; set; }
+		/// <summary>
+		/// Optional. A giveaway with public winners was completed
+		/// </summary>
+		[DataMember(Name = "giveaway_winners", EmitDefaultValue = false)]
+		public GiveawayWinners giveaway_winners { get; set; }
+		/// <summary>
+		/// Optional. Service message: a giveaway without public winners was completed
+		/// </summary>
+		[DataMember(Name = "giveaway_completed", EmitDefaultValue = false)]
+		public GiveawayCompleted giveaway_completed { get; set; }
 		/// <summary>
 		/// Optional. Service message: video chat scheduled
 		/// </summary>

@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -26,7 +26,7 @@ using System.Runtime.Serialization;
 namespace DreadBot
 {
 	/// <summary>
-	/// This object represents a custom keyboard with reply options (see Introduction to bots for details and examples).
+	/// This object represents a custom keyboard with reply options (see Introduction to bots for details and examples). Not supported in channels and for messages sent on behalf of a Telegram Business account.
 	/// </summary>
 	[DataContract]
 	public class ReplyKeyboardMarkup : KeyboardMarkup
@@ -57,7 +57,7 @@ namespace DreadBot
 		[DataMember(Name = "input_field_placeholder", EmitDefaultValue = false)]
 		public string input_field_placeholder { get; set; }
 		/// <summary>
-		/// Optional. Use this parameter if you want to show the keyboard to specific users only. Targets: 1) users that are @mentioned in the text of the Message object; 2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.Example: A user requests to change the bot's language, bot replies to the request with a keyboard to select the new language. Other users in the group don't see the keyboard.
+		/// Optional. Use this parameter if you want to show the keyboard to specific users only. Targets: 1) users that are @mentioned in the text of the Message object; 2) if the bot's message is a reply to a message in the same chat and forum topic, sender of the original message.Example: A user requests to change the bot's language, bot replies to the request with a keyboard to select the new language. Other users in the group don't see the keyboard.
 		/// </summary>
 		[DataMember(Name = "selective", EmitDefaultValue = false)]
 		public bool selective { get; set; }

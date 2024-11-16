@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -30,6 +30,11 @@ namespace DreadBot
 	[DataContract]
 	public class InputMediaPhoto : InputMedia
 	{
+		/// <summary>
+		/// Optional. Pass True, if the caption must be shown above the message media
+		/// </summary>
+		[DataMember(Name = "show_caption_above_media", EmitDefaultValue = false)]
+		public bool show_caption_above_media { get; set; }
 		/// <summary>
 		/// Optional. Pass True if the photo needs to be covered with a spoiler animation
 		/// </summary>

@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -36,7 +36,7 @@ namespace DreadBot
 		[DataMember(Name = "emoji", IsRequired = true)]
 		public string emoji { get; set; }
 		/// <summary>
-		/// ____simple_html_dom__voku__html_wrapper____>Value of the dice, 1-6 for “🎲”, “🎯” and “🎳” base emoji, 1-5 for “🏀” and “⚽” base emoji, 1-64 for “🎰” base emoji
+		/// Value of the dice, 1-6 for “🎲”, “🎯” and “🎳” base emoji, 1-5 for “🏀” and “⚽” base emoji, 1-64 for “🎰” base emoji
 		/// </summary>
 		[DataMember(Name = "value", IsRequired = true)]
 		public int value { get; set; }

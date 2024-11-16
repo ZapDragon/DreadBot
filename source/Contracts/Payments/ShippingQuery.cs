@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -41,7 +41,7 @@ namespace DreadBot
 		[DataMember(Name = "from", IsRequired = true)]
 		public User from { get; set; }
 		/// <summary>
-		/// Bot specified invoice payload
+		/// Bot-specified invoice payload
 		/// </summary>
 		[DataMember(Name = "invoice_payload", IsRequired = true)]
 		public string invoice_payload { get; set; }

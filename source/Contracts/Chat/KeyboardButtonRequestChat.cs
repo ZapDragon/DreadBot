@@ -1,6 +1,6 @@
 #region License 
 //MIT License
-//Copyright(c) [2023]
+//Copyright(c) [2024]
 //[Xylex Sirrush Rayne]
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,7 +25,7 @@ using System.Runtime.Serialization;
 namespace DreadBot
 {
 	/// <summary>
-	/// This object defines the criteria used to request a suitable chat. The identifier of the selected chat will be shared with the bot when the corresponding button is pressed.
+	/// This object defines the criteria used to request a suitable chat. Information about the selected chat will be shared with the bot when the corresponding button is pressed. The bot will be granted requested rights in the chat if appropriate. More about requesting chats ».
 	/// </summary>
 	[DataContract]
 	public class KeyboardButtonRequestChat
@@ -70,5 +70,20 @@ namespace DreadBot
 		/// </summary>
 		[DataMember(Name = "bot_is_member", EmitDefaultValue = false)]
 		public bool bot_is_member { get; set; }
+		/// <summary>
+		/// Optional. Pass True to request the chat's title
+		/// </summary>
+		[DataMember(Name = "request_title", EmitDefaultValue = false)]
+		public bool request_title { get; set; }
+		/// <summary>
+		/// Optional. Pass True to request the chat's username
+		/// </summary>
+		[DataMember(Name = "request_username", EmitDefaultValue = false)]
+		public bool request_username { get; set; }
+		/// <summary>
+		/// Optional. Pass True to request the chat's photo
+		/// </summary>
+		[DataMember(Name = "request_photo", EmitDefaultValue = false)]
+		public bool request_photo { get; set; }
 	}
 }
